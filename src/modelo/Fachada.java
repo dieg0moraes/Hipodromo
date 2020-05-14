@@ -2,9 +2,11 @@ package modelo;
 public class Fachada {
     private static Fachada instancia;
     private SistemaUsuarios sistemaUsuarios;
+    private SistemaHipodromos sistemaHipodromos;
     
     private Fachada(){
         this.sistemaUsuarios = new SistemaUsuarios();
+        this.sistemaHipodromos = new SistemaHipodromos();
     }
         
     public static Fachada getInstancia(){
@@ -24,6 +26,10 @@ public class Fachada {
     
     public boolean agregarUsuarioJugador(UsuarioJugador usuario){
         return sistemaUsuarios.agregarUsuario(usuario);
+    }
+    
+    public boolean agregarHipodromo(Hipodromo hipodromo){
+        return this.sistemaHipodromos.agregarHipodromo(hipodromo);
     }
     
 }
