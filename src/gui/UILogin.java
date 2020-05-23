@@ -89,7 +89,11 @@ public abstract class UILogin extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         login();
     }//GEN-LAST:event_btnAceptarActionPerformed
-    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+        
+        dispose();
+    }                                  
+
     public abstract void login();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

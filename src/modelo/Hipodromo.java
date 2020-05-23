@@ -1,15 +1,74 @@
 package modelo;
 
+import exceptions.NewCarreraException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Hipodromo {
     private String nombre;
     private String direccion;
     private ArrayList<Carrera> carreras;
+    private ArrayList<Jornada> jornadas;
     
     public Hipodromo(String nombre, String direccion){
-        this.carreras = new ArrayList<Carrera>();
+        this.jornadas = new ArrayList<Jornada>();
+        this.nombre = nombre;
+        this.direccion = direccion;
+    }
+    
+    public String getNombre(){
+        return this.nombre;
+    }
+    
+    public boolean agregarCarrera(Carrera carrera) 
+            throws NewCarreraException{
+        Jornada jornada = this.getJornada(carrera.getDate());        
+        return jornada.agregarCarrera(carrera);
+        
+    }
+    
+    public Jornada getJornada(Date date){
+        for(Jornada j : this.jornadas){
+            if(sameDay(date, j.getDate())){
+                return j;
+            }
+        }
+        Jornada jornada = new Jornada(date);
+        this.jornadas.add(jornada);
+        return jornada;
+    }
+    
+    private Jornada getCurrentJornada(){
+        Date today = new Date();
+        Jornada jor = null;
+        for(Jornada j : this.jornadas){
+            if(sameDay(today, j.getDate())){
+                System.out.println("Mismos dias");                
+                return j;
+            }              
+        }
+        jor = new Jornada(today);
+        this.jornadas.add(jor);
+        return jor;
+    }
+    
+    private boolean sameDay(Date date1, Date date2){
+        
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(date1);
+        cal2.setTime(date2);
+        boolean sameDay = cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
+                  cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+        return sameDay;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return this.nombre;
     }
 
     @Override
