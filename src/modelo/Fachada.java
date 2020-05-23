@@ -1,4 +1,8 @@
 package modelo;
+
+import exceptions.NewCarreraException;
+import java.util.ArrayList;
+
 public class Fachada {
     private static Fachada instancia;
     private SistemaUsuarios sistemaUsuarios;
@@ -28,8 +32,24 @@ public class Fachada {
         return sistemaUsuarios.agregarUsuario(usuario);
     }
     
+    public boolean agregarUsuarioAdmin(UsuarioAdmin usuario){
+        return sistemaUsuarios.agregarUsuario(usuario);
+    }
+    
     public boolean agregarHipodromo(Hipodromo hipodromo){
         return this.sistemaHipodromos.agregarHipodromo(hipodromo);
+    }
+    
+    public ArrayList<Hipodromo> getHipodromos(){
+        return this.sistemaHipodromos.getHipodromos();
+    }
+    
+    public Hipodromo getHipodromoByName(String nombre){
+        return sistemaHipodromos.getHipodromoByName(nombre);
+    }
+    
+    public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) throws NewCarreraException{
+        return this.sistemaHipodromos.agregarCarrera(carrera, hipodromo);
     }
     
 }

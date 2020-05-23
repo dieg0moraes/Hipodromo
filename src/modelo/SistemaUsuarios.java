@@ -14,22 +14,19 @@ public class SistemaUsuarios {
     
     public Usuario login(ArrayList<Usuario> usuariosList, 
             String password, String username){
-        Usuario ret = null;       
-        boolean found = false;
-        Iterator<Usuario> iterator = usuariosList.iterator();
-        
-        while(iterator.hasNext() && !found){
-            Usuario user = iterator.next();
+        Usuario ret = null;     
+        for(Usuario user : usuariosList){
             if(user.login(password, username)){
-                found = true;
                 ret = user;
-            }                
-        }
+                break;                
+            }
+        }               
         return ret;
     }
     
     public Usuario loginAdmin(String password, String username){
         Usuario user = login(usuariosAdmin, password, username);
+        System.out.print(user);
         return user == null ? user : (UsuarioAdmin)user;
     }
     

@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/diego/Documentos/Mis%20Projectos/Obligatorio2020/src/gui/UILogin.java</file>
-            <file>file:/home/diego/Documentos/Mis%20Projectos/Obligatorio2020/src/gui/UILoginAdmin.java</file>
-            <file>file:/home/diego/Documentos/Mis%20Projectos/Obligatorio2020/src/gui/UILanding.java</file>
-            <file>file:/home/diego/Documentos/Mis%20Projectos/Obligatorio2020/src/modelo/Fachada.java</file>
+            <file>file:/home/diego/Documentos/Mis%20Projectos/Hipodromo/src/modelo/Fachada.java</file>
+            <file>file:/home/diego/Documentos/Mis%20Projectos/Hipodromo/src/modelo/Jornada.java</file>
+            <file>file:/home/diego/Documentos/Mis%20Projectos/Hipodromo/src/gui/UICrearCarrera.java</file>
+            <file>file:/home/diego/Documentos/Mis%20Projectos/Hipodromo/src/modelo/Hipodromo.java</file>
+            <file>file:/home/diego/Documentos/Mis%20Projectos/Hipodromo/src/modelo/Carrera.java</file>
         </group>
     </open-files>
 </project-private>

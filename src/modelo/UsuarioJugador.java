@@ -11,4 +11,8 @@ package modelo;
  */
 public class UsuarioJugador extends Usuario{
     
+    public UsuarioJugador(String nombre, String password) {
+        super(nombre, password);
+    }
+    
 }
