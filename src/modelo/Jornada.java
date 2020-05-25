@@ -41,5 +41,13 @@ public class Jornada {
             return false;
     }
     
+    public boolean siCorreCaballo(Caballo caballo){
+        for(Carrera c : this.carreras)
+            if(c.siCorreCaballo(caballo))
+                return true;
+        
+        return false;
+    }
+    
     
 }

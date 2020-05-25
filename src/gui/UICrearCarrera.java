@@ -110,14 +110,18 @@ public class UICrearCarrera extends javax.swing.JFrame {
             if(dateStr != null && !dateStr.isEmpty()){
                 date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
             }else date = new Date();
+            
             String name =  this.txtNombreCarrera.getText();
             
             Carrera c = new Carrera(name, date);
-            System.out.println("Agregar carrera");
+
             if(fachada.agregarCarrera(c, this.hipodromo))
             {
                 JOptionPane.showMessageDialog(this,"Fecha" + c.getDate() +" \n"
                         + " Carrera número " + c.getNumero() +"");
+                UISelectCaballos selectCaballos = new UISelectCaballos(c);
+                selectCaballos.setVisible(true);
+                this.dispose();
             }else{
                 JOptionPane.showMessageDialog(this,"Carrera NO agregarda");
             }

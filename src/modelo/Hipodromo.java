@@ -9,7 +9,6 @@ import java.util.Objects;
 public class Hipodromo {
     private String nombre;
     private String direccion;
-    private ArrayList<Carrera> carreras;
     private ArrayList<Jornada> jornadas;
     
     public Hipodromo(String nombre, String direccion){
@@ -40,20 +39,6 @@ public class Hipodromo {
         return jornada;
     }
     
-    private Jornada getCurrentJornada(){
-        Date today = new Date();
-        Jornada jor = null;
-        for(Jornada j : this.jornadas){
-            if(sameDay(today, j.getDate())){
-                System.out.println("Mismos dias");                
-                return j;
-            }              
-        }
-        jor = new Jornada(today);
-        this.jornadas.add(jor);
-        return jor;
-    }
-    
     private boolean sameDay(Date date1, Date date2){
         
         Calendar cal1 = Calendar.getInstance();
@@ -63,6 +48,13 @@ public class Hipodromo {
         boolean sameDay = cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
                   cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
         return sameDay;
+    }
+    
+    public boolean siCorreCaballo(Caballo caballo, Date date ){
+        Jornada jornada = this.getJornada(date);
+        return jornada.siCorreCaballo(caballo);
+            
+        
     }
     
     
