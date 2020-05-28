@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +24,7 @@ public class Hipodromo {
     }
     
     public boolean agregarCarrera(Carrera carrera) 
-            throws NewCarreraException{
+            throws NewCarreraException, NewParticipacionException{
         Jornada jornada = this.getJornada(carrera.getDate());        
         return jornada.agregarCarrera(carrera);
         
@@ -98,6 +99,18 @@ public class Hipodromo {
             return false;
         }
         return true;
+    }
+
+    public boolean siCorreCaballo(Caballo caballo, Date date) {
+        boolean corre = false;
+        for(Jornada j : this.jornadas){
+            if(j.siCorreCaballo(caballo)){
+                corre = true;
+                break;
+            }
+        }
+        
+        return corre;
     }
     
     

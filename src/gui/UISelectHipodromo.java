@@ -3,22 +3,16 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import modelo.Fachada;
 import modelo.Hipodromo;
+import obligatorio2020.Utils;
+
 public class UISelectHipodromo extends javax.swing.JFrame {
     private UIMenuAdmin menuAdmin;
     public UISelectHipodromo(UIMenuAdmin u) {
         initComponents();
         this.menuAdmin = u;
-        actualizar();
+        Utils.fillJList(lstHipodromos, Fachada.getInstancia().getHipodromos());
     }
-    private void actualizar(){
-        ArrayList<Hipodromo> lista = Fachada.getInstancia().getHipodromos();
-        DefaultListModel listaMostrar = new DefaultListModel();
-        
-        for (Hipodromo u: lista){
-            listaMostrar.addElement(u);
-        }   
-        lstHipodromos.setModel(listaMostrar);
-    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

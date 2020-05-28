@@ -1,16 +1,20 @@
 package modelo;
 
 import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Fachada {
     private static Fachada instancia;
     private SistemaUsuarios sistemaUsuarios;
     private SistemaHipodromos sistemaHipodromos;
+    private SistemaCaballos sistemaCaballos;
     
     private Fachada(){
         this.sistemaUsuarios = new SistemaUsuarios();
         this.sistemaHipodromos = new SistemaHipodromos();
+        this.sistemaCaballos = new SistemaCaballos();
     }
         
     public static Fachada getInstancia(){
@@ -48,8 +52,21 @@ public class Fachada {
         return sistemaHipodromos.getHipodromoByName(nombre);
     }
     
-    public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) throws NewCarreraException{
+    public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) 
+            throws NewCarreraException, NewParticipacionException{
         return this.sistemaHipodromos.agregarCarrera(carrera, hipodromo);
     }
+    
+    public ArrayList<Caballo> getCaballosDisponibles(Carrera carrera){
+        return this.sistemaCaballos.getCaballosDisponibles(carrera);
+    }
+    
+    public boolean agregarCaballo(Caballo caballo){
+        return this.sistemaCaballos.agregarCaballo(caballo);
+    }
+    
+    public boolean siCorreCaballo(Caballo caballo, Date date){
+        return this.sistemaHipodromos.siCorreCaballo(caballo, date);
+    } 
     
 }
