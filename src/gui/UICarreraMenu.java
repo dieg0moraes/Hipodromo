@@ -79,7 +79,7 @@ public class UICarreraMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        UICrearCarrera carrera = new UICrearCarrera(this.hipodromo, this);
+        UINewCarrera carrera = new UINewCarrera(this.hipodromo, this);
         carrera.setVisible(true);
        
     }//GEN-LAST:event_btnCrearActionPerformed

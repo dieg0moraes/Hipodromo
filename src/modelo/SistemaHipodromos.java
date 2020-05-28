@@ -42,13 +42,21 @@ public class SistemaHipodromos {
     }
     
     public boolean existeHipodromo(Hipodromo hipodromo){
-        
         for(Hipodromo h : this.hipodromos){
-            System.out.println("hipodromo loop");
             if(h.equals(hipodromo)){
                 return true;
             }
         }
         return false;
     }
+
+    public boolean siCorreCaballo(Caballo caballo, Date date) {
+        for(Hipodromo h : this.hipodromos)
+            if(h.siCorreCaballo(caballo, date))
+                return true;
+            
+        return false;
+    }
+    
+    
 }

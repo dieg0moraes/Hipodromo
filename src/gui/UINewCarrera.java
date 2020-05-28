@@ -1,20 +1,24 @@
 package gui;
 
 import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
+import observer.Observador;
 
-public class UICrearCarrera extends javax.swing.JFrame {
+public class UINewCarrera extends javax.swing.JFrame {
     
     private Fachada fachada = Fachada.getInstancia();
     private Hipodromo hipodromo;
     private UICarreraMenu menu;
-    public UICrearCarrera(Hipodromo hipodromo, UICarreraMenu menu) {
+    public UINewCarrera(Hipodromo hipodromo, UICarreraMenu menu) {
         initComponents();
         this.hipodromo = hipodromo;
         this.menu = menu;
@@ -110,23 +114,26 @@ public class UICrearCarrera extends javax.swing.JFrame {
             if(dateStr != null && !dateStr.isEmpty()){
                 date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
             }else date = new Date();
+            
             String name =  this.txtNombreCarrera.getText();
             
             Carrera c = new Carrera(name, date);
-            System.out.println("Agregar carrera");
-            if(fachada.agregarCarrera(c, this.hipodromo))
+
+            if(c.validarNombre() && c.validarFecha())
             {
                 JOptionPane.showMessageDialog(this,"Fecha" + c.getDate() +" \n"
                         + " Carrera número " + c.getNumero() +"");
+                UISelectCaballosCarrera selectCaballos = new UISelectCaballosCarrera(c, this.hipodromo);
+                selectCaballos.setVisible(true);
+                this.dispose();
             }else{
-                JOptionPane.showMessageDialog(this,"Carrera NO agregarda");
+                JOptionPane.showMessageDialog(this,"Carrera no creada");
             }
         }catch (ParseException e){
             JOptionPane.showMessageDialog(this, "Fecha con mal formato dd/mm/yyyy");
         }catch(NewCarreraException e){
-            JOptionPane.showMessageDialog(this, e);
-        }
- 
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } 
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
@@ -140,4 +147,5 @@ public class UICrearCarrera extends javax.swing.JFrame {
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtNombreCarrera;
     // End of variables declaration//GEN-END:variables
+
 }
