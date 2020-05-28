@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,14 +20,21 @@ public class Jornada {
     }
     
     public boolean agregarCarrera(Carrera carrera) 
-            throws NewCarreraException{
+            throws NewCarreraException, NewParticipacionException{
         
-        carrera.validar();
-        if(existeCarreraConNombre(carrera))
+        if(carrera.validar() && existeCarreraConNombre(carrera))
             throw new NewCarreraException("Ya exist carrera con el nombre:" + carrera.getNombre());
 
         this.asignarIdCarrera(carrera);
         return this.carreras.add(carrera);
+    }
+    
+    public Carrera getCarrearById(int id){
+        for(Carrera c : this.carreras){
+            if(id == c.getNumero())
+                return c;
+        }
+        return null;
     }
     
     private void asignarIdCarrera(Carrera carrera){        

@@ -16,7 +16,7 @@ public class UILoginJugadores extends UILogin{
         String password = new String(getTxtPassword().getPassword());
         String username = getTxtUser().getText();
         
-        Usuario user = this.fachada.loginAdmin(password, username);
+        Usuario user = this.fachada.loginJugador(password, username);
         
         if(user!=null){
             

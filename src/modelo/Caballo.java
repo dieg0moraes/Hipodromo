@@ -35,9 +35,7 @@ public class Caballo {
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
-        if (!Objects.equals(this.responsable, other.responsable)) {
-            return false;
-        }
+        
         return true;
     }
     

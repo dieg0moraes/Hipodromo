@@ -1,53 +1,97 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gui;
 
-import exceptions.AddCaballoException;
+import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Caballo;
 import modelo.Carrera;
 import modelo.Fachada;
+import modelo.Hipodromo;
 import modelo.Participacion;
 import obligatorio2020.Utils;
+import observer.Observador;
 
-public class UISelectCaballos extends javax.swing.JFrame {
+public class UISelectCaballosCarrera extends javax.swing.JFrame implements Observador{
     private Carrera carrera;
+    private Hipodromo hipodromo;
     private Fachada fachada = Fachada.getInstancia();
-    
-    public UISelectCaballos(Carrera carrera) {
+    private ArrayList<Caballo> listaElegidos= new ArrayList<Caballo>();
+
+    public UISelectCaballosCarrera(Carrera carrera, Hipodromo hipodromo) {
+        super();
         initComponents();
         this.carrera = carrera;
+        this.hipodromo = hipodromo;
         this.txtInfoFechaCarrera.setText(carrera.getDate().toString());
         this.txtInfoNumeroCarrera.setText("Numero de carrera: " + carrera.getNumero());
+        carrera.agregar(this);
+        actualizarListas();
+
+    }
+
+    private void actualizarListas(){
         Utils.fillJList(lstParticipantes, carrera.getCaballos());
         Utils.fillJList(lstDisponibles, fachada.getCaballosDisponibles(carrera));
-        
     }
-   
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtNumero = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
         txtInfoFechaCarrera = new javax.swing.JLabel();
+        txtDividendo = new javax.swing.JTextField();
         txtInfoNumeroCarrera = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstParticipantes = new javax.swing.JList();
+        btnAgregarACarrera = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstDisponibles = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JSpinner();
-        jLabel4 = new javax.swing.JLabel();
-        txtDividendo = new javax.swing.JTextField();
-        btnEliminar = new javax.swing.JButton();
-        btnAgregarACarrera = new javax.swing.JButton();
+        btnConfirmarCarrera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel4.setText("Dividendo");
+
         txtInfoFechaCarrera.setText("Info fecha");
+
+        txtDividendo.setText("1.0");
+        txtDividendo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDividendoActionPerformed(evt);
+            }
+        });
 
         txtInfoNumeroCarrera.setText("Info numero");
 
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         jScrollPane1.setViewportView(lstParticipantes);
+
+        btnAgregarACarrera.setText("Agregar");
+        btnAgregarACarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarACarreraActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Caballos Participantes");
 
@@ -57,26 +101,10 @@ public class UISelectCaballos extends javax.swing.JFrame {
 
         jLabel3.setText("Numero");
 
-        jLabel4.setText("Dividendo");
-
-        txtDividendo.setText("1.0");
-        txtDividendo.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirmarCarrera.setText("Confirmar");
+        btnConfirmarCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDividendoActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
-        btnAgregarACarrera.setText("Agregar");
-        btnAgregarACarrera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarACarreraActionPerformed(evt);
+                btnConfirmarCarreraActionPerformed(evt);
             }
         });
 
@@ -88,14 +116,11 @@ public class UISelectCaballos extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnEliminar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnAgregarACarrera)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,9 +139,15 @@ public class UISelectCaballos extends javax.swing.JFrame {
                             .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(186, 186, 186)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtInfoFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtInfoNumeroCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEliminar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnConfirmarCarrera))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtInfoFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtInfoNumeroCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(82, 82, 82))
         );
         layout.setVerticalGroup(
@@ -152,9 +183,11 @@ public class UISelectCaballos extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24)
-                .addComponent(btnEliminar)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnConfirmarCarrera))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -169,18 +202,39 @@ public class UISelectCaballos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarACarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarACarreraActionPerformed
-        Caballo caballo = (Caballo)lstDisponibles.getSelectedValue();
-        float dividendo = float.class.cast(txtDividendo.getText());
-        int numero = int.class.cast(txtNumero.getValue());
-        Participacion participacion = new Participacion();
-        
-        if(carrera.agregarParticipacion(participacion)){
-            
+        try {
+            Caballo caballo = (Caballo)lstDisponibles.getSelectedValue();
+            int numero = (int)txtNumero.getValue();
+            float dividendo = Float.parseFloat(txtDividendo.getText());
+            Participacion participacion = new Participacion(carrera, caballo, numero, dividendo);
+            carrera.agregarParticipacion(participacion);
+        } catch (NewParticipacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btnAgregarACarreraActionPerformed
 
+    private void btnConfirmarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarCarreraActionPerformed
+        
+        try {
+            if(fachada.agregarCarrera(carrera, hipodromo))
+                JOptionPane.showMessageDialog(this, "Agregada");
+            
+        } catch (NewCarreraException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch(NewParticipacionException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btnConfirmarCarreraActionPerformed
+
+    @Override
+    public void actualizar(Object event) {
+        this.actualizarListas();
+    }
+      
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarACarrera;
+    private javax.swing.JButton btnConfirmarCarrera;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

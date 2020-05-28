@@ -1,13 +1,20 @@
 package modelo;
 import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
-public class Carrera {
+import observer.Observable;
+
+public class Carrera extends Observable{
     
     private String nombre;
     private Date date;
     private int numero;
     private ArrayList<Participacion> participaciones;
+    
+    public enum Events{
+        NUEVA_PARTICIPACION
+    }
 
     public Carrera(){
         this.participaciones = new ArrayList<Participacion>();        
@@ -16,7 +23,7 @@ public class Carrera {
     public Carrera(String nombre, Date date){
         this.nombre = nombre;
         this.date = date;
-        this.participaciones = new ArrayList<Participacion>(); 
+        this.participaciones = new ArrayList<Participacion>();
     }
     
     public ArrayList<Participacion> getParticipaciones(){
@@ -39,22 +46,23 @@ public class Carrera {
         return this.date;
     }
     
-    
-    private boolean validarFecha(){
-        return this.date.after(new Date()) || this.date.equals(this.date);
+    public boolean validarFecha() throws NewCarreraException{
+        if(this.date.after(new Date()) || this.date.equals(this.date))
+            return true;
+        throw new NewCarreraException("Fecha invalida");
     }  
         
-    private boolean validarNombre(){
-        return !this.nombre.isEmpty();
+    public boolean validarNombre() throws NewCarreraException{
+        if(this.nombre.isEmpty())
+            throw new NewCarreraException("Nombre invalido");
+        return true;
     }
     
-    public boolean validar() throws NewCarreraException{
-        if(!validarNombre())
-            throw new NewCarreraException("Nombre invalido");
-        if(!validarFecha())
-            throw new NewCarreraException("Fecha invalida");
-            
-        return validarNombre() && validarFecha();
+    public boolean validar() 
+            throws NewCarreraException, NewParticipacionException{
+        if(validarNombre() && validarFecha() && validarParticipaciones())
+            return true;
+        return false;
     }
     
     public boolean siCorreCaballo(Caballo caballo){
@@ -65,10 +73,45 @@ public class Carrera {
         return false;
     }
     
-    public boolean agregarParticipacion(Participacion participacion){
-        if(participacion.validar())
-            return this.participaciones.add(participacion);
-        return false
+    private boolean numeroIsRegistrado(int numero){
+        boolean ret = false;
+        for(Participacion p : this.participaciones){
+            if(p.getNumero() == numero){
+                ret = true;
+                break;
+            }
+        }
+        
+        return ret;
+    }
+    
+    public boolean agregarParticipacion(Participacion participacion) 
+            throws NewParticipacionException{
+        boolean ret = false;
+        Caballo c = participacion.getCaballo();
+        try{
+            if(participacion.validar() && !this.siCorreCaballo(c))
+                if(!this.numeroIsRegistrado(participacion.getNumero())){
+                    ret = this.participaciones.add(participacion);
+                }else throw new NewParticipacionException("Numero de caballo inválido");
+                
+        }catch(NewParticipacionException e){
+            throw e;
+        }
+        if(ret) 
+            this.notificar(Events.NUEVA_PARTICIPACION);
+        
+        return ret;
+        
+    }
+    
+    
+    private boolean validarParticipaciones() 
+            throws NewParticipacionException{
+        if(this.participaciones.size() >= 2)
+            return true;    
+        throw new NewParticipacionException("Debe seleccionar al menos 2 caballos participantes");
+        
     }
     
     public ArrayList<Caballo> getCaballos(){

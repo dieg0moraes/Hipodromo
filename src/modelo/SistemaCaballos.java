@@ -18,7 +18,6 @@ public class SistemaCaballos {
             }
         }     
         return ret;
-
     }
     
     public boolean agregarCaballo(Caballo caballo){
