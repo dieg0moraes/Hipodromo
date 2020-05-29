@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.NewCarreraException;
+import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -34,7 +35,8 @@ public class SistemaHipodromos {
         return ret;
     } 
     
-    public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) throws NewCarreraException{
+    public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) 
+            throws NewCarreraException, NewParticipacionException{
         if(this.existeHipodromo(hipodromo))            
             return hipodromo.agregarCarrera(carrera);
         return false;
@@ -56,6 +58,17 @@ public class SistemaHipodromos {
                 return true;
             
         return false;
+    }
+
+    public Jornada getJornadaDe(Hipodromo hipodromo, Date date) {
+        Hipodromo h = this.getHipodromoByName(hipodromo.getNombre());
+        return h.getJornada(date);
+    }
+
+    public Carrera crearCarrera(Date date, String nombre, Hipodromo hipodromo) 
+            throws NewCarreraException, NewParticipacionException {
+        Hipodromo h = this.getHipodromoByName(hipodromo.getNombre());
+        return h.crearCarrera(date, nombre);
     }
     
     

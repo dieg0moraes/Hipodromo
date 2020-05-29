@@ -68,5 +68,14 @@ public class Fachada {
     public boolean siCorreCaballo(Caballo caballo, Date date){
         return this.sistemaHipodromos.siCorreCaballo(caballo, date);
     } 
+
+    public Jornada getJornadaDe(Hipodromo hipodromo, Date date) {
+        return sistemaHipodromos.getJornadaDe(hipodromo, date);
+    }
+    
+    public Carrera crearCarrera(Date date, String nombre, Hipodromo hipodromo) 
+            throws NewCarreraException, NewParticipacionException{
+        return this.sistemaHipodromos.crearCarrera(date, nombre, hipodromo);
+    }
     
 }

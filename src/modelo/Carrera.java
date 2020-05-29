@@ -11,9 +11,14 @@ public class Carrera extends Observable{
     private Date date;
     private int numero;
     private ArrayList<Participacion> participaciones;
+    private Status status;
     
     public enum Events{
         NUEVA_PARTICIPACION
+    }
+    
+    public enum Status{
+        ABIERTA, CERRADA, FINALIZADA
     }
 
     public Carrera(){

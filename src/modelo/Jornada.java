@@ -4,6 +4,7 @@ import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
+import jdk.jshell.spi.ExecutionControl;
 
 public class Jornada {
     private Date date;
@@ -19,13 +20,17 @@ public class Jornada {
         return this.date;
     }
     
+    public int getNextCarreraId(){
+        return this.carreraNextId;
+    }
+    
+ 
+    
     public boolean agregarCarrera(Carrera carrera) 
             throws NewCarreraException, NewParticipacionException{
-        
         if(carrera.validar() && existeCarreraConNombre(carrera))
             throw new NewCarreraException("Ya exist carrera con el nombre:" + carrera.getNombre());
 
-        this.asignarIdCarrera(carrera);
         return this.carreras.add(carrera);
     }
     
@@ -56,6 +61,24 @@ public class Jornada {
         
         return false;
     }
+    public Carrera crearCarrera(String nombre) 
+            throws NewCarreraException, NewParticipacionException {
+        Carrera c = new Carrera(nombre, this.date);
+        if(c.validarFecha() && c.validarNombre()){
+            asignarIdCarrera(c);
+            return c;
+        }    
+        return null;
+        
+    }
+    
+    
+
+    Carrera getCurrenteCarrera() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
     
 }

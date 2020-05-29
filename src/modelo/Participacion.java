@@ -3,13 +3,11 @@ package modelo;
 import exceptions.NewParticipacionException;
 
 public class Participacion {
-    private Carrera carrera;
     private Caballo caballo;
     private int numero;
     private float dividendo;
     
-    public Participacion(Carrera carrera, Caballo caballo, int numero, float dividendo){
-        this.carrera = carrera;
+    public Participacion(Caballo caballo, int numero, float dividendo){
         this.caballo = caballo;
         this.numero = numero;
         this.dividendo = dividendo;

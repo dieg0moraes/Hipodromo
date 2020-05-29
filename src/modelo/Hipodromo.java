@@ -10,7 +10,6 @@ import java.util.Objects;
 public class Hipodromo {
     private String nombre;
     private String direccion;
-    private ArrayList<Carrera> carreras;
     private ArrayList<Jornada> jornadas;
     
     public Hipodromo(String nombre, String direccion){
@@ -30,6 +29,17 @@ public class Hipodromo {
         
     }
     
+    public Carrera getNextCarrera(){
+        Jornada jornada = getCurrentJornada();
+
+        return jornada.getCurrenteCarrera();
+    }
+    
+    public Carrera crearCarrera(Date date, String nombre) 
+            throws NewCarreraException, NewParticipacionException {
+        return this.getJornada(date).crearCarrera(nombre);
+    }
+    
     public Jornada getJornada(Date date){
         for(Jornada j : this.jornadas){
             if(sameDay(date, j.getDate())){
@@ -43,16 +53,12 @@ public class Hipodromo {
     
     private Jornada getCurrentJornada(){
         Date today = new Date();
-        Jornada jor = null;
         for(Jornada j : this.jornadas){
-            if(sameDay(today, j.getDate())){
-                System.out.println("Mismos dias");                
+            if(sameDay(today, j.getDate())){   
                 return j;
             }              
         }
-        jor = new Jornada(today);
-        this.jornadas.add(jor);
-        return jor;
+        return null;
     }
     
     private boolean sameDay(Date date1, Date date2){
@@ -65,6 +71,17 @@ public class Hipodromo {
                   cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
         return sameDay;
     }
+    
+    public boolean siCorreCaballo(Caballo caballo, Date date) {
+        boolean corre = false;
+        for(Jornada j : this.jornadas){
+            if(j.siCorreCaballo(caballo)){
+                corre = true;
+                break;
+            }
+        }        
+        return corre;
+    } 
     
     
     @Override
@@ -101,18 +118,5 @@ public class Hipodromo {
         return true;
     }
 
-    public boolean siCorreCaballo(Caballo caballo, Date date) {
-        boolean corre = false;
-        for(Jornada j : this.jornadas){
-            if(j.siCorreCaballo(caballo)){
-                corre = true;
-                break;
-            }
-        }
-        
-        return corre;
-    }
-    
-    
-    
+       
 }
