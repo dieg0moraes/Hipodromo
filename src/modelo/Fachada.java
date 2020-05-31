@@ -1,5 +1,6 @@
 package modelo;
 
+import exceptions.AbrirCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -73,9 +74,14 @@ public class Fachada {
         return sistemaHipodromos.getJornadaDe(hipodromo, date);
     }
     
+    public Carrera getNextCarrear(Hipodromo hipodromo) throws AbrirCarreraException{
+        return this.sistemaHipodromos.getNextCarrera(hipodromo);
+    }
+    
     public Carrera crearCarrera(Date date, String nombre, Hipodromo hipodromo) 
             throws NewCarreraException, NewParticipacionException{
         return this.sistemaHipodromos.crearCarrera(date, nombre, hipodromo);
     }
+
     
 }

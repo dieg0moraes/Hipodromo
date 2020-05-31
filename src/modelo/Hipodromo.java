@@ -1,5 +1,6 @@
 package modelo;
 
+import exceptions.AbrirCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -29,10 +30,9 @@ public class Hipodromo {
         
     }
     
-    public Carrera getNextCarrera(){
+    public Carrera getNextCarrera() throws AbrirCarreraException{
         Jornada jornada = getCurrentJornada();
-
-        return jornada.getCurrenteCarrera();
+        return jornada.getNextCarrera();
     }
     
     public Carrera crearCarrera(Date date, String nombre) 
@@ -82,8 +82,7 @@ public class Hipodromo {
         }        
         return corre;
     } 
-    
-    
+        
     @Override
     public String toString(){
         return this.nombre;
@@ -117,6 +116,4 @@ public class Hipodromo {
         }
         return true;
     }
-
-       
 }
