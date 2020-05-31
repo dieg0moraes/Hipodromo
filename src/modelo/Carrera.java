@@ -1,4 +1,5 @@
 package modelo;
+import exceptions.AbrirCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -12,9 +13,10 @@ public class Carrera extends Observable{
     private int numero;
     private ArrayList<Participacion> participaciones;
     private Status status;
+    private Caballo ganador;
     
     public enum Events{
-        NUEVA_PARTICIPACION
+        NUEVA_PARTICIPACION, STATUS_CARRERA
     }
     
     public enum Status{
@@ -125,6 +127,25 @@ public class Carrera extends Observable{
             caballos.add(p.getCaballo());
         }
         return caballos;
+    }
+    
+    public boolean tieneGanador(){
+        return this.ganador == null;
+    }
+    
+    public boolean seCorrio(){
+        return this.status == Status.FINALIZADA && this.tieneGanador();
+    }
+    
+    public void abrirCarrera() throws AbrirCarreraException{
+        if(Status.ABIERTA != this.status)
+            this.setStatus(Status.ABIERTA);
+        else throw new AbrirCarreraException("No hay carreras para abrir");
+    }
+    
+    private void setStatus(Status status){
+        this.status = status;
+        this.notificar(Events.STATUS_CARRERA);
     }
     
     

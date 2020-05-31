@@ -1,15 +1,16 @@
 package modelo;
 
+import exceptions.AbrirCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
-import jdk.jshell.spi.ExecutionControl;
 
 public class Jornada {
     private Date date;
     private ArrayList<Carrera> carreras;
     private int carreraNextId = 0;
+    private Carrera carreraActual;    
     
     public Jornada(Date date){
         this.date = date;
@@ -23,7 +24,6 @@ public class Jornada {
     public int getNextCarreraId(){
         return this.carreraNextId;
     }
-    
  
     
     public boolean agregarCarrera(Carrera carrera) 
@@ -71,14 +71,32 @@ public class Jornada {
         return null;
         
     }
-    
-    
-
-    Carrera getCurrenteCarrera() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private Carrera getPrimeraCarrera(){
+        int min = Integer.MAX_VALUE;
+        Carrera ret = null;
+        for(Carrera c : this.carreras){
+            if(c.getNumero() < min){
+                min = c.getNumero();
+                ret = c;
+            }
+        }
+        return ret;
     }
+    
 
-   
-    
-    
+    public Carrera getNextCarrera() throws AbrirCarreraException {
+        for(Carrera c : this.carreras){
+            if(!c.seCorrio()){
+                if(this.carreraActual == null){
+                    this.carreraActual = c;
+                    return c;
+                }                    
+                else if(this.carreraActual.seCorrio()){
+                    this.carreraActual = c;
+                    return c;
+                }
+            } 
+        }
+        throw new AbrirCarreraException("No hay carreras para abrir");
+    }     
 }

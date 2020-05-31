@@ -1,25 +1,34 @@
 package gui;
 
+import exceptions.AbrirCarreraException;
+import javax.swing.JOptionPane;
 import modelo.Carrera;
 import modelo.Fachada;
-import modelo.Hipodromo;
 import obligatorio2020.Utils;
 
 public class UIAbrirCarrera extends javax.swing.JFrame {
     Fachada fachada = Fachada.getInstancia();
-    Hipodromo hipodromo;
+    Carrera carrera;
     
-    public UIAbrirCarrera(Hipodromo hipodromo) {
+    public UIAbrirCarrera(Carrera carrera) {
         initComponents();
-        this.hipodromo = hipodromo;
-        actualizar();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+        this.carrera = carrera;
+        actualizarList();
     }
     
-    private void actualizar(){
-       Carrera carrera = hipodromo.getNextCarrera();
-       Utils.fillJList(lstParticipantes, carrera.getCaballos());
+    private void actualizarList(){
+        Utils.fillJList(lstParticipantes, this.carrera.getCaballos());
+        this.txtNombreCarrera.setText(this.carrera.getNombre());
+        this.txtNumeroCarrera.setText(this.carrera.getNumero()+"");
+       
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -42,6 +51,11 @@ public class UIAbrirCarrera extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lstParticipantes);
 
         btnAbrir.setText("Abrir carrera");
+        btnAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,6 +92,17 @@ public class UIAbrirCarrera extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+        try {
+            carrera.abrirCarrera();
+            JOptionPane.showMessageDialog(this, "Carrera a abierta");
+        } catch (AbrirCarreraException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }      
+    }//GEN-LAST:event_btnAbrirActionPerformed
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
+    } 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrir;
     private javax.swing.JLabel jLabel1;
