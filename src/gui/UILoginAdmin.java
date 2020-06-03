@@ -1,5 +1,8 @@
 package gui;
 
+import exceptions.LoginException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Fachada;
 import modelo.Usuario;
@@ -14,15 +17,14 @@ public class UILoginAdmin extends UILogin{
     public void login(){
         String password = new String(getTxtPassword().getPassword());
         String username = getTxtUser().getText();
-        
-        Usuario user = this.fachada.loginAdmin(password, username);
-        if(user != null){
+        try {
+            this.fachada.loginAdmin(password, username);
             this.menu.setVisible(true);
             this.dispose();
+        } catch (LoginException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-        else{
-            JOptionPane.showMessageDialog(this,"Login Incorrecto");
-        }
+        
     }
 
 }

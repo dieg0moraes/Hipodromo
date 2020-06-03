@@ -8,7 +8,6 @@ public class Usuario {
     private String apellido;
     private String password;
     private String username;
-    private float saldo;
     
     public Usuario(String username, String password){
         this.username = username;
@@ -25,17 +24,17 @@ public class Usuario {
     }
     
     public boolean login(String password, String username){
-        boolean a = password == this.password;
-        boolean b = username == this.username;
-        System.out.println("no:" + password);
-        System.out.println("no: " + username);
-        
-        System.out.println("this: " + this.password);
-        System.out.println("this: " + this.username);
-        
-       return password.equals(this.password) && username.equals(this.username);        
+        return password.equals(this.password) && username.equals(this.username);        
     }
-
+        
+    public String getUsername(){
+        return this.username;
+    }
+    
+    public String getPassword(){
+        return this.getUsername();
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

@@ -1,18 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
-
-/**
- *
- * @author diego
- */
 public class UsuarioJugador extends Usuario{
+    private float saldo;
     
     public UsuarioJugador(String nombre, String password) {
         super(nombre, password);
+    }
+    
+    public boolean tieneSaldo(float monto){
+        return saldo >= monto;
+    }
+    
+    public void setSaldo(float saldo){
+        this.saldo = saldo;
     }
     
 }

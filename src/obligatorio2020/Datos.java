@@ -1,4 +1,6 @@
 package obligatorio2020;
+import exceptions.LoginException;
+import exceptions.NewApuestaException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.Date;
@@ -52,7 +54,7 @@ public class Datos {
         Participacion p4 = new Participacion(c4, 3, 1.5f);
         
         Carrera c;
-        Carrera ca1;
+        Carrera ca1 = null;
         try {
             c = fachada.crearCarrera(new Date(), "Carrera 0", h1);
             c.agregarParticipacion(p1);
@@ -66,7 +68,14 @@ public class Datos {
         } catch (NewParticipacionException ex) {
             Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        aj.setSaldo(10000);
+        try {
+            fachada.realizarApuesta(ca1, p4, aj.getUsername(), aj.getPassword(), 10);
+        } catch (NewApuestaException ex) {
+            Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LoginException ex) {
+            Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         

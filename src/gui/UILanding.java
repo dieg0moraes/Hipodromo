@@ -62,8 +62,8 @@ public class UILanding extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnJugadoresLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadoresLoginActionPerformed
-        UILoginJugadores login = new UILoginJugadores();
-        login.setVisible(true);
+        UIMenuJugador ui = new UIMenuJugador();
+        ui.setVisible(true);
     }//GEN-LAST:event_btnJugadoresLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

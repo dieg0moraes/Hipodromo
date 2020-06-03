@@ -1,6 +1,8 @@
 package modelo;
 
 import exceptions.AbrirCarreraException;
+import exceptions.LoginException;
+import exceptions.NewApuestaException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -11,11 +13,13 @@ public class Fachada {
     private SistemaUsuarios sistemaUsuarios;
     private SistemaHipodromos sistemaHipodromos;
     private SistemaCaballos sistemaCaballos;
+    private SistemaApuestas sistemaApuestas;
     
     private Fachada(){
         this.sistemaUsuarios = new SistemaUsuarios();
         this.sistemaHipodromos = new SistemaHipodromos();
         this.sistemaCaballos = new SistemaCaballos();
+        this.sistemaApuestas = new SistemaApuestas();
     }
         
     public static Fachada getInstancia(){
@@ -25,11 +29,13 @@ public class Fachada {
         return instancia;
     }
     
-    public Usuario loginAdmin(String password, String username){
+    public Usuario loginAdmin(String password, String username) 
+            throws LoginException{
         return sistemaUsuarios.loginAdmin(password, username);
     }
     
-    public Usuario loginJugador(String password, String username){
+    public Usuario loginJugador(String password, String username) 
+            throws LoginException{
         return sistemaUsuarios.loginJugador(password, username);
     }
     
@@ -83,5 +89,9 @@ public class Fachada {
         return this.sistemaHipodromos.crearCarrera(date, nombre, hipodromo);
     }
 
-    
+    public boolean realizarApuesta(Carrera carrera, Participacion participacion, String username, String password, float monto) 
+            throws NewApuestaException, LoginException{
+        return this.sistemaApuestas.realizarApuesta(carrera, participacion, username, password, monto);
+    }
+       
 }
