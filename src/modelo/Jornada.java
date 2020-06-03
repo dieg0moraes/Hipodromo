@@ -98,5 +98,9 @@ public class Jornada {
             } 
         }
         throw new AbrirCarreraException("No hay carreras para abrir");
-    }     
+    }   
+    
+    public Carrera getCarreraActual(){
+        return this.carreraActual;
+    }
 }

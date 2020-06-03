@@ -5,14 +5,10 @@ import exceptions.NewParticipacionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
-import modelo.Jornada;
-import observer.Observador;
 
 public class UINewCarrera extends javax.swing.JFrame {
     

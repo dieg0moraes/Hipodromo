@@ -38,4 +38,8 @@ public class Participacion {
         System.out.println("Dividendo" + this.dividendo);
         return this.dividendo > 1.0f;
     }
+    
+    public String toString(){
+        return this.caballo.getNombre() + " " + this.numero + " - Dividendo" +this.dividendo;
+    }
 }

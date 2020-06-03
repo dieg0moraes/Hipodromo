@@ -7,9 +7,17 @@ import obligatorio2020.Utils;
 
 public class UISelectHipodromo extends javax.swing.JFrame {
     private UIMenuAdmin menuAdmin;
+    private UIMenuJugador menuJugador;
+            
     public UISelectHipodromo(UIMenuAdmin u) {
         initComponents();
         this.menuAdmin = u;
+        Utils.fillJList(lstHipodromos, Fachada.getInstancia().getHipodromos());
+    }
+    
+    public UISelectHipodromo(UIMenuJugador u) {
+        initComponents();
+        this.menuJugador = u;
         Utils.fillJList(lstHipodromos, Fachada.getInstancia().getHipodromos());
     }
 
@@ -52,7 +60,8 @@ public class UISelectHipodromo extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         Hipodromo h = (Hipodromo)lstHipodromos.getSelectedValue();
-        this.menuAdmin.setHipodromo(h);
+        if(this.menuAdmin != null)this.menuAdmin.setHipodromo(h);
+        if(this.menuJugador != null) this.menuJugador.setHipodromo(h);
     }//GEN-LAST:event_btnActualizarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

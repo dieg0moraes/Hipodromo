@@ -82,6 +82,11 @@ public class Hipodromo {
         }        
         return corre;
     } 
+    
+    public Carrera getCarreraAbierta(){
+        Jornada jornada = getCurrentJornada();
+        return jornada.getCarreraActual();
+    }
         
     @Override
     public String toString(){

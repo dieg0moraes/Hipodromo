@@ -14,6 +14,8 @@ public class Carrera extends Observable{
     private ArrayList<Participacion> participaciones;
     private Status status;
     private Caballo ganador;
+    private ArrayList<Apuesta> apuestas;
+    
     
     public enum Events{
         NUEVA_PARTICIPACION, STATUS_CARRERA
@@ -24,13 +26,15 @@ public class Carrera extends Observable{
     }
 
     public Carrera(){
-        this.participaciones = new ArrayList<Participacion>();        
+        this.participaciones = new ArrayList<Participacion>(); 
+        this.apuestas = new ArrayList<Apuesta>();
     }
     
     public Carrera(String nombre, Date date){
         this.nombre = nombre;
         this.date = date;
         this.participaciones = new ArrayList<Participacion>();
+        this.apuestas = new ArrayList<Apuesta>();
     }
     
     public ArrayList<Participacion> getParticipaciones(){
@@ -112,6 +116,14 @@ public class Carrera extends Observable{
         
     }
     
+    public float getMontoTotalApostado(){
+        float total = 0;
+        for(Apuesta a : this.apuestas){
+            total += a.getMonto();
+        }
+        return total;
+    }
+    
     
     private boolean validarParticipaciones() 
             throws NewParticipacionException{
@@ -148,5 +160,15 @@ public class Carrera extends Observable{
         this.notificar(Events.STATUS_CARRERA);
     }
     
+    public Status getStatus(){
+        return this.status;
+    }
     
+    public Caballo getGanador(){
+        return this.ganador;
+    } 
+    
+     public boolean isAbierta() {
+        return this.status == Status.ABIERTA;
+    }
 }
