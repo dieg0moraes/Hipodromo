@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 
 public class UILanding extends javax.swing.JFrame {
+    
     public UILanding() {
         initComponents();
     }
@@ -57,13 +53,13 @@ public class UILanding extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
-        UILoginAdmin login = new UILoginAdmin();
-        login.setVisible(true);
+        UILoginAdmin view = new UILoginAdmin();
+        view.setVisible(true);
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnJugadoresLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadoresLoginActionPerformed
-        UIMenuJugador ui = new UIMenuJugador();
-        ui.setVisible(true);
+        UILoginJugadores view = new UILoginJugadores();
+        view.setVisible(true);            
     }//GEN-LAST:event_btnJugadoresLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

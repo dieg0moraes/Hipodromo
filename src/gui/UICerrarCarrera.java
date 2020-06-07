@@ -1,25 +1,45 @@
 
 package gui;
 
+import gui.controllers.CerrarCarreraController;
+import gui.controllers.intefaces.ICerrarCarrera;
+import javax.swing.JOptionPane;
 import modelo.Carrera;
-import modelo.Fachada;
 import modelo.Hipodromo;
 
-public class UICerrarCarrera extends javax.swing.JFrame {
-    Fachada fachada = Fachada.getInstancia();
-    Hipodromo hipodromo;
+public class UICerrarCarrera extends javax.swing.JFrame implements ICerrarCarrera{
+    private Hipodromo hipodromo;
+    private CerrarCarreraController controller;
+    
     public UICerrarCarrera(Hipodromo hipodromo) {
         initComponents();
         this.hipodromo = hipodromo;
-        this.cargarInformacion();
+        this.controller = new CerrarCarreraController(this, this.hipodromo);
+        
+    }
+
+    @Override
+    public void cargarDatos(Carrera carrera) {
+        if(carrera != null){
+            this.txtNombre.setText(carrera.getNombre());
+            this.txtNumeroCarrera.setText(carrera.getNumero() + "");
+            this.txtMontoTotalCarrera.setText(carrera.getMontoTotalApostado() + "");
+        }else{ 
+            JOptionPane.showMessageDialog(this, "No hay carreras abiertas");
+            this.dispose();
+        }
+    }
+
+    @Override
+    public void error(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void success(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
     }
     
-    private void cargarInformacion(){
-        Carrera carrera = this.hipodromo.getCarreraAbierta();
-        this.txtNombre.setText(carrera.getNombre());
-        this.txtNumeroCarrera.setText(carrera.getNumero() + "");
-        this.txtMontoTotalCarrera.setText(carrera.getMontoTotalApostado() + "");
-    }
     
     
 

@@ -171,4 +171,10 @@ public class Carrera extends Observable{
      public boolean isAbierta() {
         return this.status == Status.ABIERTA;
     }
+    
+     public void cerrarCarrera(){
+         
+     }
+     
+    
 }

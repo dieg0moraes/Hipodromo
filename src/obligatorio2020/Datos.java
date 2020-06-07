@@ -6,6 +6,7 @@ import exceptions.NewParticipacionException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Apuesta;
 import modelo.Caballo;
 import modelo.Carrera;
 import modelo.Fachada;
@@ -69,8 +70,10 @@ public class Datos {
             Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
         }
         aj.setSaldo(10000);
+        Apuesta a = new Apuesta(aj, p1, 10);
+        
         try {
-            fachada.realizarApuesta(ca1, p4, aj.getUsername(), aj.getPassword(), 10);
+            fachada.realizarApuesta(a);
         } catch (NewApuestaException ex) {
             Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (LoginException ex) {

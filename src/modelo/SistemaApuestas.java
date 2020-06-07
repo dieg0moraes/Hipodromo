@@ -10,11 +10,11 @@ public class SistemaApuestas {
         this.apuestas = new ArrayList<Apuesta>();
     }    
     
-    public boolean realizarApuesta(Carrera carrera, Participacion participacion, String username, String password, float monto) 
+    public boolean realizarApuesta(Apuesta apuesta) 
             throws NewApuestaException, LoginException{
         Fachada fachada = Fachada.getInstancia();
-        UsuarioJugador usuario = (UsuarioJugador) fachada.loginJugador(password, username);
-        Apuesta apuesta = new Apuesta(usuario, participacion, monto);
+        UsuarioJugador usuario = apuesta.getJugador();
+        usuario = fachada.loginJugador(usuario);
         if(apuesta.validar()){
             return this.apuestas.add(apuesta);            
         }

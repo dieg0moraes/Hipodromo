@@ -62,7 +62,7 @@ public class Jornada {
         return false;
     }
     public Carrera crearCarrera(String nombre) 
-            throws NewCarreraException, NewParticipacionException {
+            throws NewCarreraException {
         Carrera c = new Carrera(nombre, this.date);
         if(c.validarFecha() && c.validarNombre()){
             asignarIdCarrera(c);
@@ -100,7 +100,10 @@ public class Jornada {
         throw new AbrirCarreraException("No hay carreras para abrir");
     }   
     
-    public Carrera getCarreraActual(){
+    public Carrera getCarreraActual() 
+            throws NullPointerException{
+        if(this.carreraActual == null)
+            throw new NullPointerException("No hay carrera abiertas");
         return this.carreraActual;
     }
 }

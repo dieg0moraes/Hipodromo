@@ -1,24 +1,20 @@
 package gui;
 
-import exceptions.NewCarreraException;
-import exceptions.NewParticipacionException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import gui.controllers.NuevaCarreraController;
 import javax.swing.JOptionPane;
 import modelo.Carrera;
-import modelo.Fachada;
 import modelo.Hipodromo;
+import gui.controllers.intefaces.INuevaCarrera;
 
-public class UINewCarrera extends javax.swing.JFrame {
+public class UINewCarrera extends javax.swing.JFrame implements INuevaCarrera{
     
-    private Fachada fachada = Fachada.getInstancia();
     private Hipodromo hipodromo;
-    private UICarreraMenu menu;
-    public UINewCarrera(Hipodromo hipodromo, UICarreraMenu menu) {
+    private NuevaCarreraController controller;
+    
+    public UINewCarrera(Hipodromo hipodromo) {
         initComponents();
         this.hipodromo = hipodromo;
-        this.menu = menu;
+        this.controller = new NuevaCarreraController(this, hipodromo);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -104,30 +100,18 @@ public class UINewCarrera extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         
-        try{
-            String dateStr = this.txtDate.getText();
-            
-            Date date;
-            
-            if(dateStr != null && !dateStr.isEmpty()){
-                date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
-            }else date = new Date();
-            
-            String name =  this.txtNombreCarrera.getText();
-            
-            Carrera c = fachada.crearCarrera(date, name, this.hipodromo);
+        String dateStr = this.txtDate.getText();            
+        String name =  this.txtNombreCarrera.getText();
+        Carrera c = this.controller.crearCarrera(name, dateStr);
+        if(c != null){
             JOptionPane.showMessageDialog(this,"Se creara la carrera " + c.getNombre());
             UISelectCaballosCarrera selectCaballos = new UISelectCaballosCarrera(c, this.hipodromo);
             selectCaballos.setVisible(true);
-            this.dispose();
+            this.dispose();  
             
-        }catch (ParseException e){
-            JOptionPane.showMessageDialog(this, "Fecha con mal formato dd/mm/yyyy");
-        }catch(NewCarreraException e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        } catch (NewParticipacionException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        } 
+        }
+                
+        
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
@@ -141,5 +125,10 @@ public class UINewCarrera extends javax.swing.JFrame {
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtNombreCarrera;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void error(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
 
 }

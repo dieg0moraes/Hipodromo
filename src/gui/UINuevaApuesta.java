@@ -2,23 +2,25 @@ package gui;
 
 import exceptions.LoginException;
 import exceptions.NewApuestaException;
+import gui.controllers.NuevaApuestaController;
+import gui.controllers.intefaces.INuevaApuesta;
 import javax.swing.JOptionPane;
+import modelo.Apuesta;
 import modelo.Caballo;
 import modelo.Carrera;
-import modelo.Fachada;
 import modelo.Hipodromo;
 import modelo.Participacion;
+import modelo.UsuarioJugador;
 import obligatorio2020.Utils;
 
-public class UINuevaApuesta extends javax.swing.JFrame {
-    private Fachada fachada = Fachada.getInstancia();
+public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
     private Hipodromo hipodromo;
-    private Carrera carrera;
+    private NuevaApuestaController controller;
     
     public UINuevaApuesta(Hipodromo hipodromo) {
         initComponents();
         this.hipodromo = hipodromo;
-        this.cargarDatos();
+        this.controller = new NuevaApuestaController(this, hipodromo);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -27,9 +29,17 @@ public class UINuevaApuesta extends javax.swing.JFrame {
         });   
     }
     
-    public void cargarDatos(){
-        Carrera carrera = this.hipodromo.getCarreraAbierta();
-        this.carrera = carrera;
+    @Override
+    public void showError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void success(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje);
+    }
+    
+    public void loadCarrera(Carrera carrera){
         if(carrera != null){
             if(carrera.isAbierta()){
                 txtEstado.setText(carrera.getStatus().toString());  
@@ -50,9 +60,11 @@ public class UINuevaApuesta extends javax.swing.JFrame {
         }
     }
     
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         this.dispose();
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -217,22 +229,17 @@ public class UINuevaApuesta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
         float monto =  Float.parseFloat(this.txtMontoAApostar.getText());
         String username = this.txtUsername.getText();
         String password = this.txtPassword.getText();
+        UsuarioJugador usuario = new UsuarioJugador(username, password);
         Participacion participacion = (Participacion)lstParticipaciones.getSelectedValue();
-        try{
-            this.fachada.realizarApuesta(carrera, participacion, username, password, monto);
-            JOptionPane.showMessageDialog(this, "Apuesta hecha");
-        } catch (NewApuestaException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        } catch (LoginException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+        Apuesta apuesta = new Apuesta(usuario, participacion, monto);
+        this.controller.apostar(apuesta);            
     }//GEN-LAST:event_btnApostarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -255,4 +262,6 @@ public class UINuevaApuesta extends javax.swing.JFrame {
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    
 }

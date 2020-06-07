@@ -13,10 +13,11 @@ public class SistemaUsuarios {
     }
     
     public Usuario login(ArrayList<Usuario> usuariosList, 
-            String password, String username){
+            Usuario log){
         Usuario ret = null;     
         for(Usuario user : usuariosList){
-            if(user.login(password, username)){
+            if(user.login(log.getPassword(), log.getUsername())){
+                System.out.println(user.toString());
                 ret = user;
                 break;                
             }
@@ -24,18 +25,18 @@ public class SistemaUsuarios {
         return ret;
     }
     
-    public Usuario loginAdmin(String password, String username) 
+    public UsuarioAdmin loginAdmin(Usuario log) 
             throws LoginException{
-        Usuario user = login(usuariosAdmin, password, username);
+        Usuario user = login(usuariosAdmin, log);
         if(user == null)
             throw new LoginException("Acceso denegado");
             
         return  (UsuarioAdmin)user;
     }
     
-    public Usuario loginJugador(String password, String username) 
+    public UsuarioJugador loginJugador(Usuario log) 
             throws LoginException{
-        Usuario user = login(usuarios, password, username);
+        Usuario user = login(usuarios, log);
         if(user == null)
             throw new LoginException("Los datos no son correctos");
         return (UsuarioJugador)user;
