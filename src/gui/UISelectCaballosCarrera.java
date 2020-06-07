@@ -1,50 +1,33 @@
 package gui;
 
-import exceptions.NewCarreraException;
-import exceptions.NewParticipacionException;
+import gui.controllers.SelectCaballosController;
+import gui.controllers.intefaces.ISelectCaballos;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Caballo;
 import modelo.Carrera;
-import modelo.Fachada;
 import modelo.Hipodromo;
-import modelo.Participacion;
 import obligatorio2020.Utils;
-import observer.Observador;
 
-public class UISelectCaballosCarrera extends javax.swing.JFrame implements Observador{
-    private Carrera carrera;
-    private Hipodromo hipodromo;
-    private Fachada fachada = Fachada.getInstancia();
-    private ArrayList<Caballo> listaElegidos= new ArrayList<Caballo>();
+public class UISelectCaballosCarrera extends javax.swing.JFrame implements ISelectCaballos{
+    private SelectCaballosController controller;
 
     public UISelectCaballosCarrera(Carrera carrera, Hipodromo hipodromo) {
         super();
         initComponents();
-        this.carrera = carrera;
-        this.hipodromo = hipodromo;
-        this.txtInfoFechaCarrera.setText(carrera.getDate().toString());
-        this.txtInfoNumeroCarrera.setText("Numero de carrera: " + carrera.getNumero());
-        carrera.agregar(this);
+        this.controller = new SelectCaballosController(this, carrera, hipodromo);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
-        actualizarListas();
-
     }
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         
     } 
-
-    private void actualizarListas(){
-        Utils.fillJList(lstParticipantes, carrera.getCaballos());
-        Utils.fillJList(lstDisponibles, fachada.getCaballosDisponibles(carrera));
-    }
-    
+       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -205,35 +188,15 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements Obser
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarACarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarACarreraActionPerformed
-        try {
-            Caballo caballo = (Caballo)lstDisponibles.getSelectedValue();
-            int numero = (int)txtNumero.getValue();
-            float dividendo = Float.parseFloat(txtDividendo.getText());
-            Participacion participacion = new Participacion(caballo, numero, dividendo);
-            carrera.agregarParticipacion(participacion);
-        } catch (NewParticipacionException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+        Caballo caballo = (Caballo)lstDisponibles.getSelectedValue();
+        int numero = (int)txtNumero.getValue();
+        float dividendo = Float.parseFloat(txtDividendo.getText());
+        controller.agregarCaballo(caballo, numero, dividendo);
     }//GEN-LAST:event_btnAgregarACarreraActionPerformed
 
     private void btnConfirmarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarCarreraActionPerformed
-        
-        try {
-            if(fachada.agregarCarrera(carrera, hipodromo))
-                JOptionPane.showMessageDialog(this, "Agregada - Carrera numero" + carrera.getNumero());
-            
-        } catch (NewCarreraException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        } catch(NewParticipacionException e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+        this.controller.confirmarCarrera();        
     }//GEN-LAST:event_btnConfirmarCarreraActionPerformed
-
-    @Override
-    public void actualizar(Object event) {
-        this.actualizarListas();
-    }
-      
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarACarrera;
@@ -252,4 +215,27 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements Obser
     private javax.swing.JLabel txtInfoNumeroCarrera;
     private javax.swing.JSpinner txtNumero;
     // End of variables declaration//GEN-END:variables
+
+    
+    @Override
+    public void actualizarListas(ArrayList<Caballo> disponibles, ArrayList<Caballo> seleccionados) {
+        Utils.fillJList(lstDisponibles, disponibles);
+        Utils.fillJList(lstParticipantes, seleccionados);
+    }
+
+    @Override
+    public void cargarDatos(Carrera carrera) {
+        this.txtInfoFechaCarrera.setText(carrera.getDate().toString());
+        this.txtInfoNumeroCarrera.setText(carrera.getNumero() +"");
+    }
+
+    @Override
+    public void error(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void success(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
 }

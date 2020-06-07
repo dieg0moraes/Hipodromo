@@ -1,16 +1,16 @@
 package gui;
-
-import exceptions.AbrirCarreraException;
+import gui.controllers.AbrirCarreraController;
+import gui.controllers.intefaces.IAbrirCarrera;
 import javax.swing.JOptionPane;
 import modelo.Carrera;
-import modelo.Fachada;
+import modelo.Hipodromo;
 import obligatorio2020.Utils;
 
-public class UIAbrirCarrera extends javax.swing.JFrame {
-    Fachada fachada = Fachada.getInstancia();
-    Carrera carrera;
+public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
+    private AbrirCarreraController controller;
+    private Carrera carrera;
     
-    public UIAbrirCarrera(Carrera carrera) {
+    public UIAbrirCarrera(Hipodromo hipodromo) {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -18,15 +18,22 @@ public class UIAbrirCarrera extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
-        this.carrera = carrera;
-        actualizarList();
+        this.controller = new AbrirCarreraController(this, hipodromo);
+    } 
+
+    @Override
+    public void cargarDatos(Carrera carrera) {
+        if(carrera != null){
+            this.carrera = carrera;
+            Utils.fillJList(lstParticipantes, this.carrera.getCaballos());
+            this.txtNombreCarrera.setText(this.carrera.getNombre());
+            this.txtNumeroCarrera.setText(this.carrera.getNumero()+"");   
+        }
     }
-    
-    private void actualizarList(){
-        Utils.fillJList(lstParticipantes, this.carrera.getCaballos());
-        this.txtNombreCarrera.setText(this.carrera.getNombre());
-        this.txtNumeroCarrera.setText(this.carrera.getNumero()+"");
-       
+
+    @Override
+    public void error(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje);
     }
     
     @SuppressWarnings("unchecked")
@@ -93,12 +100,7 @@ public class UIAbrirCarrera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
-        try {
-            carrera.abrirCarrera();
-            JOptionPane.showMessageDialog(this, "Carrera a abierta");
-        } catch (AbrirCarreraException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }      
+        controller.abrirCarrera();
     }//GEN-LAST:event_btnAbrirActionPerformed
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();
@@ -111,4 +113,9 @@ public class UIAbrirCarrera extends javax.swing.JFrame {
     private javax.swing.JLabel txtNombreCarrera;
     private javax.swing.JLabel txtNumeroCarrera;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void success(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje);
+    }
 }

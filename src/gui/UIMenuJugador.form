@@ -23,15 +23,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace pref="109" max="32767" attributes="0"/>
-              <Component id="btnElegirHipodromo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-              <Component id="btnApostar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="cbHipodromos" max="32767" attributes="0"/>
+                  <Component id="btnApostar" pref="94" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="159" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,23 +37,15 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-              <Component id="btnElegirHipodromo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="cbHipodromos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnApostar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="168" max="32767" attributes="0"/>
+              <EmptySpace pref="174" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnElegirHipodromo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Seleccionar Hipodromo"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnElegirHipodromoActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnApostar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apostar"/>
@@ -63,6 +53,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnApostarActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbHipodromos">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

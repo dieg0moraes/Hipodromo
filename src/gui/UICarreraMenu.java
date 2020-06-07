@@ -1,20 +1,14 @@
 package gui;
 
-import exceptions.AbrirCarreraException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import modelo.Carrera;
+
 import modelo.Hipodromo;
 
 public class UICarreraMenu extends javax.swing.JFrame {
     private Hipodromo hipodromo;
-    private UIMenuAdmin menu;
 
-    public UICarreraMenu(Hipodromo hipodromo, UIMenuAdmin menu) {
+    public UICarreraMenu(Hipodromo hipodromo) {
         initComponents();
         this.hipodromo = hipodromo;
-        this.menu = menu;
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -50,6 +44,11 @@ public class UICarreraMenu extends javax.swing.JFrame {
         });
 
         btnCerrarApuestas.setText("Cerrar apuestas");
+        btnCerrarApuestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarApuestasActionPerformed(evt);
+            }
+        });
 
         btnFinalizarApuestas.setText("Finalizar carrera");
 
@@ -89,23 +88,20 @@ public class UICarreraMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        UINewCarrera carrera = new UINewCarrera(this.hipodromo, this);
+        UINewCarrera carrera = new UINewCarrera(this.hipodromo);
         carrera.setVisible(true);
        
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
-        Carrera carrera = null;
-        try {
-            carrera = this.hipodromo.getNextCarrera();
-        } catch (AbrirCarreraException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-        if(carrera != null){            
-            UIAbrirCarrera abrir = new UIAbrirCarrera(carrera);
-            abrir.setVisible(true);
-        }
+        UIAbrirCarrera view = new UIAbrirCarrera(this.hipodromo);
+        view.setVisible(true);
+        
     }//GEN-LAST:event_btnAbrirActionPerformed
+
+    private void btnCerrarApuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarApuestasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCerrarApuestasActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();
