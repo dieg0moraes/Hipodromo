@@ -21,6 +21,10 @@ public class Apuesta {
         return this.monto;
     } 
     
+    public UsuarioJugador getJugador(){
+        return this.jugador;
+    }
+    
     public boolean validar() 
             throws NewApuestaException{
         return this.validarMonto() && this.usuarioTieneSaldo();

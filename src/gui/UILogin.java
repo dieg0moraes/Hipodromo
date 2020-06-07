@@ -1,28 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
+import gui.controllers.LoginController;
+import gui.controllers.intefaces.ILogin;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-/**
- *
- * @author diego
- */
-public abstract class UILogin extends javax.swing.JFrame {
+public abstract class UILogin extends javax.swing.JFrame implements ILogin{
+    
+    protected LoginController controller = new LoginController((ILogin)this);
 
     public UILogin() {
         initComponents();
     }
 
-    public JPasswordField getTxtPassword() {
+    protected JPasswordField getTxtPassword() {
         return txtPassword; 
     }
     
-    public JTextField  getTxtUser() {
+    protected JTextField  getTxtUser() {
         return txtUsername; 
     }
     @SuppressWarnings("unchecked")
@@ -89,11 +84,11 @@ public abstract class UILogin extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         login();
     }//GEN-LAST:event_btnAceptarActionPerformed
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
-        
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                       
         dispose();
     }                                  
 
+    @Override
     public abstract void login();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

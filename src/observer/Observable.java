@@ -15,7 +15,7 @@ public class Observable {
     
     public void notificar(Object event){
         for(Observador o : this.observadores){
-            o.actualizar(event);
+            o.actualizar(event, this);
         }
     }
     

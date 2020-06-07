@@ -36,7 +36,7 @@ public class Hipodromo {
     }
     
     public Carrera crearCarrera(Date date, String nombre) 
-            throws NewCarreraException, NewParticipacionException {
+            throws NewCarreraException {
         return this.getJornada(date).crearCarrera(nombre);
     }
     

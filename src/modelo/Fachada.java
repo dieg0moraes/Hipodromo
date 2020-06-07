@@ -21,6 +21,11 @@ public class Fachada {
         this.sistemaCaballos = new SistemaCaballos();
         this.sistemaApuestas = new SistemaApuestas();
     }
+    
+    public enum Eventos{
+        
+    }    
+    
         
     public static Fachada getInstancia(){
         if(instancia == null){
@@ -29,14 +34,14 @@ public class Fachada {
         return instancia;
     }
     
-    public Usuario loginAdmin(String password, String username) 
+    public UsuarioAdmin loginAdmin(UsuarioAdmin user) 
             throws LoginException{
-        return sistemaUsuarios.loginAdmin(password, username);
+        return sistemaUsuarios.loginAdmin(user);
     }
     
-    public Usuario loginJugador(String password, String username) 
+    public UsuarioJugador loginJugador(UsuarioJugador usuario) 
             throws LoginException{
-        return sistemaUsuarios.loginJugador(password, username);
+        return sistemaUsuarios.loginJugador(usuario);
     }
     
     public boolean agregarUsuarioJugador(UsuarioJugador usuario){
@@ -80,7 +85,7 @@ public class Fachada {
         return sistemaHipodromos.getJornadaDe(hipodromo, date);
     }
     
-    public Carrera getNextCarrear(Hipodromo hipodromo) throws AbrirCarreraException{
+    public Carrera getNextCarrera(Hipodromo hipodromo) throws AbrirCarreraException{
         return this.sistemaHipodromos.getNextCarrera(hipodromo);
     }
     
@@ -89,9 +94,9 @@ public class Fachada {
         return this.sistemaHipodromos.crearCarrera(date, nombre, hipodromo);
     }
 
-    public boolean realizarApuesta(Carrera carrera, Participacion participacion, String username, String password, float monto) 
+    public boolean realizarApuesta(Apuesta apuesta) 
             throws NewApuestaException, LoginException{
-        return this.sistemaApuestas.realizarApuesta(carrera, participacion, username, password, monto);
+        return this.sistemaApuestas.realizarApuesta(apuesta);
     }
        
 }
