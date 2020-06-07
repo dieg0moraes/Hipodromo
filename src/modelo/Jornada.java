@@ -1,5 +1,6 @@
 package modelo;
 
+import exceptions.AbrirCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class Jornada {
     private Date date;
     private ArrayList<Carrera> carreras;
     private int carreraNextId = 0;
+    private Carrera carreraActual;    
     
     public Jornada(Date date){
         this.date = date;
@@ -19,13 +21,16 @@ public class Jornada {
         return this.date;
     }
     
+    public int getNextCarreraId(){
+        return this.carreraNextId;
+    }
+ 
+    
     public boolean agregarCarrera(Carrera carrera) 
             throws NewCarreraException, NewParticipacionException{
-        
         if(carrera.validar() && existeCarreraConNombre(carrera))
             throw new NewCarreraException("Ya exist carrera con el nombre:" + carrera.getNombre());
 
-        this.asignarIdCarrera(carrera);
         return this.carreras.add(carrera);
     }
     
@@ -56,6 +61,46 @@ public class Jornada {
         
         return false;
     }
+    public Carrera crearCarrera(String nombre) 
+            throws NewCarreraException, NewParticipacionException {
+        Carrera c = new Carrera(nombre, this.date);
+        if(c.validarFecha() && c.validarNombre()){
+            asignarIdCarrera(c);
+            return c;
+        }    
+        return null;
+        
+    }
+    private Carrera getPrimeraCarrera(){
+        int min = Integer.MAX_VALUE;
+        Carrera ret = null;
+        for(Carrera c : this.carreras){
+            if(c.getNumero() < min){
+                min = c.getNumero();
+                ret = c;
+            }
+        }
+        return ret;
+    }
     
+
+    public Carrera getNextCarrera() throws AbrirCarreraException {
+        for(Carrera c : this.carreras){
+            if(!c.seCorrio()){
+                if(this.carreraActual == null){
+                    this.carreraActual = c;
+                    return c;
+                }                    
+                else if(this.carreraActual.seCorrio()){
+                    this.carreraActual = c;
+                    return c;
+                }
+            } 
+        }
+        throw new AbrirCarreraException("No hay carreras para abrir");
+    }   
     
+    public Carrera getCarreraActual(){
+        return this.carreraActual;
+    }
 }

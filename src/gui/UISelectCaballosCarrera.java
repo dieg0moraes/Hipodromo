@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Caballo;
 import modelo.Carrera;
@@ -33,9 +26,19 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements Obser
         this.txtInfoFechaCarrera.setText(carrera.getDate().toString());
         this.txtInfoNumeroCarrera.setText("Numero de carrera: " + carrera.getNumero());
         carrera.agregar(this);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         actualizarListas();
 
     }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        
+    } 
 
     private void actualizarListas(){
         Utils.fillJList(lstParticipantes, carrera.getCaballos());
@@ -206,7 +209,7 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements Obser
             Caballo caballo = (Caballo)lstDisponibles.getSelectedValue();
             int numero = (int)txtNumero.getValue();
             float dividendo = Float.parseFloat(txtDividendo.getText());
-            Participacion participacion = new Participacion(carrera, caballo, numero, dividendo);
+            Participacion participacion = new Participacion(caballo, numero, dividendo);
             carrera.agregarParticipacion(participacion);
         } catch (NewParticipacionException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -217,7 +220,7 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements Obser
         
         try {
             if(fachada.agregarCarrera(carrera, hipodromo))
-                JOptionPane.showMessageDialog(this, "Agregada");
+                JOptionPane.showMessageDialog(this, "Agregada - Carrera numero" + carrera.getNumero());
             
         } catch (NewCarreraException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());

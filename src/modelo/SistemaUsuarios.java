@@ -1,7 +1,7 @@
 package modelo;
 
+import exceptions.LoginException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SistemaUsuarios {
     private ArrayList<Usuario> usuarios;
@@ -24,15 +24,21 @@ public class SistemaUsuarios {
         return ret;
     }
     
-    public Usuario loginAdmin(String password, String username){
+    public Usuario loginAdmin(String password, String username) 
+            throws LoginException{
         Usuario user = login(usuariosAdmin, password, username);
-        System.out.print(user);
-        return user == null ? user : (UsuarioAdmin)user;
+        if(user == null)
+            throw new LoginException("Acceso denegado");
+            
+        return  (UsuarioAdmin)user;
     }
     
-    public Usuario loginJugador(String password, String username){
+    public Usuario loginJugador(String password, String username) 
+            throws LoginException{
         Usuario user = login(usuarios, password, username);
-        return user == null ? user : (UsuarioJugador)user;
+        if(user == null)
+            throw new LoginException("Los datos no son correctos");
+        return (UsuarioJugador)user;
     }
     
     public boolean agregarUsuario(UsuarioJugador usuario){

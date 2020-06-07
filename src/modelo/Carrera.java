@@ -1,4 +1,5 @@
 package modelo;
+import exceptions.AbrirCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -11,19 +12,29 @@ public class Carrera extends Observable{
     private Date date;
     private int numero;
     private ArrayList<Participacion> participaciones;
+    private Status status;
+    private Caballo ganador;
+    private ArrayList<Apuesta> apuestas;
+    
     
     public enum Events{
-        NUEVA_PARTICIPACION
+        NUEVA_PARTICIPACION, STATUS_CARRERA
+    }
+    
+    public enum Status{
+        ABIERTA, CERRADA, FINALIZADA
     }
 
     public Carrera(){
-        this.participaciones = new ArrayList<Participacion>();        
+        this.participaciones = new ArrayList<Participacion>(); 
+        this.apuestas = new ArrayList<Apuesta>();
     }
     
     public Carrera(String nombre, Date date){
         this.nombre = nombre;
         this.date = date;
         this.participaciones = new ArrayList<Participacion>();
+        this.apuestas = new ArrayList<Apuesta>();
     }
     
     public ArrayList<Participacion> getParticipaciones(){
@@ -105,6 +116,14 @@ public class Carrera extends Observable{
         
     }
     
+    public float getMontoTotalApostado(){
+        float total = 0;
+        for(Apuesta a : this.apuestas){
+            total += a.getMonto();
+        }
+        return total;
+    }
+    
     
     private boolean validarParticipaciones() 
             throws NewParticipacionException{
@@ -122,5 +141,34 @@ public class Carrera extends Observable{
         return caballos;
     }
     
+    public boolean tieneGanador(){
+        return this.ganador == null;
+    }
     
+    public boolean seCorrio(){
+        return this.status == Status.FINALIZADA && this.tieneGanador();
+    }
+    
+    public void abrirCarrera() throws AbrirCarreraException{
+        if(Status.ABIERTA != this.status)
+            this.setStatus(Status.ABIERTA);
+        else throw new AbrirCarreraException("No hay carreras para abrir");
+    }
+    
+    private void setStatus(Status status){
+        this.status = status;
+        this.notificar(Events.STATUS_CARRERA);
+    }
+    
+    public Status getStatus(){
+        return this.status;
+    }
+    
+    public Caballo getGanador(){
+        return this.ganador;
+    } 
+    
+     public boolean isAbierta() {
+        return this.status == Status.ABIERTA;
+    }
 }

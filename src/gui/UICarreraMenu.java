@@ -1,5 +1,10 @@
 package gui;
 
+import exceptions.AbrirCarreraException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import modelo.Carrera;
 import modelo.Hipodromo;
 
 public class UICarreraMenu extends javax.swing.JFrame {
@@ -38,6 +43,11 @@ public class UICarreraMenu extends javax.swing.JFrame {
         });
 
         btnAbrir.setText("Abrir");
+        btnAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirActionPerformed(evt);
+            }
+        });
 
         btnCerrarApuestas.setText("Cerrar apuestas");
 
@@ -83,6 +93,19 @@ public class UICarreraMenu extends javax.swing.JFrame {
         carrera.setVisible(true);
        
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+        Carrera carrera = null;
+        try {
+            carrera = this.hipodromo.getNextCarrera();
+        } catch (AbrirCarreraException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        if(carrera != null){            
+            UIAbrirCarrera abrir = new UIAbrirCarrera(carrera);
+            abrir.setVisible(true);
+        }
+    }//GEN-LAST:event_btnAbrirActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();
