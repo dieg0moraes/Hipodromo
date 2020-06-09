@@ -75,5 +75,7 @@ public class SistemaHipodromos {
     public Carrera getNextCarrera(Hipodromo hipodromo) throws AbrirCarreraException{
         return hipodromo.getNextCarrera();
     }
+    
+    
    
 }

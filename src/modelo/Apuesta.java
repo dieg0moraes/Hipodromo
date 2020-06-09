@@ -44,5 +44,9 @@ public class Apuesta {
         return true;
     }
     
+    public Caballo getCaballo(){
+        return this.participacion.getCaballo();
+    }
+    
     
 }

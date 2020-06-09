@@ -100,7 +100,8 @@ public class UICarreraMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     private void btnCerrarApuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarApuestasActionPerformed
-        // TODO add your handling code here:
+        UICerrarApuestas view = new UICerrarApuestas(this.hipodromo);
+        view.setVisible(true);
     }//GEN-LAST:event_btnCerrarApuestasActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
