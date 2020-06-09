@@ -98,5 +98,7 @@ public class Fachada {
             throws NewApuestaException, LoginException{
         return this.sistemaApuestas.realizarApuesta(apuesta);
     }
+    
+    
        
 }

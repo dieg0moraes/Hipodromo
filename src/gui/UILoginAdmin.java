@@ -9,8 +9,6 @@ public class UILoginAdmin extends UILogin{
     public void login(){
         String password = new String(getTxtPassword().getPassword());
         String username = getTxtUser().getText();
-        System.out.println(password);
-        System.out.println(username);
         
         UsuarioAdmin user = new UsuarioAdmin(username, password);
         controller.loginAdmin(user);
