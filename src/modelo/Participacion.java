@@ -38,6 +38,10 @@ public class Participacion {
         return this.dividendo;
     }
     
+    public String getNombreCaballo(){
+        return this.caballo.getNombre();
+    }    
+        
     private boolean validarNumero(){
         return this.numero >= 1 && this.numero <= 9999;
     }
@@ -48,6 +52,6 @@ public class Participacion {
     }
     
     public String toString(){
-        return this.caballo.getNombre() + " " + this.numero + " - Dividendo" +this.dividendo;
+       return this.caballo.getNombre() + " " + this.numero + " - Dividendo" +this.dividendo;
     }
 }

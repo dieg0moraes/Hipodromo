@@ -18,7 +18,7 @@ public class Carrera extends Observable{
     
     
     public enum Events{
-        NUEVA_PARTICIPACION, STATUS_CARRERA, PARTICIPACION_ELIMINADA, NUEVA_APUESTA
+        NUEVA_PARTICIPACION, STATUS_CARRERA, PARTICIPACION_ELIMINADA, NUEVA_APUESTA, GANADOR_ASIGNADO
     }
     
     public enum Status{
@@ -201,6 +201,20 @@ public class Carrera extends Observable{
             }
                 
         }
+    }
+    
+    public boolean estaCerrada(){
+        return this.status.equals(Status.CERRADA);
+    }
+    
+    private void setGanador(Caballo caballo){
+        this.ganador = caballo;
+        this.notificar(Events.GANADOR_ASIGNADO);
+    } 
+    
+    public void finalizarCarrera(Participacion participacion){
+        this.setGanador(participacion.getCaballo());
+        this.setStatus(Status.FINALIZADA);
     }
     
     

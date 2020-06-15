@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.AbrirCarreraException;
+import exceptions.FinalizarCarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ public class Hipodromo extends Observable{
         this.jornadas = new ArrayList<Jornada>();
         this.nombre = nombre;
         this.direccion = direccion;
+    }
+
+    public Carrera getCarreraAFinalizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public enum Events{
@@ -98,6 +103,12 @@ public class Hipodromo extends Observable{
         Jornada jornada = this.getCurrentJornada();
         jornada.abrirCarrera(carrera);
     }
+    
+    public Carrera getLastCarreraCorrida() throws FinalizarCarreraException{
+        Jornada jornada = this.getCurrentJornada();
+        return jornada.getLastCarreraCorrida();
+    }
+    
         
     @Override
     public String toString(){
