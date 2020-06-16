@@ -50,4 +50,8 @@ public class Participacion {
     public String toString(){
         return this.caballo.getNombre() + " " + this.numero + " - Dividendo" +this.dividendo;
     }
+    
+    public String getNombreCaballo(){
+        return this.caballo.getNombre();
+    }
 }
