@@ -56,7 +56,9 @@ public class UIMenuJugador extends javax.swing.JFrame implements IMenu{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
-        Hipodromo h = (Hipodromo) cbHipodromos.getSelectedItem(); 
+        Hipodromo h = (Hipodromo) cbHipodromos.getSelectedItem();
+        UINuevaApuesta view = new UINuevaApuesta(h);
+        view.setVisible(true);
         
     }//GEN-LAST:event_btnApostarActionPerformed
 
