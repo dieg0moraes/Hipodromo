@@ -9,8 +9,10 @@ import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
 import modelo.Participacion;
+import observer.Observable;
+import observer.Observador;
 
-public class SelectCaballosController {
+public class SelectCaballosController implements Observador {
     private ISelectCaballos view;
     private Carrera carrera;
     private Hipodromo hipodromo;
@@ -19,7 +21,9 @@ public class SelectCaballosController {
     public SelectCaballosController(ISelectCaballos view, Carrera carrera, Hipodromo hipodromo){
         this.view = view;
         this.carrera = carrera;
+        this.carrera.agregar(this);
         this.hipodromo = hipodromo;
+        this.hipodromo.agregar(this);
         this.cargarDatos();
     }
     
@@ -39,6 +43,10 @@ public class SelectCaballosController {
         } 
     }
     
+    public void eliminarCaballoParticipante(Caballo caballo){
+        this.carrera.eliminarCaballoParticipante(caballo);
+    }
+    
     public void confirmarCarrera(){
         try{
             this.fachada.agregarCarrera(carrera, hipodromo);
@@ -47,6 +55,15 @@ public class SelectCaballosController {
             this.view.error(ex.getMessage());
         }
     }    
+
+    @Override
+    public void actualizar(Object event, Observable origen) {
+        if(event.equals(Carrera.Events.NUEVA_PARTICIPACION) | event.equals(Carrera.Events.PARTICIPACION_ELIMINADA)){
+            this.cargarDatos();
+        }else if(event.equals(Hipodromo.Events.CARRERA_AGREGADA)){
+            this.cargarDatos();
+        }
+    }
    
     
     

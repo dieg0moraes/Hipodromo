@@ -21,7 +21,7 @@ public class CerrarCarreraController {
     }
     
     public void cerrarCarrera(){
-        this.carrera.cerrarCarrera();
+        this.carrera.cerrarApuestas();
     }
     
 }

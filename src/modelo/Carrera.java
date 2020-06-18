@@ -13,21 +13,22 @@ public class Carrera extends Observable{
     private int numero;
     private ArrayList<Participacion> participaciones;
     private Status status;
-    private Caballo ganador;
+    private Caballo ganador = null;
     private ArrayList<Apuesta> apuestas;
     
     
     public enum Events{
-        NUEVA_PARTICIPACION, STATUS_CARRERA
+        NUEVA_PARTICIPACION, STATUS_CARRERA, PARTICIPACION_ELIMINADA, NUEVA_APUESTA
     }
     
     public enum Status{
-        ABIERTA, CERRADA, FINALIZADA
+        ABIERTA, CERRADA, FINALIZADA, DEFINIDA
     }
 
     public Carrera(){
         this.participaciones = new ArrayList<Participacion>(); 
         this.apuestas = new ArrayList<Apuesta>();
+        this.setStatus(Status.DEFINIDA);
     }
     
     public Carrera(String nombre, Date date){
@@ -35,6 +36,7 @@ public class Carrera extends Observable{
         this.date = date;
         this.participaciones = new ArrayList<Participacion>();
         this.apuestas = new ArrayList<Apuesta>();
+        this.setStatus(Status.DEFINIDA);
     }
     
     public ArrayList<Participacion> getParticipaciones(){
@@ -111,9 +113,7 @@ public class Carrera extends Observable{
         }
         if(ret) 
             this.notificar(Events.NUEVA_PARTICIPACION);
-        
-        return ret;
-        
+        return ret;        
     }
     
     public float getMontoTotalApostado(){
@@ -123,7 +123,23 @@ public class Carrera extends Observable{
         }
         return total;
     }
+        
+    public float getMontoTotalApostado(Caballo caballo){
+        float total = 0;
+        for(Apuesta a : this.getApuestasDeUnCaballo(caballo)){
+            total += a.getMonto();
+        }
+        return total;        
+    }
     
+    public ArrayList<Apuesta> getApuestasDeUnCaballo(Caballo caballo){
+        ArrayList<Apuesta> apuestas = new ArrayList<Apuesta>();
+        for(Apuesta a : this.apuestas){
+            if(a.getCaballo().equals(caballo))
+                apuestas.add(a);
+        }
+        return apuestas;
+    }
     
     private boolean validarParticipaciones() 
             throws NewParticipacionException{
@@ -155,7 +171,7 @@ public class Carrera extends Observable{
         else throw new AbrirCarreraException("No hay carreras para abrir");
     }
     
-    private void setStatus(Status status){
+    public void setStatus(Status status){
         this.status = status;
         this.notificar(Events.STATUS_CARRERA);
     }
@@ -172,9 +188,62 @@ public class Carrera extends Observable{
         return this.status == Status.ABIERTA;
     }
     
-     public void cerrarCarrera(){
-         
-     }
+    public void cerrarApuestas(){
+        this.setStatus(Status.CERRADA);         
+    }
      
+    public void eliminarCaballoParticipante(Caballo caballo){
+        for(Participacion p : this.participaciones){
+            if(p.tieneCaballo(caballo)){
+                this.participaciones.remove(p);            
+                this.notificar(Events.PARTICIPACION_ELIMINADA);
+                break;
+            }                
+        }
+    }
+    
+    public boolean isFinalizada(){
+        return this.status.equals(Status.FINALIZADA) && this.ganador != null;
+    }
+    
+    public ArrayList<UsuarioJugador> getGanadores(){
+        ArrayList<UsuarioJugador> ganadores = new ArrayList<UsuarioJugador>();
+        if(this.isFinalizada()){
+            for(Apuesta apuesta : this.apuestas){
+                if(apuesta.apostoACaballo(this.ganador))
+                    ganadores.add(apuesta.getJugador());
+            }
+        }
+        return ganadores;
+    }
+    
+    public boolean isGanador(UsuarioJugador jugador){
+        for(Apuesta apuesta : this.apuestas)
+            if(apuesta.apostoACaballo(this.ganador))
+                return true;
+        return false;
+    }
+    
+    public boolean isGanador(Caballo caballo){
+        if(this.ganador == null) return false;
+        return this.ganador.equals(caballo);
+    }
+    
+    public float getMontoTotalPagado(){
+        float total = 0;
+        
+        return total;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "Carrera{" + "nombre=" + nombre + ", numero=" + numero + ", status=" + status + '}';
+    }
+    
+    
+    
+    
     
 }
