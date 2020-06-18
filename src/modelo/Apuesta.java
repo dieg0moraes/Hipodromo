@@ -44,13 +44,5 @@ public class Apuesta {
         return true;
     }
     
-    public Caballo getCaballo(){
-        return this.participacion.getCaballo();
-    }
-    
-    public boolean apostoACaballo(Caballo caballo){
-        return this.participacion.tieneCaballo(caballo);
-    }
-    
     
 }

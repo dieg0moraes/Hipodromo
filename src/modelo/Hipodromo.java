@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
-import observer.Observable;
 
-public class Hipodromo extends Observable{
+public class Hipodromo {
     private String nombre;
     private String direccion;
     private ArrayList<Jornada> jornadas;
@@ -20,10 +19,6 @@ public class Hipodromo extends Observable{
         this.direccion = direccion;
     }
     
-    public enum Events{
-        CARRERA_AGREGADA, CARRERA_ABIERTA
-    }
-    
     public String getNombre(){
         return this.nombre;
     }
@@ -31,9 +26,8 @@ public class Hipodromo extends Observable{
     public boolean agregarCarrera(Carrera carrera) 
             throws NewCarreraException, NewParticipacionException{
         Jornada jornada = this.getJornada(carrera.getDate());        
-        boolean ret = jornada.agregarCarrera(carrera);
-        this.notificar(Events.CARRERA_AGREGADA);
-        return ret;
+        return jornada.agregarCarrera(carrera);
+        
     }
     
     public Carrera getNextCarrera() throws AbrirCarreraException{
@@ -93,27 +87,19 @@ public class Hipodromo extends Observable{
         Jornada jornada = getCurrentJornada();
         return jornada.getCarreraActual();
     }
-    
-    public void abrirCarrera(Carrera carrera) throws AbrirCarreraException{
-        Jornada jornada = this.getCurrentJornada();
-        jornada.abrirCarrera(carrera);
-    }
-    
-    public ArrayList<Carrera> getCarreras(){
-        Jornada jornada = this.getCurrentJornada();
-        return jornada.getCarreras();
-    }
-    
-    public ArrayList<Carrera> getCarreras(Date date){
-        Jornada jornada = this.getJornada(date);
-        return jornada.getCarreras();
-    }
         
     @Override
     public String toString(){
         return this.nombre;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.nombre);
+        hash = 29 * hash + Objects.hashCode(this.direccion);
+        return hash;
+    }
 
     @Override
     public boolean equals(Object obj) {

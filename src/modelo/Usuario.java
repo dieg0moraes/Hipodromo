@@ -24,6 +24,9 @@ public class Usuario {
     }
     
     public boolean login(String password, String username){
+        System.out.print(password);
+        System.out.println(this.password);
+        
         return password.equals(this.password) && username.equals(this.username);        
     }
         
@@ -32,7 +35,7 @@ public class Usuario {
     }
     
     public String getPassword(){
-        return this.password;
+        return this.getUsername();
     }
     
     @Override

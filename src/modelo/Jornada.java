@@ -5,9 +5,8 @@ import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
-import observer.Observable;
 
-public class Jornada extends Observable{
+public class Jornada {
     private Date date;
     private ArrayList<Carrera> carreras;
     private int carreraNextId = 0;
@@ -16,10 +15,6 @@ public class Jornada extends Observable{
     public Jornada(Date date){
         this.date = date;
         this.carreras = new ArrayList<Carrera>();
-    }
-    
-    public enum Events{
-        CARRERA_ABIERTA
     }
     
     public Date getDate(){
@@ -35,6 +30,7 @@ public class Jornada extends Observable{
             throws NewCarreraException, NewParticipacionException{
         if(carrera.validar() && existeCarreraConNombre(carrera))
             throw new NewCarreraException("Ya exist carrera con el nombre:" + carrera.getNombre());
+
         return this.carreras.add(carrera);
     }
     
@@ -109,20 +105,5 @@ public class Jornada extends Observable{
         if(this.carreraActual == null)
             throw new NullPointerException("No hay carrera abiertas");
         return this.carreraActual;
-    }
-    
-    public void abrirCarrera(Carrera carrera) throws AbrirCarreraException{
-        for(Carrera c : this.carreras){
-            if(c.equals(carrera)){
-                c.abrirCarrera();
-                this.notificar(Events.CARRERA_ABIERTA);
-                this.carreraActual = c;
-                break;
-            }
-        }
-    }
-    
-    public ArrayList<Carrera> getCarreras(){
-        return this.carreras;
     }
 }
