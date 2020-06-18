@@ -83,8 +83,8 @@
               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="txtMontoAApostar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="61" max="32767" attributes="0"/>
+              <Component id="txtMontoAApostar" min="-2" pref="82" max="-2" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
               <Component id="btnApostar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
           </Group>
@@ -230,6 +230,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtMontoAApostar">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMontoAApostarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnApostar">
       <Properties>

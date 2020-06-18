@@ -64,6 +64,11 @@ public class Carrera extends Observable{
             return true;
         throw new NewCarreraException("Fecha invalida");
     }  
+    
+    public boolean isGanador(Caballo caballo){
+        if(this.ganador == null) return false;
+        return this.ganador.equals(caballo);
+    }
         
     public boolean validarNombre() throws NewCarreraException{
         if(this.nombre.isEmpty())
@@ -203,5 +208,14 @@ public class Carrera extends Observable{
         }
     }
     
+    public boolean apuestaPertence(Apuesta apuesta){
+        boolean ret = false;
+        for(Apuesta a : this.apuestas){
+            if(a.equals(apuesta)){
+                return true;
+            }
+        }
+        return ret;
+    }
     
 }

@@ -4,6 +4,7 @@ package gui;
 import gui.controllers.CerrarApuestasController;
 import gui.controllers.intefaces.ICerrarApuestas;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.Carrera;
 import modelo.Hipodromo;
 import obligatorio2020.Utils;
@@ -131,4 +132,9 @@ public class UICerrarApuestas extends javax.swing.JFrame implements ICerrarApues
     private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtNumeroCarrera;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void error(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
 }

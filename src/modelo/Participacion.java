@@ -30,6 +30,10 @@ public class Participacion {
         return true;
     }
     
+    public String getNombreCaballo(){
+        return caballo.getNombre();
+    }
+    
     public int getNumero(){
         return this.numero;
     }
