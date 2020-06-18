@@ -17,10 +17,6 @@ public class Participacion {
         return this.caballo;
     }
     
-    public boolean tieneCaballo(Caballo caballo){
-        return this.caballo.equals(caballo);
-    }
-    
     public boolean validar() 
             throws NewParticipacionException{
         if(!validarDividendo())
@@ -34,10 +30,6 @@ public class Participacion {
         return this.numero;
     }
     
-    public float getDividendo(){
-        return this.dividendo;
-    }
-    
     private boolean validarNumero(){
         return this.numero >= 1 && this.numero <= 9999;
     }
@@ -49,9 +41,5 @@ public class Participacion {
     
     public String toString(){
         return this.caballo.getNombre() + " " + this.numero + " - Dividendo" +this.dividendo;
-    }
-    
-    public String getNombreCaballo(){
-        return this.caballo.getNombre();
     }
 }

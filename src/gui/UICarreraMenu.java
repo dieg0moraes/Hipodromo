@@ -53,11 +53,6 @@ public class UICarreraMenu extends javax.swing.JFrame {
         btnFinalizarApuestas.setText("Finalizar carrera");
 
         btnMonitorear.setText("Monitorear");
-        btnMonitorear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMonitorearActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,14 +100,8 @@ public class UICarreraMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     private void btnCerrarApuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarApuestasActionPerformed
-        UICerrarApuestas view = new UICerrarApuestas(this.hipodromo);
-        view.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarApuestasActionPerformed
-
-    private void btnMonitorearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorearActionPerformed
-        UIMonitor view = new UIMonitor(this.hipodromo);
-        view.setVisible(true);
-    }//GEN-LAST:event_btnMonitorearActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();

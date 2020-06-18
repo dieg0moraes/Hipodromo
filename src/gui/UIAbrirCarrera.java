@@ -22,20 +22,18 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
     } 
 
     @Override
-    public void cargarDatos(Carrera c) {
-        if(c != null){
-            System.out.println(c);
-            this.carrera = c;
+    public void cargarDatos(Carrera carrera) {
+        if(carrera != null){
+            this.carrera = carrera;
             Utils.fillJList(lstParticipantes, this.carrera.getCaballos());
             this.txtNombreCarrera.setText(this.carrera.getNombre());
             this.txtNumeroCarrera.setText(this.carrera.getNumero()+"");   
-            this.txtStatus.setText(this.carrera.getStatus().toString());
         }
     }
 
     @Override
     public void error(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        JOptionPane.showConfirmDialog(this, mensaje);
     }
     
     @SuppressWarnings("unchecked")
@@ -48,8 +46,6 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
         jScrollPane1 = new javax.swing.JScrollPane();
         lstParticipantes = new javax.swing.JList();
         btnAbrir = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        txtStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,10 +64,6 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
             }
         });
 
-        jLabel2.setText("Status: ");
-
-        txtStatus.setText("status");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,10 +71,6 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtStatus))
                     .addComponent(btnAbrir)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -101,15 +89,11 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNumeroCarrera))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtStatus))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnAbrir)
-                .addGap(24, 24, 24))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,16 +108,14 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lstParticipantes;
     private javax.swing.JLabel txtNombreCarrera;
     private javax.swing.JLabel txtNumeroCarrera;
-    private javax.swing.JLabel txtStatus;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void success(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        JOptionPane.showConfirmDialog(this, mensaje);
     }
 }
