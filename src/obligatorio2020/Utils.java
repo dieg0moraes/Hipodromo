@@ -14,4 +14,8 @@ public class Utils {
         jList.setModel(listaMostrar);       
     }
     
+    public static void addElementToJList(JList jlist, Object object){
+        ((DefaultListModel)(jlist.getModel())).addElement(object);
+    }
+    
 }

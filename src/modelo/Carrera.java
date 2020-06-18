@@ -13,7 +13,7 @@ public class Carrera extends Observable{
     private int numero;
     private ArrayList<Participacion> participaciones;
     private Status status;
-    private Caballo ganador;
+    private Caballo ganador = null;
     private ArrayList<Apuesta> apuestas;
     
     
@@ -65,6 +65,11 @@ public class Carrera extends Observable{
         throw new NewCarreraException("Fecha invalida");
     }  
     
+    /**
+     *
+     * @param caballo
+     * @return
+     */
     public boolean isGanador(Caballo caballo){
         if(this.ganador == null) return false;
         return this.ganador.equals(caballo);
@@ -203,9 +208,35 @@ public class Carrera extends Observable{
                 this.participaciones.remove(p);            
                 this.notificar(Events.PARTICIPACION_ELIMINADA);
                 break;
-            }
-                
+            }                
         }
+    }
+    
+    public boolean isFinalizada(){
+        return this.status.equals(Status.FINALIZADA) && this.ganador != null;
+    }
+    
+    public ArrayList<UsuarioJugador> getGanadores(){
+        ArrayList<UsuarioJugador> ganadores = new ArrayList<UsuarioJugador>();
+        if(this.isFinalizada()){
+            for(Apuesta apuesta : this.apuestas){
+                if(apuesta.apostoACaballo(this.ganador))
+                    ganadores.add(apuesta.getJugador());
+            }
+        }
+        return ganadores;
+    }
+    
+    public boolean isGanador(UsuarioJugador jugador){
+        for(Apuesta apuesta : this.apuestas)
+            if(apuesta.apostoACaballo(this.ganador))
+                return true;
+        return false;
+    }
+    
+    public boolean esGanador(Caballo caballo){
+        if(this.ganador == null) return false;
+        return this.ganador.equals(caballo);
     }
     
     public boolean apuestaPertence(Apuesta apuesta){
@@ -216,6 +247,19 @@ public class Carrera extends Observable{
             }
         }
         return ret;
+    }
+    
+    public float getMontoTotalPagado(){
+        float total = 0;
+        
+        return total;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "Carrera{" + "nombre=" + nombre + ", numero=" + numero + ", status=" + status + '}';
     }
     
 }

@@ -122,4 +122,8 @@ public class Jornada extends Observable{
             }
         }
     }
+    
+    public ArrayList<Carrera> getCarreras(){
+        return this.carreras;
+    }
 }

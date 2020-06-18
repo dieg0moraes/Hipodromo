@@ -49,9 +49,15 @@ public class Apuesta {
         return this.participacion.getCaballo();
     }
     
+
     public String getNombreCarrera(){
         return this.participacion.getNombreCarrera();
     }
+    
+     public boolean apostoACaballo(Caballo caballo){
+        return this.participacion.tieneCaballo(caballo);
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -75,6 +81,8 @@ public class Apuesta {
     }
     
     
+
+   
     
     
 }

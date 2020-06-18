@@ -100,6 +100,16 @@ public class Hipodromo extends Observable{
         Jornada jornada = this.getCurrentJornada();
         jornada.abrirCarrera(carrera);
     }
+    
+    public ArrayList<Carrera> getCarreras(){
+        Jornada jornada = this.getCurrentJornada();
+        return jornada.getCarreras();
+    }
+    
+    public ArrayList<Carrera> getCarreras(Date date){
+        Jornada jornada = this.getJornada(date);
+        return jornada.getCarreras();
+    }
         
     @Override
     public String toString(){
