@@ -7,8 +7,5 @@ public class MenuAdminController extends MenuController{
         super(view);
         this.cargarDatos();
         
-    }      
-    
-   
-    
+    }       
 }

@@ -123,6 +123,12 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
 
         jLabel8.setText("Monto: ");
 
+        txtMontoAApostar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMontoAApostarActionPerformed(evt);
+            }
+        });
+
         btnApostar.setText("Apostar");
         btnApostar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,8 +185,8 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
                 .addGap(64, 64, 64)
                 .addComponent(jLabel8)
                 .addGap(27, 27, 27)
-                .addComponent(txtMontoAApostar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(txtMontoAApostar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(btnApostar)
                 .addGap(27, 27, 27))
         );
@@ -229,7 +235,7 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here
+       
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApostarActionPerformed
@@ -241,6 +247,10 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
         Apuesta apuesta = new Apuesta(usuario, participacion, monto);
         this.controller.apostar(apuesta);            
     }//GEN-LAST:event_btnApostarActionPerformed
+
+    private void txtMontoAApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoAApostarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMontoAApostarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApostar;

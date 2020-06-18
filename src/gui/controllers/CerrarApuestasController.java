@@ -1,7 +1,10 @@
 package gui.controllers;
 
+import exceptions.CarreraException;
 import gui.controllers.intefaces.ICerrarApuestas;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Caballo;
 import modelo.Carrera;
 import modelo.Hipodromo;
@@ -17,11 +20,17 @@ public class CerrarApuestasController implements Observador{
     
     public CerrarApuestasController(ICerrarApuestas view, Hipodromo hipodromo){
         this.view = view;
-        Carrera carrera = hipodromo.getCarreraAbierta();
-        this.carrera = carrera;
-        this.hipodromo = hipodromo;
-        this.carrera.agregar(this);
-        this.cargarDatos();
+        Carrera carrera;
+        try {
+            carrera = hipodromo.getCarreraAbierta();
+            this.carrera = carrera;
+            this.hipodromo = hipodromo;
+            this.carrera.agregar(this);
+            this.cargarDatos();
+        } catch (CarreraException ex) {
+            this.view.error(ex.getMessage());
+        }
+        
     }
     
     public void cargarDatos(){

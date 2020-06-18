@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.AbrirCarreraException;
+import exceptions.CarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -105,9 +106,9 @@ public class Jornada extends Observable{
     }   
     
     public Carrera getCarreraActual() 
-            throws NullPointerException{
+            throws CarreraException{
         if(this.carreraActual == null)
-            throw new NullPointerException("No hay carrera abiertas");
+            throw new CarreraException("No hay carrera abiertas");
         return this.carreraActual;
     }
     

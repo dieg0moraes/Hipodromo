@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.AbrirCarreraException;
+import exceptions.CarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -89,7 +90,8 @@ public class Hipodromo extends Observable{
         return corre;
     } 
     
-    public Carrera getCarreraAbierta(){
+    public Carrera getCarreraAbierta() 
+            throws CarreraException{
         Jornada jornada = getCurrentJornada();
         return jornada.getCarreraActual();
     }

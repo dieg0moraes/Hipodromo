@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.NewApuestaException;
+import java.util.Objects;
 
 public class Apuesta {
     private UsuarioJugador jugador;
@@ -47,6 +48,33 @@ public class Apuesta {
     public Caballo getCaballo(){
         return this.participacion.getCaballo();
     }
+    
+    public String getNombreCarrera(){
+        return this.participacion.getNombreCarrera();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Apuesta other = (Apuesta) obj;
+        if (!Objects.equals(this.jugador, other.jugador)) {
+            return false;
+        }
+        if (!Objects.equals(this.participacion, other.participacion)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     
 }

@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import exceptions.CarreraException;
 import gui.controllers.intefaces.ICerrarCarrera;
 import modelo.Carrera;
 import modelo.Hipodromo;
@@ -15,9 +16,15 @@ public class CerrarCarreraController {
 
     public void cargarDatos()
     {
-        Carrera carrera = this.hipodromo.getCarreraAbierta();
-        this.carrera = carrera;
-        this.view.cargarDatos(carrera);
+        Carrera carrera;
+        try {
+            carrera = this.hipodromo.getCarreraAbierta();
+            this.carrera = carrera;
+            this.view.cargarDatos(carrera);
+        } catch (CarreraException ex) {
+            this.view.error(ex.getMessage());
+        }
+        
     }
     
     public void cerrarCarrera(){
