@@ -1,13 +1,19 @@
 package gui.controllers;
 
 import exceptions.CarreraException;
+import exceptions.ConsultarSaldoException;
+import exceptions.LoginException;
 import gui.controllers.intefaces.IConsultarSaldo;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Apuesta;
 import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
 import modelo.Participacion;
+import modelo.Usuario;
+import modelo.UsuarioJugador;
 
 public class ConsultarSaldoController {
     private IConsultarSaldo view;
@@ -46,8 +52,18 @@ public class ConsultarSaldoController {
     }
      
     public void consultarUltimaApuesta(String username, String password){
-        Apuesta apuesta = fachada.getUltimaApuesta(username, password, this.carrera);
-        view.mostrarApuesta(apuesta);
+        try {
+            UsuarioJugador usuario = fachada.loginJugador((UsuarioJugador) new Usuario(username, password));
+            Apuesta apuesta = fachada.getUltimaApuesta(usuario, this.carrera);
+            if(apuesta == null){
+                view.showError("No hay apuestas para mostrar");
+            }
+            view.mostrarApuesta(apuesta);
+        } catch (LoginException ex) {
+            this.view.showError(ex.getMessage());
+        }
+        
+       
         
     }
     

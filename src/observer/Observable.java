@@ -19,5 +19,9 @@ public class Observable {
         }
     }
     
+    public void quitar(Object object){
+        this.observadores.remove(object);
+    }
+    
     
 }

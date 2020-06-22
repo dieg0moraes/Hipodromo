@@ -11,6 +11,8 @@ import obligatorio2020.Utils;
 
 public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSaldo{
     private ConsultarSaldoController controller;
+    private Carrera modelo;
+    
     public UIConsultarSaldo(Hipodromo hipodromo) {
         initComponents();
         this.controller = new ConsultarSaldoController(this, hipodromo);
@@ -333,6 +335,6 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
     
     @Override 
     public void mostrarApuesta(Apuesta apuesta){
-        this.txtNombreCarrera(apuesta.getNombreCarrera());
+        this.txtNombreCarrera.setText(modelo.getNombre());
     }
 }

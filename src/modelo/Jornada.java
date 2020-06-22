@@ -12,7 +12,32 @@ public class Jornada extends Observable{
     private Date date;
     private ArrayList<Carrera> carreras;
     private int carreraNextId = 0;
-    private Carrera carreraActual;    
+    private Carrera carreraActual;  
+    private int oid;
+
+    public Jornada() {
+        
+    }
+    
+    public void setDate(Date date){
+        this.date = date;
+    }
+    
+    public int getOid(){
+        return this.oid;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    public void setSiguienteCarrera(int carrera){
+        this.carreraNextId = carrera;
+    }
+    
+    public void setCarreraActual(Carrera carrera){
+        this.carreraActual = carrera;
+    }
     
     public Jornada(Date date){
         this.date = date;

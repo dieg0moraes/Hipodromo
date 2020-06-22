@@ -7,15 +7,35 @@ public class Apuesta {
     private UsuarioJugador jugador;
     private Participacion participacion;
     private float monto;
+    private int oid;
     
     public Apuesta(UsuarioJugador jugador, Participacion participacion, float monto){
         this.jugador = jugador;
         this.participacion = participacion;
         this.monto = monto;
     }
+
+    public Apuesta() {
+        
+    }
     
-    public void setParticipacion(Participacion participacio){
+    public int getOid(){
+        return this.oid;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    
+    
+    
+    public void setParticipacion(Participacion participacion){
         this.participacion = participacion;
+    }
+    
+    public Participacion getParticipacion(){
+        return this.participacion;
     }
     
     public float getMonto(){
@@ -49,13 +69,12 @@ public class Apuesta {
         return this.participacion.getCaballo();
     }
     
-
-    public String getNombreCarrera(){
-        return this.participacion.getNombreCarrera();
+    public boolean apostoACaballo(Caballo caballo){
+        return this.participacion.tieneCaballo(caballo);
     }
     
-     public boolean apostoACaballo(Caballo caballo){
-        return this.participacion.tieneCaballo(caballo);
+    public void setMonto(float monto){
+        this.monto = monto;
     }
 
 
@@ -78,6 +97,10 @@ public class Apuesta {
             return false;
         }
         return true;
+    }
+
+    public void setJugador(UsuarioJugador user) {
+        this.jugador = user;
     }
     
     

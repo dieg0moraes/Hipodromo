@@ -21,6 +21,10 @@ public class Fachada {
         this.sistemaCaballos = new SistemaCaballos();
         this.sistemaApuestas = new SistemaApuestas();
     }
+
+    public Apuesta getUltimaApuesta(Usuario usuario, Carrera carrera) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public enum Eventos{
         
@@ -98,9 +102,5 @@ public class Fachada {
             throws NewApuestaException, LoginException{
         return this.sistemaApuestas.realizarApuesta(apuesta);
     }
-    
-    
-    
-    
        
 }

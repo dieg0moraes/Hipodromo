@@ -13,6 +13,7 @@ import observer.Observable;
 public class Hipodromo extends Observable{
     private String nombre;
     private String direccion;
+    private int oid;
     private ArrayList<Jornada> jornadas;
     
     public Hipodromo(String nombre, String direccion){
@@ -21,8 +22,32 @@ public class Hipodromo extends Observable{
         this.direccion = direccion;
     }
     
+    public Hipodromo(){
+        
+    }
+    
     public enum Events{
         CARRERA_AGREGADA, CARRERA_ABIERTA
+    }
+    
+    public int getOid(){
+        return oid;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+    
+    public void setDireccion(String direccion){
+        this.direccion = direccion;
+    }
+    
+    public ArrayList<Jornada> getJornadas(){
+        return this.jornadas;
     }
     
     public String getNombre(){
@@ -110,6 +135,17 @@ public class Hipodromo extends Observable{
         Jornada jornada = this.getJornada(date);
         return jornada.getCarreras();
     }
+    
+    public ArrayList<Carrera> getTodayCarrerasParticipacionesModificables(){
+        Jornada jornada = this.getCurrentJornada();
+        ArrayList<Carrera> carreras = new ArrayList<Carrera>();
+        for(Carrera carrera : jornada.getCarreras()){
+            if(carrera.isModificable())
+                carreras.add(carrera);
+        }
+        return carreras;
+    }
+    
         
     @Override
     public String toString(){

@@ -11,10 +11,32 @@ public class Carrera extends Observable{
     private String nombre;
     private Date date;
     private int numero;
-    private ArrayList<Participacion> participaciones;
     private Status status;
+    private int oid;
+    
+    private ArrayList<Participacion> participaciones;    
     private Caballo ganador = null;
     private ArrayList<Apuesta> apuestas;
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    public int getOid(){
+        return this.oid;
+    }  
+    
+    public void setNombre(String nombre){
+        this.nombre = nombre;       
+    }
+    
+    public void setDate(Date date){
+        this.date = date;
+    }
+    
+    public ArrayList<Apuesta> getApuestas(){
+        return this.apuestas;
+    }
     
     
     public enum Events{
@@ -22,7 +44,7 @@ public class Carrera extends Observable{
     }
     
     public enum Status{
-        ABIERTA, CERRADA, FINALIZADA, DEFINIDA
+        DEFINIDA, ABIERTA, CERRADA, FINALIZADA
     }
 
     public Carrera(){
@@ -65,11 +87,6 @@ public class Carrera extends Observable{
         throw new NewCarreraException("Fecha invalida");
     }  
     
-    /**
-     *
-     * @param caballo
-     * @return
-     */
     public boolean isGanador(Caballo caballo){
         if(this.ganador == null) return false;
         return this.ganador.equals(caballo);
@@ -103,8 +120,7 @@ public class Carrera extends Observable{
                 ret = true;
                 break;
             }
-        }
-        
+        }    
         return ret;
     }
     
@@ -194,8 +210,12 @@ public class Carrera extends Observable{
         return this.ganador;
     } 
     
-     public boolean isAbierta() {
+    public boolean isAbierta() {
         return this.status == Status.ABIERTA;
+    }
+    
+    public boolean isModificable(){
+        return this.status == Status.DEFINIDA || this.status == Status.ABIERTA;
     }
     
     public void cerrarApuestas(){
@@ -210,6 +230,35 @@ public class Carrera extends Observable{
                 break;
             }                
         }
+    }
+    
+    public ArrayList<Participacion> getParticipacionesConApuestas(){
+        ArrayList<Participacion> ret = new ArrayList<Participacion>();
+        for(Apuesta a : this.apuestas){
+            Participacion p = a.getParticipacion();
+            if(!ret.contains(p)){
+                ret.add(p);
+            }
+        }
+        return ret;
+    }
+    
+    public boolean isModificable(Participacion participacion){
+        for(Apuesta p : this.apuestas){
+            if(p.getParticipacion().equals(participacion)) {
+                return false;
+            }  
+        }
+        return true;   
+    }
+    
+    public ArrayList<Participacion> getParticipacionesModificables(){
+        ArrayList<Participacion> ret = new ArrayList<Participacion>();
+        for(Participacion p : this.participaciones){
+            if(isModificable(p))
+                ret.add(p);
+        }
+        return ret;
     }
     
     public boolean isFinalizada(){

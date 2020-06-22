@@ -26,13 +26,14 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnModificarTIpoApuesta" min="-2" max="-2" attributes="0"/>
                   <Component id="btnMonitorear" min="-2" max="-2" attributes="0"/>
                   <Component id="btnFinalizarApuestas" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCerrarApuestas" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAbrir" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCrear" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="112" max="32767" attributes="0"/>
+              <EmptySpace pref="156" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -49,7 +50,9 @@
               <Component id="btnFinalizarApuestas" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnMonitorear" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="86" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnModificarTIpoApuesta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="75" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -90,6 +93,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMonitorearActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnModificarTIpoApuesta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Modificar tipo apuesta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarTIpoApuestaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

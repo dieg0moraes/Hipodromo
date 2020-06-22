@@ -6,11 +6,42 @@ public class Participacion {
     private Caballo caballo;
     private int numero;
     private float dividendo;
+    private TipoApuesta tipoApuesta;
+    private int oid;
     
     public Participacion(Caballo caballo, int numero, float dividendo){
         this.caballo = caballo;
         this.numero = numero;
         this.dividendo = dividendo;
+        this.tipoApuesta = new TipoApuestaSimple();
+    }
+    
+    public Participacion(){
+        
+    }
+    
+    public void setTipoApuesta(TipoApuesta tipo){
+        this.tipoApuesta = tipo;
+    }
+    
+    public void setDividendo(float dividendo){
+        this.dividendo = dividendo;
+    }
+    
+    public void setNumero(int numero){
+        this.numero = numero;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    public int getOid(){
+        return this.oid;
+    }
+    
+    public void setCaballo(Caballo caballo){
+        this.caballo = caballo;
     }
     
     public Caballo getCaballo(){
@@ -55,7 +86,9 @@ public class Participacion {
         return this.caballo.getNombre() + " " + this.numero + " - Dividendo" +this.dividendo;
     }
     
-    public String getNombreCaballo(){
-        return this.caballo.getNombre();
+    public void setTipoParticipacion(TipoApuesta tipo){
+        this.tipoApuesta = tipo;
     }
+    
 }
+
