@@ -6,13 +6,81 @@ import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import persistencia.Persistencia;
+import persistencia.data_mappers.CarreraDataMapper;
+import persistencia.data_mappers.HipodromoDataMapper;
+import persistencia.data_mappers.JornadaDataMapper;
+import persistencia.data_mappers.ParticipacionDataMapper;
 
 public class SistemaHipodromos {
     
     private ArrayList<Hipodromo> hipodromos;
+    private ArrayList<Participacion> participaciones;
+    private ArrayList<Carrera> carreras;
+    private ArrayList<Jornada> jornadas;
     
     public SistemaHipodromos(){
         this.hipodromos = new ArrayList<Hipodromo>();
+        this.participaciones = new ArrayList<Participacion>();
+        this.carreras = new ArrayList<Carrera>();
+        this.jornadas = new ArrayList<Jornada>();
+    }
+    
+    public Participacion buscarParticipacionById(int oid){
+        for(Participacion p: this.participaciones){
+            if(p.getOid() == oid)
+                return p;
+        }   
+        return null;
+    }
+    
+    public Carrera buscarCarreraById(int oid){
+        for(Carrera c : this.carreras){
+            if(c.getOid() == oid)
+                return c;                        
+        }
+        return null;
+    }
+    
+    public Jornada buscarJornadaById(int oid){
+        for(Jornada j : this.jornadas){
+            if(j.getOid() == oid)
+                return j;
+        }
+        return null;
+    }
+  
+    public void cargarHipodromos(){
+        HipodromoDataMapper mapper = new HipodromoDataMapper(); 
+        ArrayList<Hipodromo> lista = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(Hipodromo h : lista){
+            this.hipodromos.add(h);
+        }
+    }
+    
+    public void cargarParticipaciones(){
+        ParticipacionDataMapper mapper = new ParticipacionDataMapper();
+        ArrayList<Participacion> list = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(Participacion p : list){
+            participaciones.add(p);
+        }
+        
+    }
+    
+    public void cargarCarreras(){
+        CarreraDataMapper mapper = new CarreraDataMapper();
+        ArrayList<Carrera> lista = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(Carrera c : lista){
+            this.carreras.add(c);
+        }
+    }
+    
+    public void cargarJornadas(){
+        JornadaDataMapper mapper = new JornadaDataMapper();
+        ArrayList<Jornada> list = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(Jornada j : list){
+            this.jornadas.add(j);
+        }
     }
     
     public boolean agregarHipodromo(Hipodromo hipodromo){
@@ -38,9 +106,14 @@ public class SistemaHipodromos {
     
     public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) 
             throws NewCarreraException, NewParticipacionException{
-        if(this.existeHipodromo(hipodromo))            
+        if(this.existeHipodromo(hipodromo)){
+            Persistencia persistentencia = Persistencia.getInstancia();
+            CarreraDataMapper mapper = new CarreraDataMapper(carrera, hipodromo.getOid());
+            
             return hipodromo.agregarCarrera(carrera);
-        return false;
+            
+        }            
+            return false;
     
     }
     
@@ -76,6 +149,8 @@ public class SistemaHipodromos {
         return hipodromo.getNextCarrera();
     }
     
+   
+        
     
    
 }

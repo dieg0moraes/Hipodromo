@@ -2,6 +2,7 @@ package modelo;
 
 import exceptions.AbrirCarreraException;
 import exceptions.FinalizarCarreraException;
+import exceptions.CarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -12,7 +13,42 @@ public class Jornada extends Observable{
     private Date date;
     private ArrayList<Carrera> carreras;
     private int carreraNextId = 0;
-    private Carrera carreraActual;    
+    private Carrera carreraActual;  
+    private int oid;
+
+    public Jornada() {
+        this.carreras = new ArrayList<Carrera>();
+    }
+    
+    public Participacion buscarParticipacionById(int oid){
+        for(Carrera c : this.carreras){
+            Participacion p = c.buscarParticipacionById(oid);
+            if(p != null)
+                return p;
+            
+        }
+        return null;
+    }
+    
+    public void setDate(Date date){
+        this.date = date;
+    }
+    
+    public int getOid(){
+        return this.oid;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    public void setSiguienteCarrera(int carrera){
+        this.carreraNextId = carrera;
+    }
+    
+    public void setCarreraActual(Carrera carrera){
+        this.carreraActual = carrera;
+    }
     
     public Jornada(Date date){
         this.date = date;
@@ -73,9 +109,9 @@ public class Jornada extends Observable{
             asignarIdCarrera(c);
             return c;
         }    
-        return null;
-        
+        return null; 
     }
+    
     private Carrera getPrimeraCarrera(){
         int min = Integer.MAX_VALUE;
         Carrera ret = null;
@@ -106,9 +142,9 @@ public class Jornada extends Observable{
     }   
     
     public Carrera getCarreraActual() 
-            throws NullPointerException{
+            throws CarreraException{
         if(this.carreraActual == null)
-            throw new NullPointerException("No hay carrera abiertas");
+            throw new CarreraException("No hay carrera abiertas");
         return this.carreraActual;
     }
     
@@ -123,11 +159,16 @@ public class Jornada extends Observable{
         }
     }
     
+    
     public Carrera getLastCarreraCorrida() throws FinalizarCarreraException{
         for(Carrera c : this.carreras){
             if(c.estaCerrada())
                 return c;
         }
         throw new FinalizarCarreraException("No hay carreras para finalizar");
+    }     
+    public ArrayList<Carrera> getCarreras(){
+        return this.carreras;
+
     }
 }

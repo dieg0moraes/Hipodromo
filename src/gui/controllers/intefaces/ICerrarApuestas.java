@@ -5,4 +5,5 @@ import modelo.Carrera;
 
 public interface ICerrarApuestas {
     public void cargarDatos(ArrayList<String> detalles, Carrera carrera);
+    public void error(String mensaje);
 }

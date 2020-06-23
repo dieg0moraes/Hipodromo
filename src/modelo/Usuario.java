@@ -3,7 +3,7 @@ package modelo;
 import java.util.Objects;
 
 public class Usuario {
-    
+    private int objectId;
     private String nombre;
     private String apellido;
     private String password;
@@ -13,6 +13,30 @@ public class Usuario {
         this.username = username;
         this.password = password;
     }    
+    
+    public Usuario(){
+        
+    }
+    
+    public int getOid(){
+        return this.objectId;
+    }
+    
+    public void setOid(int id){
+        this.objectId = id;
+    }
+    
+    public void setUsername(String username){
+        this.username = username;
+    }
+    
+    public String getUsername(){
+        return this.username;
+    }
+    
+    public void setPassword(String password){
+        this.password = password;
+    }
     
     public void setNombreCompleto(String nombre, String apellido){
         this.nombre = nombre;
@@ -27,9 +51,6 @@ public class Usuario {
         return password.equals(this.password) && username.equals(this.username);        
     }
         
-    public String getUsername(){
-        return this.username;
-    }
     
     public String getPassword(){
         return this.password;

@@ -1,12 +1,30 @@
 package modelo;
 
 import java.util.ArrayList;
+import persistencia.Persistencia;
+import persistencia.data_mappers.CaballoDataMapper;
 
 public class SistemaCaballos {
     private ArrayList<Caballo> caballos;    
     
     public SistemaCaballos(){
         this.caballos = new ArrayList<Caballo>();
+    }
+    
+    public Caballo buscarCaballoById(int oid){
+        for(Caballo c : this.caballos){
+            if(c.getOid() == oid)
+                return c;
+        }
+        return null;
+    }
+    
+    public void cargarCaballos(){
+        CaballoDataMapper mapper = new CaballoDataMapper();
+        ArrayList<Caballo> caballos = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(Caballo c : caballos){
+            this.caballos.add(c);
+        }
     }
     
     public ArrayList<Caballo> getCaballosDisponibles(Carrera carrera){

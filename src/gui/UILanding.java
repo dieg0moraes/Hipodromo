@@ -21,7 +21,7 @@ public class UILanding extends javax.swing.JFrame {
             }
         });
 
-        btnJugadoresLogin.setText("Login Jugadores");
+        btnJugadoresLogin.setText("Apostar");
         btnJugadoresLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJugadoresLoginActionPerformed(evt);
@@ -33,9 +33,9 @@ public class UILanding extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addContainerGap(87, Short.MAX_VALUE)
                 .addComponent(btnAdminLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(49, 49, 49)
                 .addComponent(btnJugadoresLogin)
                 .addGap(64, 64, 64))
         );
@@ -58,8 +58,8 @@ public class UILanding extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnJugadoresLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadoresLoginActionPerformed
-        UILoginJugadores view = new UILoginJugadores();
-        view.setVisible(true);            
+        UIMenuJugador view = new UIMenuJugador();
+        view.setVisible(true);
     }//GEN-LAST:event_btnJugadoresLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

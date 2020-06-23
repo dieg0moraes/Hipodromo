@@ -21,12 +21,47 @@ public class Fachada {
         this.sistemaCaballos = new SistemaCaballos();
         this.sistemaApuestas = new SistemaApuestas();
     }
+
+    public UsuarioJugador buscarJugadorById(int oid){
+        return sistemaUsuarios.buscarJugadorById(oid);
+    }    
+    
+    public Apuesta getUltimaApuesta(Usuario usuario, Carrera carrera) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void cargarApuestas() {
+        this.sistemaApuestas.cargarApuestas();
+    }
     
     public enum Eventos{
         
     }    
     
+    public Caballo buscarCaballosById(int oid){
+        return this.sistemaCaballos.buscarCaballoById(oid);
+    } 
+    
+    public Participacion buscarParticipacionById(int oid){
+        return this.sistemaHipodromos.buscarParticipacionById(oid);
+    }
         
+    public Carrera buscarCarreraById(int oid){
+        return this.sistemaHipodromos.buscarCarreraById(oid);
+    }
+    
+    public Jornada buscarJornadaById(int oid){
+        return this.sistemaHipodromos.buscarJornadaById(oid);
+    }
+    
+    public Apuesta buscarApuestaById(int oid){
+        return this.sistemaApuestas.buscarApuestaById(oid);
+    }
+    
+    public TipoApuesta buscarTipoApuestaById(int oid){
+        return this.sistemaApuestas.buscarTipoApuestaById(oid);
+    }
+    
     public static Fachada getInstancia(){
         if(instancia == null){
             instancia = new Fachada();
@@ -99,6 +134,32 @@ public class Fachada {
         return this.sistemaApuestas.realizarApuesta(apuesta);
     }
     
+    public void cargarHipodromos(){
+        this.sistemaHipodromos.cargarHipodromos();
+    }
     
-       
+    public void cargarCaballos(){
+        this.sistemaCaballos.cargarCaballos();
+    }
+    
+     public void cargarUsuarios(){
+        this.sistemaUsuarios.cargarUsuarios();
+    }
+     
+    public void cargarParticipaciones(){
+         this.sistemaHipodromos.cargarParticipaciones();
+    }
+    
+    public void cargarCarreras(){
+        this.sistemaHipodromos.cargarCarreras();
+    }
+    
+    public void cargarJornadas(){
+        this.sistemaHipodromos.cargarJornadas();
+    }
+    
+    public void cargarTipoApuestas(){
+        this.sistemaApuestas.cargarTipoApuestas();
+    }
+    
 }

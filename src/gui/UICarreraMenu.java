@@ -26,6 +26,7 @@ public class UICarreraMenu extends javax.swing.JFrame {
         btnCerrarApuestas = new javax.swing.JButton();
         btnFinalizarApuestas = new javax.swing.JButton();
         btnMonitorear = new javax.swing.JButton();
+        btnModificarTIpoApuesta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,6 +59,18 @@ public class UICarreraMenu extends javax.swing.JFrame {
         });
 
         btnMonitorear.setText("Monitorear");
+        btnMonitorear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMonitorearActionPerformed(evt);
+            }
+        });
+
+        btnModificarTIpoApuesta.setText("Modificar tipo apuesta");
+        btnModificarTIpoApuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarTIpoApuestaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,12 +79,13 @@ public class UICarreraMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnModificarTIpoApuesta)
                     .addComponent(btnMonitorear)
                     .addComponent(btnFinalizarApuestas)
                     .addComponent(btnCerrarApuestas)
                     .addComponent(btnAbrir)
                     .addComponent(btnCrear))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +100,9 @@ public class UICarreraMenu extends javax.swing.JFrame {
                 .addComponent(btnFinalizarApuestas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMonitorear)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificarTIpoApuesta)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,6 +130,17 @@ public class UICarreraMenu extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_btnFinalizarApuestasActionPerformed
 
+    private void btnMonitorearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorearActionPerformed
+        UIMonitor view = new UIMonitor(this.hipodromo);
+        view.setVisible(true);
+    }//GEN-LAST:event_btnMonitorearActionPerformed
+
+    private void btnModificarTIpoApuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTIpoApuestaActionPerformed
+        UIModificarTipoApuesta view = new UIModificarTipoApuesta(this.hipodromo);
+        view.setVisible(true);
+    }//GEN-LAST:event_btnModificarTIpoApuestaActionPerformed
+
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();
     }   
@@ -122,6 +149,7 @@ public class UICarreraMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrarApuestas;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnFinalizarApuestas;
+    private javax.swing.JButton btnModificarTIpoApuesta;
     private javax.swing.JButton btnMonitorear;
     // End of variables declaration//GEN-END:variables
 }

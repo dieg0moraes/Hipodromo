@@ -1,20 +1,43 @@
 package modelo;
 
 import exceptions.NewApuestaException;
+import java.util.Objects;
 
 public class Apuesta {
     private UsuarioJugador jugador;
     private Participacion participacion;
     private float monto;
+    private int oid;
     
     public Apuesta(UsuarioJugador jugador, Participacion participacion, float monto){
         this.jugador = jugador;
         this.participacion = participacion;
         this.monto = monto;
+        this.oid = 0;
+    }
+
+    public Apuesta() {
+        this.oid = 0;
+        
     }
     
-    public void setParticipacion(Participacion participacio){
+    public int getOid(){
+        return this.oid;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    
+    
+    
+    public void setParticipacion(Participacion participacion){
         this.participacion = participacion;
+    }
+    
+    public Participacion getParticipacion(){
+        return this.participacion;
     }
     
     public float getMonto(){
@@ -47,6 +70,44 @@ public class Apuesta {
     public Caballo getCaballo(){
         return this.participacion.getCaballo();
     }
+    
+    public boolean apostoACaballo(Caballo caballo){
+        return this.participacion.tieneCaballo(caballo);
+    }
+    
+    public void setMonto(float monto){
+        this.monto = monto;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Apuesta other = (Apuesta) obj;
+        if (!Objects.equals(this.jugador, other.jugador)) {
+            return false;
+        }
+        if (!Objects.equals(this.participacion, other.participacion)) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setJugador(UsuarioJugador user) {
+        this.jugador = user;
+    }
+    
+    
+
+   
     
     
 }

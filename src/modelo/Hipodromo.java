@@ -2,6 +2,7 @@ package modelo;
 
 import exceptions.AbrirCarreraException;
 import exceptions.FinalizarCarreraException;
+import exceptions.CarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import observer.Observable;
 public class Hipodromo extends Observable{
     private String nombre;
     private String direccion;
+    private int oid;
     private ArrayList<Jornada> jornadas;
     
     public Hipodromo(String nombre, String direccion){
@@ -25,8 +27,42 @@ public class Hipodromo extends Observable{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public Hipodromo(){
+        this.jornadas = new ArrayList<Jornada>();   
+    }
+    
     public enum Events{
         CARRERA_AGREGADA, CARRERA_ABIERTA
+    }
+    
+    public Participacion buscarParticipacionById(int oid){
+        for(Jornada j :this.jornadas){
+            Participacion p = j.buscarParticipacionById(oid);
+            if(p != null)
+                return p;
+            
+        }
+        return null;
+    }
+    
+    public int getOid(){
+        return oid;
+    }
+    
+    public void setOid(int oid){
+        this.oid = oid;
+    }
+    
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+    
+    public void setDireccion(String direccion){
+        this.direccion = direccion;
+    }
+    
+    public ArrayList<Jornada> getJornadas(){
+        return this.jornadas;
     }
     
     public String getNombre(){
@@ -69,7 +105,9 @@ public class Hipodromo extends Observable{
                 return j;
             }              
         }
-        return null;
+        Jornada jornada = new Jornada(new Date());
+        this.jornadas.add(jornada);
+        return jornada;
     }
     
     private boolean sameDay(Date date1, Date date2){
@@ -85,16 +123,15 @@ public class Hipodromo extends Observable{
     
     public boolean siCorreCaballo(Caballo caballo, Date date) {
         boolean corre = false;
-        for(Jornada j : this.jornadas){
-            if(j.siCorreCaballo(caballo)){
+        Jornada j = this.getJornada(date);
+        if(j.siCorreCaballo(caballo)){
                 corre = true;
-                break;
-            }
-        }        
+        }                
         return corre;
     } 
     
-    public Carrera getCarreraAbierta(){
+    public Carrera getCarreraAbierta() 
+            throws CarreraException{
         Jornada jornada = getCurrentJornada();
         return jornada.getCarreraActual();
     }
@@ -109,12 +146,30 @@ public class Hipodromo extends Observable{
         return jornada.getLastCarreraCorrida();
     }
     
+    public ArrayList<Carrera> getCarreras(){
+        Jornada jornada = this.getCurrentJornada();
+        return jornada.getCarreras();
+    }
+    
+    public ArrayList<Carrera> getCarreras(Date date){
+        Jornada jornada = this.getJornada(date);
+        return jornada.getCarreras();
+    }
+    
+    public ArrayList<Carrera> getTodayCarrerasParticipacionesModificables(){
+        Jornada jornada = this.getCurrentJornada();
+        ArrayList<Carrera> carreras = new ArrayList<Carrera>();
+        for(Carrera carrera : jornada.getCarreras()){
+            if(carrera.isModificable())
+                carreras.add(carrera);
+        }
+        return carreras;
+    }
         
     @Override
     public String toString(){
         return this.nombre;
     }
-
 
     @Override
     public boolean equals(Object obj) {
