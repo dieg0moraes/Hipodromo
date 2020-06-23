@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.AbrirCarreraException;
+import exceptions.FinalizarCarreraException;
 import exceptions.CarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
@@ -108,9 +109,9 @@ public class Jornada extends Observable{
             asignarIdCarrera(c);
             return c;
         }    
-        return null;
-        
+        return null; 
     }
+    
     private Carrera getPrimeraCarrera(){
         int min = Integer.MAX_VALUE;
         Carrera ret = null;
@@ -158,7 +159,16 @@ public class Jornada extends Observable{
         }
     }
     
+    
+    public Carrera getLastCarreraCorrida() throws FinalizarCarreraException{
+        for(Carrera c : this.carreras){
+            if(c.estaCerrada())
+                return c;
+        }
+        throw new FinalizarCarreraException("No hay carreras para finalizar");
+    }     
     public ArrayList<Carrera> getCarreras(){
         return this.carreras;
+
     }
 }

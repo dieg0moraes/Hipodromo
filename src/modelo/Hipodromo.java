@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.AbrirCarreraException;
+import exceptions.FinalizarCarreraException;
 import exceptions.CarreraException;
 import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
@@ -20,6 +21,10 @@ public class Hipodromo extends Observable{
         this.jornadas = new ArrayList<Jornada>();
         this.nombre = nombre;
         this.direccion = direccion;
+    }
+
+    public Carrera getCarreraAFinalizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public Hipodromo(){
@@ -136,6 +141,11 @@ public class Hipodromo extends Observable{
         jornada.abrirCarrera(carrera);
     }
     
+    public Carrera getLastCarreraCorrida() throws FinalizarCarreraException{
+        Jornada jornada = this.getCurrentJornada();
+        return jornada.getLastCarreraCorrida();
+    }
+    
     public ArrayList<Carrera> getCarreras(){
         Jornada jornada = this.getCurrentJornada();
         return jornada.getCarreras();
@@ -155,13 +165,11 @@ public class Hipodromo extends Observable{
         }
         return carreras;
     }
-    
         
     @Override
     public String toString(){
         return this.nombre;
     }
-
 
     @Override
     public boolean equals(Object obj) {

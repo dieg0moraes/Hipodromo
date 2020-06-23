@@ -52,6 +52,11 @@ public class UICarreraMenu extends javax.swing.JFrame {
         });
 
         btnFinalizarApuestas.setText("Finalizar carrera");
+        btnFinalizarApuestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarApuestasActionPerformed(evt);
+            }
+        });
 
         btnMonitorear.setText("Monitorear");
         btnMonitorear.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +125,11 @@ public class UICarreraMenu extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_btnCerrarApuestasActionPerformed
 
+    private void btnFinalizarApuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarApuestasActionPerformed
+        UIFinalizarCarrera view = new UIFinalizarCarrera(hipodromo);
+        view.setVisible(true);
+    }//GEN-LAST:event_btnFinalizarApuestasActionPerformed
+
     private void btnMonitorearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorearActionPerformed
         UIMonitor view = new UIMonitor(this.hipodromo);
         view.setVisible(true);
@@ -129,6 +139,7 @@ public class UICarreraMenu extends javax.swing.JFrame {
         UIModificarTipoApuesta view = new UIModificarTipoApuesta(this.hipodromo);
         view.setVisible(true);
     }//GEN-LAST:event_btnModificarTIpoApuestaActionPerformed
+
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();
