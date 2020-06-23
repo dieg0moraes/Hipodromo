@@ -16,7 +16,17 @@ public class Jornada extends Observable{
     private int oid;
 
     public Jornada() {
-        
+        this.carreras = new ArrayList<Carrera>();
+    }
+    
+    public Participacion buscarParticipacionById(int oid){
+        for(Carrera c : this.carreras){
+            Participacion p = c.buscarParticipacionById(oid);
+            if(p != null)
+                return p;
+            
+        }
+        return null;
     }
     
     public void setDate(Date date){

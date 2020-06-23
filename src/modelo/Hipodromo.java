@@ -23,11 +23,21 @@ public class Hipodromo extends Observable{
     }
     
     public Hipodromo(){
-        
+        this.jornadas = new ArrayList<Jornada>();   
     }
     
     public enum Events{
         CARRERA_AGREGADA, CARRERA_ABIERTA
+    }
+    
+    public Participacion buscarParticipacionById(int oid){
+        for(Jornada j :this.jornadas){
+            Participacion p = j.buscarParticipacionById(oid);
+            if(p != null)
+                return p;
+            
+        }
+        return null;
     }
     
     public int getOid(){
@@ -90,7 +100,9 @@ public class Hipodromo extends Observable{
                 return j;
             }              
         }
-        return null;
+        Jornada jornada = new Jornada(new Date());
+        this.jornadas.add(jornada);
+        return jornada;
     }
     
     private boolean sameDay(Date date1, Date date2){
@@ -106,12 +118,10 @@ public class Hipodromo extends Observable{
     
     public boolean siCorreCaballo(Caballo caballo, Date date) {
         boolean corre = false;
-        for(Jornada j : this.jornadas){
-            if(j.siCorreCaballo(caballo)){
+        Jornada j = this.getJornada(date);
+        if(j.siCorreCaballo(caballo)){
                 corre = true;
-                break;
-            }
-        }        
+        }                
         return corre;
     } 
     

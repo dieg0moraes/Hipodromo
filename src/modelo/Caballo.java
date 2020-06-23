@@ -10,10 +10,11 @@ public class Caballo {
     public Caballo(String nombre, String responsable){
         this.nombre = nombre;
         this.responsable = responsable;
+        this.oid = 0;
     }
     
     public Caballo(){
-        
+        this.oid = 0;
     }
 
     public int getOid(){

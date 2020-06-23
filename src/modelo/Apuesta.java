@@ -13,9 +13,11 @@ public class Apuesta {
         this.jugador = jugador;
         this.participacion = participacion;
         this.monto = monto;
+        this.oid = 0;
     }
 
     public Apuesta() {
+        this.oid = 0;
         
     }
     

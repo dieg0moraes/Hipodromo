@@ -4,12 +4,52 @@ import exceptions.LoginException;
 import exceptions.NewApuestaException;
 import java.util.ArrayList;
 import java.util.Date;
+import persistencia.Persistencia;
+import persistencia.data_mappers.ApuestaDataMapper;
+import persistencia.data_mappers.TipoApuestaDataMapper;
 
 public class SistemaApuestas {
     private ArrayList<Apuesta> apuestas;
+    private ArrayList<TipoApuesta> tiposApuesta;
+    
     public SistemaApuestas(){
         this.apuestas = new ArrayList<Apuesta>();
+        this.tiposApuesta = new ArrayList<TipoApuesta>();
     }    
+    
+    public void cargarApuestas(){
+        ApuestaDataMapper mapper = new ApuestaDataMapper();
+        ArrayList<Apuesta> lista = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(Apuesta a : lista){
+            this.apuestas.add(a);
+        }
+    }
+    
+    public void cargarTipoApuestas(){
+        TipoApuestaDataMapper mapper = new TipoApuestaDataMapper();
+        ArrayList<TipoApuesta> list = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(TipoApuesta t : list){
+            this.tiposApuesta.add(t);
+        }
+    }
+    
+    public Apuesta buscarApuestaById(int oid){
+        for(Apuesta a : this.apuestas){
+            if(a.getOid() == oid)
+                return a;
+        }
+        return null;
+    }  
+    
+    public TipoApuesta buscarTipoApuestaById(int oid){
+       for(TipoApuesta a : this.tiposApuesta){
+           if(a.getOid() == oid)
+               return a;
+       } 
+       return null;
+    }
+    
+    
     
     public boolean realizarApuesta(Apuesta apuesta) 
             throws NewApuestaException, LoginException{
@@ -20,7 +60,7 @@ public class SistemaApuestas {
             return this.apuestas.add(apuesta);            
         }
         return false;
-    }
+    } 
     
     public Apuesta getUltimaApuesta(String username, String password, Carrera carrera) 
             throws LoginException{

@@ -11,7 +11,7 @@ public class Obligatorio2020 {
         UILanding main = new UILanding();
         BaseDatos bd = BaseDatos.getInstancia();
         try {
-            String url = "jdbc:mysql://localhost:3306/";
+            String url = "jdbc:mysql://localhost:3306/hipodromo";
             bd.conectar("com.mysql.jdbc.Driver",url, "root", "rootroot");
             Datos.carga();
             bd.desconectar();

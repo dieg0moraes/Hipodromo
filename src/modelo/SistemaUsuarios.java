@@ -2,6 +2,9 @@ package modelo;
 
 import exceptions.LoginException;
 import java.util.ArrayList;
+import persistencia.Persistencia;
+import persistencia.data_mappers.UsuarioAdministradorDataMapper;
+import persistencia.data_mappers.UsuarioJugadorDataMapper;
 
 public class SistemaUsuarios {
     private ArrayList<Usuario> usuarios;
@@ -47,5 +50,34 @@ public class SistemaUsuarios {
     
     public boolean agregarUsuario(UsuarioAdmin usuario){
         return this.usuariosAdmin.add(usuario);
+    }
+    
+    public UsuarioJugador buscarJugadorById(int oid){
+        for(Usuario u : this.usuarios){
+            if(u.getOid() == oid)
+                return (UsuarioJugador)u;
+        }
+        return null;
+    }
+    
+    public void cargarUsuarios(){
+       this.cargarUsuariosAdmin();
+       this.cargarUsuariosJugador();        
+    }
+    
+    private void cargarUsuariosJugador(){
+        UsuarioJugadorDataMapper mapper = new UsuarioJugadorDataMapper();
+        ArrayList<UsuarioJugador> lista = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(UsuarioJugador u : lista){
+            this.usuarios.add(u);
+        }   
+    }
+    
+    private void cargarUsuariosAdmin(){
+        UsuarioAdministradorDataMapper mapper = new UsuarioAdministradorDataMapper();
+        ArrayList<UsuarioAdmin> lista = Persistencia.getInstancia().obtenerTodos(mapper);
+        for(UsuarioAdmin u : lista){
+            this.usuariosAdmin.add(u);
+        }
     }
 }

@@ -78,7 +78,7 @@ public class Persistencia {
     }
     public ArrayList buscar(DataMapper map,String filtro){ //el filtro es el where
         
-        String sql = map.getSqlSeleccionar(); 
+        String sql = map.getSqlSeleccionar();
         if(filtro!=null){
             sql+=" where " + filtro; //SOLO ANDA PARA SIMPLES
         }
@@ -87,7 +87,7 @@ public class Persistencia {
         try {
             int oidActual, oidUltimoCambio = -1;
             while(rs.next()){
-                oidActual = rs.getInt("oid");//el campo se tiene que llamar oid 
+                oidActual = rs.getInt("object_id");//el campo se tiene que llamar oid 
                 if(oidActual!=oidUltimoCambio){ //Debe estar seleccionado ordenado por oid
                     map.crearNuevo();
                     map.setOid(oidActual); 
@@ -100,6 +100,7 @@ public class Persistencia {
                 
                 
             }
+            System.out.println(lista);
             return lista;
         } catch (SQLException ex) {
             System.out.println("Error al buscar: " + ex.getMessage());

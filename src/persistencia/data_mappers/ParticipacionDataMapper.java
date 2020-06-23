@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Caballo;
+import modelo.Fachada;
 import modelo.Participacion;
 import modelo.TipoApuesta;
 import persistencia.DataMapper;
@@ -25,7 +26,18 @@ public class ParticipacionDataMapper implements DataMapper{
 
     @Override
     public ArrayList<String> getSqlInsertar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> sqls = new ArrayList<String>();
+        persistencia.StringBuilder builder = new persistencia.StringBuilder();
+        builder.setTable("Participaciones");
+        String string = builder.insert().
+                addValue("object_id", this.getOid()+"").
+                addValue("caballo", this.participacion.getCaballo().getOid()+"").
+                addValue("numero_caballo", this.participacion.getNumero()+"").
+                addValue("dividendo", this.participacion.getDividendo()+"").
+                addValue("tipo_apuesta", this.participacion.getTipoApuesta().getTipo()).get();
+        
+        return sqls;
+        
     }
 
     @Override
@@ -40,7 +52,7 @@ public class ParticipacionDataMapper implements DataMapper{
 
     @Override
     public String getSqlSeleccionar() {
-        return "select * from participaciones";
+        return "select * from Participaciones";
     }
 
     @Override
@@ -57,22 +69,23 @@ public class ParticipacionDataMapper implements DataMapper{
     public void leerCompuesto(ResultSet rs) throws SQLException {
         int numero = rs.getInt("numero_caballo");
         this.participacion.setNumero(numero);
+        
         float dividendo = rs.getFloat("dividendo");
         this.participacion.setDividendo(dividendo);
+      
+        int idCaballo = rs.getInt("caballo");
+        Fachada f = Fachada.getInstancia();
+        this.participacion.setCaballo(f.buscarCaballosById(idCaballo));   
+    
+        int idTipoApuesta = rs.getInt("tipo_apuesta");
+        TipoApuesta a = f.buscarTipoApuestaById(idTipoApuesta);
+        this.participacion.setTipoApuesta(a);
         
     }
 
     @Override
     public void leerComponente(ResultSet rs) throws SQLException {
-        int idCaballo = rs.getInt("caballo");
-        CaballoDataMapper caballoMapper = new CaballoDataMapper();
-        ArrayList<Caballo> caballos = Persistencia.getInstancia().buscar(caballoMapper, "object_id = "+idCaballo);
-        this.participacion.setCaballo(caballos.get(0));
         
-        int idTipoApuesta = rs.getInt("tipo_apuesta");
-        TipoApuestaDataMapper tipoMapper = new TipoApuestaDataMapper();
-        ArrayList<TipoApuesta> tipo = Persistencia.getInstancia().buscar(tipoMapper, "object_id = "+idTipoApuesta);
-        this.participacion.setTipoApuesta(tipo.get(0));
     }
     
 }

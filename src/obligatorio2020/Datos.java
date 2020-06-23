@@ -10,14 +10,20 @@ import modelo.Apuesta;
 import modelo.Caballo;
 import modelo.Carrera;
 import modelo.Fachada;
-import modelo.Hipodromo;
-import modelo.Participacion;
-import modelo.UsuarioAdmin;
-import modelo.UsuarioJugador;
 
 public class Datos {
     public static void carga() throws NewCarreraException{
         Fachada fachada = Fachada.getInstancia();
+        fachada.cargarUsuarios();        
+        fachada.cargarCaballos();
+        fachada.cargarTipoApuestas();
+        fachada.cargarParticipaciones();
+        fachada.cargarApuestas();
+        fachada.cargarCarreras();
+        fachada.cargarJornadas();
+        fachada.cargarHipodromos();
+        
+        /*
         Hipodromo h1 = new Hipodromo("Municipal", "Calle falsa 123");
         Hipodromo h2 = new Hipodromo("Maronas", "Otra falsa 321");
         
@@ -83,7 +89,7 @@ public class Datos {
         
         
         
-        
+        */
         System.out.println("Loaded data");
         
         

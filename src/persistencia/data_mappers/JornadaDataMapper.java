@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Carrera;
+import modelo.Fachada;
 import modelo.Jornada;
 import persistencia.DataMapper;
 import persistencia.Persistencia;
@@ -39,7 +40,7 @@ public class JornadaDataMapper implements DataMapper{
 
     @Override
     public String getSqlSeleccionar() {
-        return "select j.object_id, j.date, j.next_carrera_id, j.carrera_actual, jh.carrera from Jornadas j inner join JornadaCarrera jh on j.object_id = jh.jornada;";
+        return "select j.object_id, j.date, j.next_carrera_id, j.carrera_actual, jh.carrera from Jornadas j left join JornadaCarrera jh on j.object_id = jh.jornada";
         
     }
 
@@ -56,21 +57,23 @@ public class JornadaDataMapper implements DataMapper{
     @Override
     public void leerCompuesto(ResultSet rs) throws SQLException {
         this.jornada.setDate(rs.getDate("date"));
-         int carrera = rs.getInt("next_carrera_id");
-         this.jornada.setSiguienteCarrera(carrera);  
+        int carrera = rs.getInt("next_carrera_id");
+        this.jornada.setSiguienteCarrera(carrera);  
     }
 
     @Override
-    public void leerComponente(ResultSet rs) throws SQLException {       
-        CarreraDataMapper mapper = new CarreraDataMapper();                  
+    public void leerComponente(ResultSet rs) throws SQLException { 
+        Fachada f = Fachada.getInstancia();
+        
         int carreraActual = rs.getInt("carrera_actual");
-        ArrayList<Carrera> carreras = Persistencia.getInstancia().buscar(mapper, "object_id = "+carreraActual);
-        this.jornada.setCarreraActual(carreras.get(0));
-        int carrera = rs.getInt("carrera");
-        carreras = Persistencia.getInstancia().buscar(mapper, "object_id = "+carrera);
-        for(Carrera c : carreras){
-            this.jornada.getCarreras().add(c);
-        }       
+        Carrera c = f.buscarCarreraById(carreraActual);
+        this.jornada.setCarreraActual(c);
+        
+        
+        int carrera = rs.getInt("carrera");     
+        Carrera ca = f.buscarCarreraById(carrera);
+        this.jornada.getCarreras().add(ca);
+               
     }
     
 }

@@ -68,16 +68,9 @@ public class ApuestaDataMapper implements DataMapper{
     public void leerComponente(ResultSet rs) throws SQLException {
         int participacionId = rs.getInt("participacion");
         int user = rs.getInt("user_id");
-        ParticipacionDataMapper participacionDm = new ParticipacionDataMapper();
         
-        Persistencia p = Persistencia.getInstancia();
-        ArrayList<Participacion> lista = p.buscar(participacionDm, "object_id = "+participacionId);
-        Participacion participacion = lista.get(0);       
+        this.apuesta.setParticipacion(Fachada.getInstancia().buscarParticipacionById(participacionId));
+        this.apuesta.setJugador(Fachada.getInstancia().buscarJugadorById(user));
         
-        this.apuesta.setParticipacion(participacion);
-        
-        UsuarioDataMapper usuarioDm = new UsuarioDataMapper();
-        ArrayList<UsuarioJugador> list = p.buscar(usuarioDm, "object_id = " + user);
-        this.apuesta.setJugador(list.get(0));
     }        
 }    

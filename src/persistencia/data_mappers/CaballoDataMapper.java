@@ -37,7 +37,7 @@ public class CaballoDataMapper implements DataMapper{
 
     @Override
     public String getSqlSeleccionar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "select * from Caballos";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CaballoDataMapper implements DataMapper{
 
     @Override
     public void leerComponente(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }

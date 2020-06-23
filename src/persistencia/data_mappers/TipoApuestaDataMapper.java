@@ -36,7 +36,7 @@ public class TipoApuestaDataMapper implements DataMapper{
 
     @Override
     public String getSqlSeleccionar() {
-        return "select * from TiposApuestas;";
+        return "select * from TiposApuestas";
     }
 
     @Override
@@ -57,7 +57,7 @@ public class TipoApuestaDataMapper implements DataMapper{
 
     @Override
     public void leerComponente(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
     
     

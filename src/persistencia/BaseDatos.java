@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package persistencia;
 
 import java.sql.Connection;
@@ -11,13 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author alumnoFI
- */
 public class BaseDatos {
     
     private static BaseDatos instancia = new BaseDatos();
@@ -62,6 +51,7 @@ public class BaseDatos {
     
     public ResultSet consultar(String sql){
         try {
+            System.out.println(sql);
             return stmt.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println("Error al ejecutar consulta:" + ex.getMessage());

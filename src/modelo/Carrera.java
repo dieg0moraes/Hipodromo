@@ -12,7 +12,7 @@ public class Carrera extends Observable{
     private Date date;
     private int numero;
     private Status status;
-    private int oid;
+    private int oid = 0;
     
     private ArrayList<Participacion> participaciones;    
     private Caballo ganador = null;
@@ -51,6 +51,7 @@ public class Carrera extends Observable{
         this.participaciones = new ArrayList<Participacion>(); 
         this.apuestas = new ArrayList<Apuesta>();
         this.setStatus(Status.DEFINIDA);
+        this.oid = 0;
     }
     
     public Carrera(String nombre, Date date){
@@ -59,6 +60,7 @@ public class Carrera extends Observable{
         this.participaciones = new ArrayList<Participacion>();
         this.apuestas = new ArrayList<Apuesta>();
         this.setStatus(Status.DEFINIDA);
+        this.oid = 0;
     }
     
     public ArrayList<Participacion> getParticipaciones(){
@@ -302,6 +304,14 @@ public class Carrera extends Observable{
         float total = 0;
         
         return total;
+    }
+    
+    public Participacion buscarParticipacionById(int oid){
+        for(Participacion p : this.participaciones){
+            if(p.getOid() == oid)
+                return p;
+        }
+        return null;
     }
     
     

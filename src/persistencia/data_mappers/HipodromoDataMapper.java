@@ -3,6 +3,7 @@ package persistencia.data_mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import modelo.Fachada;
 import modelo.Hipodromo;
 import modelo.Jornada;
 import persistencia.DataMapper;
@@ -29,10 +30,7 @@ public class HipodromoDataMapper implements DataMapper{
 
     @Override
     public ArrayList<String> getSqlActualizar() {
-        ArrayList<String> sql = new ArrayList<String>();
-        String sqlString = "select h.name, h.direccion, j.jornada from Hipodromos h inner join JornadaHipodromo j on h.object_id = j.hipodromo;";
-        sql.add(sqlString);
-        return sql;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -42,7 +40,7 @@ public class HipodromoDataMapper implements DataMapper{
 
     @Override
     public String getSqlSeleccionar() {
-        String sqlString = "select h.name, h.direccion, j.jornada from Hipodromos h inner join JornadaHipodromo j on h.object_id = j.hipodromo;";
+        String sqlString = "select h.object_id, h.name, h.direccion, j.jornada from Hipodromos h left join JornadaHipodromo j on h.object_id = j.hipodromo;";
         return sqlString;
     }
 
@@ -65,11 +63,9 @@ public class HipodromoDataMapper implements DataMapper{
     @Override
     public void leerComponente(ResultSet rs) throws SQLException {
         int jornada = rs.getInt("jornada");
-        Persistencia persistencia = Persistencia.getInstancia();
-        JornadaDataMapper jornadaMapper = new JornadaDataMapper();
-        ArrayList<Jornada> jornadas = persistencia.buscar(jornadaMapper, "object_id ="+jornada);
-        for(Jornada j : jornadas){
+        Fachada f = Fachada.getInstancia();
+        Jornada j = f.buscarJornadaById(jornada);
+        if(j != null)
             this.hipodromo.getJornadas().add(j);
-        }    
     }   
 }

@@ -14,10 +14,16 @@ public class Participacion {
         this.numero = numero;
         this.dividendo = dividendo;
         this.tipoApuesta = new TipoApuestaSimple();
+        this.oid = 0;
     }
     
     public Participacion(){
-        
+        this.tipoApuesta = new TipoApuestaSimple();
+        this.oid = 0;
+    }
+    
+    public TipoApuesta getTipoApuesta(){
+        return this.tipoApuesta;
     }
     
     public void setTipoApuesta(TipoApuesta tipo){
