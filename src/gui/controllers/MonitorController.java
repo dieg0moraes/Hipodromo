@@ -74,7 +74,7 @@ public class MonitorController implements Observador{
     private String formatearStringListaCaballos(Participacion participacion, boolean ganador){
         String string = participacion.getNombreCaballo() + " " + participacion.getNumero() + " " + participacion.getDividendo();
         if(ganador)
-            string.concat("** GANADOR **");
+            string += "** GANADOR **";
         return string;
     }
 

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Apuesta;
 import modelo.Fachada;
-import modelo.UsuarioJugador;
 import persistencia.DataMapper;
 
 public class ApuestaDataMapper implements DataMapper{
