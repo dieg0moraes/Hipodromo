@@ -272,6 +272,8 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         String username = this.txtUsername.getText();
         String password = this.txtPassword.getText();
+        this.txtPassword.setText("");
+        this.txtUsername.setText("");
         this.controller.consultarUltimaApuesta(username, password);
     }//GEN-LAST:event_btnConsultarActionPerformed
 

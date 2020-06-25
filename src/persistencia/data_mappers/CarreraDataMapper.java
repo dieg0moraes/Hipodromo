@@ -83,10 +83,7 @@ public class CarreraDataMapper implements DataMapper {
 
     @Override
     public String getSqlSeleccionar() {
-        String sql ="select c.object_id, c.numero, c.date, c.nombre, c.status, c.ganador, cp.participacion_id, ca.apuesta \n" +
-                        "from Carreras c left join CarreraParticipaciones cp on c.object_id = cp.carrera_id\n" +
-                        "left join CarreraApuesta ca on c.object_id = ca.carrera \n" +
-                        "left join Apuestas ap on ap.object_id = ca.apuesta;";
+        String sql ="select c.object_id, c.numero, c.date, c.nombre, c.status, c.ganador, cp.participacion_id from Carreras c left join CarreraParticipaciones cp on c.object_id = cp.carrera_id" ;
         return sql;               
     }
 
@@ -113,7 +110,7 @@ public class CarreraDataMapper implements DataMapper {
         this.carrera.setNumero(numero);
         int caballo = rs.getInt("ganador");
         Caballo c = Fachada.getInstancia().buscarCaballosById(caballo);
-        this.carrera.getCaballos().add(c);
+        this.carrera.setGanador(c);
         
         
         
@@ -130,11 +127,8 @@ public class CarreraDataMapper implements DataMapper {
             this.carrera.addParticipacion(p);   
         }
         
-        int apuesta = rs.getInt("apuesta");
-        if(!rs.wasNull()){            
-            Apuesta a = f.buscarApuestaById(apuesta);
-            a.setCarrera(carrera);
-        }
+        
+
         
     }    
 }

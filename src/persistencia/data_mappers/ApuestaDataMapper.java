@@ -64,14 +64,9 @@ public class ApuestaDataMapper implements DataMapper{
 
     @Override
     public void leerComponente(ResultSet rs) throws SQLException {
-        int participacionId = rs.getInt("participacion");
-        int user = rs.getInt("user_id");
+        int participacionId = rs.getInt("participacion");      
         
         this.apuesta.setParticipacion(Fachada.getInstancia().buscarParticipacionById(participacionId));
-        UsuarioJugador usuario = Fachada.getInstancia().buscarJugadorById(user);
-        usuario.addApuesta(this.apuesta);
-        usuario.setLastApuesta(apuesta);
-        this.apuesta.setJugador(usuario);
         
     }        
 }    

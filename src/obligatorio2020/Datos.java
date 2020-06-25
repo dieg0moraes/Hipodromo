@@ -12,13 +12,14 @@ import modelo.Participacion;
 
 public class Datos {
     public static void carga() throws NewCarreraException{
-        Fachada fachada = Fachada.getInstancia();
-        fachada.cargarUsuarios();        
+        Fachada fachada = Fachada.getInstancia();      
         fachada.cargarCaballos();
         fachada.cargarTipoApuestas();
         fachada.cargarParticipaciones();
         fachada.cargarApuestas();
         fachada.cargarCarreras();
+        fachada.cargarUsuarios();  
+        
         fachada.cargarJornadas();
         fachada.cargarHipodromos();
         
