@@ -97,7 +97,7 @@ public class Apuesta {
     public Carrera getCarrera(){
         return this.carrera;
     }
-    
+
     public void setCarrera(Carrera carrera){
         this.carrera = carrera;
     }

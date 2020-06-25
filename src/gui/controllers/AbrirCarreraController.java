@@ -9,7 +9,6 @@ import modelo.Hipodromo;
 public class AbrirCarreraController {
     private IAbrirCarrera view;
     private Carrera carrera;
-    private Hipodromo hipodromo;
     private Fachada fachada = Fachada.getInstancia();
     
     public AbrirCarreraController(IAbrirCarrera view, Hipodromo hipodromo){
@@ -17,9 +16,9 @@ public class AbrirCarreraController {
         Carrera carrera = null;
         try {
             carrera = this.fachada.getNextCarrera(hipodromo);
-            this.carrera = carrera;   
-            this.hipodromo = hipodromo;
+            this.carrera = carrera;  
             this.cargarDatos();
+
         } catch (AbrirCarreraException ex) {
             this.view.error(ex.getMessage());
         }
@@ -29,11 +28,12 @@ public class AbrirCarreraController {
         this.view.cargarDatos(carrera);
     }
     
-    public void abrirCarrera(){
+    public void abrirCarrera()
+    {
         try {
-            this.hipodromo.abrirCarrera(this.carrera);
+            this.carrera.abrirCarrera();
             this.view.success("Carrera abierta");
-        } catch (AbrirCarreraException ex){
+        } catch (AbrirCarreraException ex) {
             view.error(ex.getMessage());
         }
     }    

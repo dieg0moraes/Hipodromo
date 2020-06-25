@@ -153,15 +153,11 @@ public class SistemaHipodromos {
     public Carrera getNextCarrera(Hipodromo hipodromo) throws AbrirCarreraException{
         return hipodromo.getNextCarrera();
     }
+
     
     public void finalizarCarrera(Carrera carrera, Participacion participacion){
         carrera.finalizarCarrera(participacion);
         SistemaApuestas ap = Fachada.getInstancia().getSistemaApuestas();
         ap.pagar(carrera);
     }
-    
-   
-        
-    
-   
 }

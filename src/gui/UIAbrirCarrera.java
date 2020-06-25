@@ -30,10 +30,10 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
             this.txtStatus.setText(c.getStatus().toString());
         }
     }
-
+    
     @Override
     public void error(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        JOptionPane.showConfirmDialog(this, mensaje);
     }
     
     @SuppressWarnings("unchecked")
@@ -66,9 +66,9 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
             }
         });
 
-        jLabel2.setText("Status: ");
+        jLabel2.setText("Status");
 
-        txtStatus.setText("status");
+        txtStatus.setText("Numero");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,15 +99,15 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNumeroCarrera))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtStatus))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnAbrir)
-                .addGap(24, 24, 24))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -132,6 +132,6 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
 
     @Override
     public void success(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        JOptionPane.showConfirmDialog(this, mensaje);
     }
 }

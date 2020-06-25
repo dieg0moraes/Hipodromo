@@ -185,8 +185,7 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements ISele
     }//GEN-LAST:event_txtDividendoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Caballo caballo = (Caballo)lstParticipantes.getSelectedValue();
-        this.controller.eliminarCaballoParticipante(caballo);
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarACarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarACarreraActionPerformed

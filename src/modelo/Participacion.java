@@ -54,10 +54,6 @@ public class Participacion {
         return this.caballo;
     }
     
-    public boolean tieneCaballo(Caballo caballo){
-        return this.caballo.equals(caballo);
-    }
-    
     public boolean validar() 
             throws NewParticipacionException{
         if(!validarDividendo())
@@ -73,10 +69,6 @@ public class Participacion {
     
     public int getNumero(){
         return this.numero;
-    }
-    
-    public float getDividendo(){
-        return this.dividendo;
     }
     
     private boolean validarNumero(){
@@ -103,7 +95,14 @@ public class Participacion {
     public float getMontoGanado(Apuesta apuesta, Carrera carrera){
         return this.tipoApuesta.ganoApuesta(dividendo, apuesta, carrera);
     }
-    
+
+    public boolean tieneCaballo(Caballo caballo){
+        return this.caballo.equals(caballo);
+    }
+
+    public float getDividendo() {
+        return this.dividendo;
+    }
     
     
 }
