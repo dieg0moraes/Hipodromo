@@ -10,7 +10,6 @@ import modelo.Hipodromo;
 import obligatorio2020.Utils;
 
 public class UICerrarApuestas extends javax.swing.JFrame implements ICerrarApuestas{
-    private Carrera carrera;
     private CerrarApuestasController controller;
     
     public UICerrarApuestas(Hipodromo hipodromo) {
@@ -124,7 +123,6 @@ public class UICerrarApuestas extends javax.swing.JFrame implements ICerrarApues
     @Override
     public void cargarDatos(ArrayList<String> detalles, Carrera carrera, float totalApostado) {
         Utils.fillJList(lstCaballos, detalles);
-        this.carrera = carrera;
         this.txtMontoTotal.setText(totalApostado+ "");
         this.txtNombre.setText(carrera.getNombre());
         this.txtNumeroCarrera.setText(carrera.getNumero() +"");
@@ -145,6 +143,11 @@ public class UICerrarApuestas extends javax.swing.JFrame implements ICerrarApues
 
     @Override
     public void error(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+    
+    @Override
+    public void success(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }
 }

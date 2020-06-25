@@ -32,6 +32,20 @@ public class Carrera extends Observable{
     public void setDate(Date date){
         this.date = date;
     }
+
+    public void addParticipacion(Participacion p) {
+        boolean has = false;
+        for(Participacion pa : this.participaciones){
+            if(pa.getOid() == p.getOid())
+            {
+                has = true;
+                break;
+            }
+            
+        }
+        if(!has)
+            this.participaciones.add(p);
+    }
    
     public enum Events{
         NUEVA_PARTICIPACION, STATUS_CARRERA, PARTICIPACION_ELIMINADA, GANADOR_ASIGNADO

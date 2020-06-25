@@ -43,7 +43,8 @@ public class CerrarApuestasController{
     }
 
     public void cerrarApuestas(){
-        carrera.cerrarApuestas();        
+        carrera.cerrarApuestas();   
+        this.view.success("Apuestas cerradas");
     }
     
     public String generarStringDetalles(Caballo caballo, float dividendo, int numero, float montoTotal){

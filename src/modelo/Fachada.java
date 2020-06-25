@@ -199,5 +199,7 @@ public class Fachada extends Observable{
     public float getMontoTotalPagado(Carrera carrera){
         return this.sistemaApuestas.getMontoTotalPagado(carrera);
     }
+    
+    
 }
 

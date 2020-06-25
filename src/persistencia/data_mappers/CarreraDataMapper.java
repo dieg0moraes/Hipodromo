@@ -127,7 +127,7 @@ public class CarreraDataMapper implements DataMapper {
         int participacion = rs.getInt("participacion_id");
         if(!rs.wasNull()){  
             Participacion p = f.buscarParticipacionById(participacion);
-            this.carrera.getParticipaciones().add(p);   
+            this.carrera.addParticipacion(p);   
         }
         
         int apuesta = rs.getInt("apuesta");

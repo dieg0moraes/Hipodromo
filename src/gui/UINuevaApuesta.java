@@ -1,7 +1,5 @@
 package gui;
 
-import exceptions.LoginException;
-import exceptions.NewApuestaException;
 import gui.controllers.NuevaApuestaController;
 import gui.controllers.intefaces.INuevaApuesta;
 import javax.swing.JOptionPane;
@@ -12,6 +10,7 @@ import modelo.Hipodromo;
 import modelo.Participacion;
 import modelo.UsuarioJugador;
 import obligatorio2020.Utils;
+
 
 public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
     private Hipodromo hipodromo;
@@ -41,22 +40,27 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
     
     public void loadCarrera(Carrera carrera){
         if(carrera != null){
-            if(carrera.isAbierta()){
-                txtEstado.setText(carrera.getStatus().toString());  
-                Caballo c = carrera.getGanador();
-                String ganador = "No hay ganador";
-                if(c != null)
-                    ganador = c.getNombre();
-                txtGanador.setText(ganador);
-                txtNombre.setText(carrera.getNombre());
-                txtNumero.setText(carrera.getNumero() + "");
-                Utils.fillJList(lstParticipaciones, carrera.getParticipaciones());
-            }           
+             mostrar(carrera);
+        
         }else{
-            JOptionPane.showMessageDialog(this, "No hay carreras");
+            JOptionPane.showMessageDialog(this, "No hay carreras abiertas");
             this.dispose();
         }
+        
     }
+    
+    private void mostrar(Carrera carrera){
+        txtEstado.setText(carrera.getStatus().toString());  
+        Caballo c = carrera.getGanador();
+        String ganador = "No hay ganador";
+        if(c != null)
+            ganador = c.getNombre();
+        txtGanador.setText(ganador);
+        txtNombre.setText(carrera.getNombre());
+        txtNumero.setText(carrera.getNumero() + "");
+        Utils.fillJList(lstParticipaciones, carrera.getParticipaciones());           
+        
+    } 
     
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
@@ -276,6 +280,11 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void showSuccess(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
 
     
 }

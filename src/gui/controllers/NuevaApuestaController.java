@@ -25,10 +25,10 @@ public class NuevaApuestaController implements Observador{
         try{
             this.hipodromo = hipodromo;
             hipodromo.getCurrentJornada().agregar(this);
-            Carrera carrera = hipodromo.getCarreraAbierta();            
+            Carrera carrera = hipodromo.getCarreraAbierta();       
+            Fachada.getInstancia().getSistemaApuestas().agregar(this);
             this.carrera = carrera;
-            this.hipodromo = hipodromo;
-            
+            this.carrera.agregar(this);
             this.loadView(carrera);
         }catch(CarreraException ex){
             view.showError(ex.getMessage());
@@ -36,10 +36,13 @@ public class NuevaApuestaController implements Observador{
     }
     
     private void loadView(Carrera carrera){
-        this.carrera.quitar(this);
-        this.carrera = carrera;        
-        this.carrera.agregar(this);
-        this.view.loadCarrera(carrera);
+        if(this.carrera != null && !this.carrera.equals(carrera)){
+            this.carrera.quitar(this);
+            this.carrera = carrera;        
+            this.carrera.agregar(this);
+        }       
+            
+        this.view.loadCarrera(this.carrera);
     }
    
     public void apostar(Apuesta apuesta){
@@ -47,6 +50,7 @@ public class NuevaApuestaController implements Observador{
             if(!this.carrera.estaCerrada()){
                 apuesta.setCarrera(this.carrera);
                 this.fachada.realizarApuesta(apuesta);
+                this.view.showSuccess("Apuesta realizada");
             }
                 
         } catch (NewApuestaException | LoginException ex) {
@@ -60,14 +64,15 @@ public class NuevaApuestaController implements Observador{
                 event.equals(Carrera.Events.PARTICIPACION_ELIMINADA) || event.equals(Carrera.Events.STATUS_CARRERA)){
             this.view.loadCarrera(this.carrera);
         }
+        
         if(event.equals(Jornada.Eventos.NUEVA_CARRERA_ACTUAL)){
             try {
-                this.carrera = this.hipodromo.getCarreraAbierta();
-                loadView(this.carrera);
+                Carrera carrera = this.hipodromo.getCarreraAbierta();
+                this.view.loadCarrera(this.carrera);
             } catch (CarreraException ex) {
                 view.showError(ex.getMessage());
             }
-            this.view.loadCarrera(this.carrera);
+            
         }
     }
 

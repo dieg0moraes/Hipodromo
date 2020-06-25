@@ -75,6 +75,7 @@ public class Jornada extends Observable{
             throws NewCarreraException, NewParticipacionException{
         if(carrera.validar() && existeCarreraConNombre(carrera))
             throw new NewCarreraException("Ya exist carrera con el nombre:" + carrera.getNombre());
+        this.notificar(Eventos.NUEVA_CARRERA_AGREGADA);
         return this.carreras.add(carrera);
     }
     

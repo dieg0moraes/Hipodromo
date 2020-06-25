@@ -52,7 +52,7 @@ public class Apuesta {
     
     public boolean validar() 
             throws NewApuestaException{
-        return this.validarMonto() && this.usuarioTieneSaldo();
+        return this.validarMonto() && this.usuarioTieneSaldo() & this.carrera.isAbierta();
     }
     
     public boolean validarMonto() 

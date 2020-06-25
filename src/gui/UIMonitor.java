@@ -5,6 +5,7 @@ import gui.controllers.intefaces.IMonitor;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import modelo.Caballo;
 import modelo.Carrera;
 import modelo.Hipodromo;
@@ -17,8 +18,7 @@ public class UIMonitor extends javax.swing.JFrame implements IMonitor{
     
     public UIMonitor(Hipodromo hipodromo) {
         initComponents();
-        this.controller = new MonitorController(this, hipodromo);
-        this.controller.cargarDatos();
+        this.controller = new MonitorController(this, hipodromo);        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -142,8 +142,8 @@ public class UIMonitor extends javax.swing.JFrame implements IMonitor{
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
                         .addComponent(btnFiltrar)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -306,6 +306,11 @@ public class UIMonitor extends javax.swing.JFrame implements IMonitor{
     @Override
     public void cargarGanadores(ArrayList<UsuarioJugador> jugadores){
         Utils.fillJList(lstGanadores, jugadores);       
+    }
+    
+    @Override
+    public void showError(String error){
+        JOptionPane.showMessageDialog(this, error);
     }
     
 

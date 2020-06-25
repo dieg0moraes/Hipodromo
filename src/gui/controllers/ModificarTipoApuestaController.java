@@ -38,7 +38,8 @@ public class ModificarTipoApuestaController{
     }
     
     public void setTipoApuesta(TipoApuesta tipo, Participacion participacion){
-        participacion.setTipoParticipacion(tipo);
+        participacion.setTipoParticipacion(tipo); 
+        this.view.success("Tipo de apuesta cambiada");
         
     }    
 }

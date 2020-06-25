@@ -1,7 +1,12 @@
 package gui.controllers;
 
 import gui.controllers.intefaces.IMonitor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
@@ -22,18 +27,29 @@ public class MonitorController implements Observador{
         this.view = view;
         this.hipodromo = hipodromo;
         this.hipodromo.agregar(this);
+        ArrayList<Carrera> list = this.hipodromo.getCarreras();
+        cargarDatos(list);
+        
     }
     
-    public void cargarDatos(){
-        ArrayList<Carrera> list = this.hipodromo.getCarreras();
+    public void cargarDatos(ArrayList<Carrera> list){
         for(Carrera c : list){
             c.agregar(this);
         }
         view.cargarCarreras(list);
     }
     
-    public void filtrarPorFechas(String fecha){
-        
+    public void filtrarPorFechas(String dateStr){
+        Date date = null; 
+        if(dateStr != null && !dateStr.isEmpty()){
+            try {
+                date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
+                ArrayList<Carrera> carreras = this.hipodromo.getCarreras(date);
+                this.cargarDatos(carreras);
+            } catch (ParseException ex) {
+                this.view.showError("dd/MM/yyy - Formatee la fecha correctamente");
+            }
+        }else date = new Date();       
         
     }
     

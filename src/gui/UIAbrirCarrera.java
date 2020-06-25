@@ -8,7 +8,6 @@ import obligatorio2020.Utils;
 
 public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
     private AbrirCarreraController controller;
-    private Carrera carrera;
     
     public UIAbrirCarrera(Hipodromo hipodromo) {
         initComponents();
@@ -25,11 +24,10 @@ public class UIAbrirCarrera extends javax.swing.JFrame implements IAbrirCarrera{
     public void cargarDatos(Carrera c) {
         if(c != null){
             System.out.println(c);
-            this.carrera = c;
-            Utils.fillJList(lstParticipantes, this.carrera.getCaballos());
-            this.txtNombreCarrera.setText(this.carrera.getNombre());
-            this.txtNumeroCarrera.setText(this.carrera.getNumero()+"");   
-            this.txtStatus.setText(this.carrera.getStatus().toString());
+            Utils.fillJList(lstParticipantes, c.getCaballos());
+            this.txtNombreCarrera.setText(c.getNombre());
+            this.txtNumeroCarrera.setText(c.getNumero()+"");   
+            this.txtStatus.setText(c.getStatus().toString());
         }
     }
 

@@ -10,4 +10,5 @@ public interface IMonitor {
     public void cargarCaballos(ArrayList<String> participaciones);
     public void cargarGanadores(ArrayList<UsuarioJugador> jugadores);
     public void cargarCarrera(Carrera carrera, float totalApostado, float totalPagado);
+    public void showError(String error);
 }

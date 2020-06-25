@@ -7,6 +7,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import modelo.Carrera;
 import modelo.Hipodromo;
 import modelo.Participacion;
@@ -157,6 +158,11 @@ public class UIModificarTipoApuesta extends javax.swing.JFrame implements IModif
     @Override
     public void cargarParticipaciones(ArrayList<Participacion> participaciones) {
         Utils.fillJList(lstParticipaciones, participaciones);
+    }
+
+    @Override
+    public void success(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
     }
    
     
