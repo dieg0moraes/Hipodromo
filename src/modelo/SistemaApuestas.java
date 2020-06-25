@@ -103,7 +103,7 @@ public class SistemaApuestas extends Observable{
         }
     }
      
-     public ArrayList<UsuarioJugador> getGanadores(Carrera carrera){
+    public ArrayList<UsuarioJugador> getGanadores(Carrera carrera){
         ArrayList<UsuarioJugador> ganadores = new ArrayList<UsuarioJugador>();
         if(carrera.isFinalizada()){
             for(Apuesta apuesta : this.getApuestasDeCarrera(carrera)){

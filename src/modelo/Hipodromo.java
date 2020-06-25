@@ -22,7 +22,6 @@ public class Hipodromo extends Observable{
         this.nombre = nombre;
         this.direccion = direccion;
     }
-
     
     public Hipodromo(){
         this.jornadas = new ArrayList<Jornada>();   
