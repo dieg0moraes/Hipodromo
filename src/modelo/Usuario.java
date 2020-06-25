@@ -89,6 +89,12 @@ public class Usuario {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "objectId=" + objectId + ", nombre=" + nombre + ", apellido=" + apellido+ "}";
+    }
+    
     
     
     

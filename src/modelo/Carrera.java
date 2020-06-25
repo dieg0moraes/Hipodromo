@@ -238,7 +238,7 @@ public class Carrera extends Observable{
         return this.status.equals(Status.CERRADA);
     }
     
-    private void setGanador(Caballo caballo){
+    public void setGanador(Caballo caballo){
         this.ganador = caballo;
         
     } 
