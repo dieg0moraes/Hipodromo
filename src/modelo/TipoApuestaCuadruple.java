@@ -10,17 +10,17 @@ public class TipoApuestaCuadruple extends TipoApuesta{
     */    
 
     @Override
-    public void ganoApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera) {
+    public float ganoApuesta(float dividendo, Apuesta apuesta, Carrera carrera) {
         int multiplier = dividendo >= 2 ? 3 : 4;
         float monto = apuesta.getMonto() * dividendo * multiplier;
-        usuario.aumentarSaldo(monto);
+        return monto;
         
     }
 
     @Override
-    public void perdioApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera) {
+    public float perdioApuesta(float dividendo,Apuesta apuesta, Carrera carrera) {
         float descuento = apuesta.getMonto() * 2;
-        usuario.decrementarSaldo(descuento);
+        return descuento;
     }
     
 }

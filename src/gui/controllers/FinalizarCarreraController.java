@@ -3,20 +3,23 @@ package gui.controllers;
 import exceptions.FinalizarCarreraException;
 import gui.controllers.intefaces.IFinalizarCarrera;
 import modelo.Carrera;
+import modelo.Fachada;
 import modelo.Hipodromo;
 import modelo.Participacion;
 
 public class FinalizarCarreraController{
     private Carrera carrera;
     private IFinalizarCarrera view;
+    private Fachada fachada = Fachada.getInstancia();
     
     public FinalizarCarreraController(IFinalizarCarrera view, Hipodromo hipodromo){
         Carrera carrera;
+        this.view = view;
         try {
             carrera = hipodromo.getLastCarreraCorrida();
             this.carrera = carrera;
-            this.view = view;
-            this.view.cargarDatos(carrera);
+            float monto = fachada.getMontoTotalApostado(carrera);
+            this.view.cargarDatos(this.carrera, monto);
         } catch (FinalizarCarreraException ex) {
             this.view.mostrarError(ex.getMessage());
         }
@@ -24,19 +27,20 @@ public class FinalizarCarreraController{
     }
     
     public void cargarDatos(){
-        view.cargarDatos(this.carrera);
+        float monto = fachada.getMontoTotalApostado(carrera);
+        view.cargarDatos(this.carrera, monto);
     }
     
     public void detallesParticipacion(Participacion participacion){
         int numero = participacion.getNumero();
         float dividendo = participacion.getDividendo();
         String nombre = participacion.getNombreCaballo();
-        float montoTotal = carrera.getMontoTotalApostado(participacion.getCaballo());
+        float montoTotal = fachada.getMontoTotalApostado(this.carrera, participacion.getCaballo());
         view.cargarDetallesParticipacion(numero, dividendo, montoTotal, nombre);
     }
     
     public void finzalizarCarrera(Participacion participacion){
-        this.carrera.finalizarCarrera(participacion);
+        this.fachada.finalizarCarrera(this.carrera,participacion);
     }
     
 }

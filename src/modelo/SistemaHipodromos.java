@@ -49,6 +49,14 @@ public class SistemaHipodromos {
         }
         return null;
     }
+    
+    public Hipodromo getHipodromoDeCarrera(Carrera carrera){
+        for(Hipodromo h : this.hipodromos){
+            if(h.carreraPertence(carrera))
+                return h;
+        }
+        return null;
+    }
   
     public void cargarHipodromos(){
         HipodromoDataMapper mapper = new HipodromoDataMapper(); 
@@ -97,7 +105,7 @@ public class SistemaHipodromos {
      
         while(iterator.hasNext() && ret == null){
             Hipodromo hipodromo = iterator.next();
-            if(hipodromo.getNombre() == name){
+            if(hipodromo.getNombre().equals(name)){
                 ret = hipodromo;
             }                
         }
@@ -107,9 +115,6 @@ public class SistemaHipodromos {
     public boolean agregarCarrera(Carrera carrera, Hipodromo hipodromo) 
             throws NewCarreraException, NewParticipacionException{
         if(this.existeHipodromo(hipodromo)){
-            Persistencia persistentencia = Persistencia.getInstancia();
-            CarreraDataMapper mapper = new CarreraDataMapper(carrera, hipodromo.getOid());
-            
             return hipodromo.agregarCarrera(carrera);
             
         }            
@@ -147,6 +152,12 @@ public class SistemaHipodromos {
     
     public Carrera getNextCarrera(Hipodromo hipodromo) throws AbrirCarreraException{
         return hipodromo.getNextCarrera();
+    }
+    
+    public void finalizarCarrera(Carrera carrera, Participacion participacion){
+        carrera.finalizarCarrera(participacion);
+        SistemaApuestas ap = Fachada.getInstancia().getSistemaApuestas();
+        ap.pagar(carrera);
     }
     
    

@@ -13,6 +13,16 @@ public class UIMenuJugador extends javax.swing.JFrame implements IMenu{
     public UIMenuJugador() {
         initComponents();
         this.controller = new MenuJugadorController(this);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
     }
     
     @SuppressWarnings("unchecked")

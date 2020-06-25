@@ -1,6 +1,6 @@
 package modelo;
 
-public class TipoApuesta {
+public  class TipoApuesta {
     private int oid;
     private String tipo;
     
@@ -24,11 +24,11 @@ public class TipoApuesta {
         return this.oid;
     }
     
-    public void ganoApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera){
-        
+    public float ganoApuesta(float dividendo, Apuesta apuesta, Carrera carrera){
+        return 0f;
     }
-    public void perdioApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera){
-        
+    public float perdioApuesta(float dividendo, Apuesta apuesta, Carrera carrera){
+        return 0f;
     }
     
 }

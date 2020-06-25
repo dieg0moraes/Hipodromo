@@ -3,14 +3,15 @@ package modelo;
 public class TipoApuestaSimple extends TipoApuesta{
 
     @Override
-    public void ganoApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera) {
+    public float ganoApuesta(float dividendo, Apuesta apuesta, Carrera carrera) {
         float montoGanado = apuesta.getMonto() * dividendo;
-        usuario.aumentarSaldo(montoGanado);
+        return montoGanado;
+        
     }
 
     @Override
-    public void perdioApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera) {
-        usuario.decrementarSaldo(apuesta.getMonto());
+    public float perdioApuesta(float dividendo, Apuesta apuesta, Carrera carrera) {
+        return apuesta.getMonto();
     }
     
 }

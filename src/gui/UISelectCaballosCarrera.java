@@ -25,6 +25,7 @@ public class UISelectCaballosCarrera extends javax.swing.JFrame implements ISele
     }
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
         
     } 
        

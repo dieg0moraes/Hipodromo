@@ -16,7 +16,6 @@ public class Carrera extends Observable{
     
     private ArrayList<Participacion> participaciones;    
     private Caballo ganador = null;
-    private ArrayList<Apuesta> apuestas;
     
     public void setOid(int oid){
         this.oid = oid;
@@ -33,14 +32,9 @@ public class Carrera extends Observable{
     public void setDate(Date date){
         this.date = date;
     }
-    
-    public ArrayList<Apuesta> getApuestas(){
-        return this.apuestas;
-    }
-    
-    
+   
     public enum Events{
-        NUEVA_PARTICIPACION, STATUS_CARRERA, PARTICIPACION_ELIMINADA, NUEVA_APUESTA, GANADOR_ASIGNADO
+        NUEVA_PARTICIPACION, STATUS_CARRERA, PARTICIPACION_ELIMINADA, GANADOR_ASIGNADO
     }
     
     public enum Status{
@@ -49,7 +43,6 @@ public class Carrera extends Observable{
 
     public Carrera(){
         this.participaciones = new ArrayList<Participacion>(); 
-        this.apuestas = new ArrayList<Apuesta>();
         this.setStatus(Status.DEFINIDA);
         this.oid = 0;
     }
@@ -58,7 +51,6 @@ public class Carrera extends Observable{
         this.nombre = nombre;
         this.date = date;
         this.participaciones = new ArrayList<Participacion>();
-        this.apuestas = new ArrayList<Apuesta>();
         this.setStatus(Status.DEFINIDA);
         this.oid = 0;
     }
@@ -130,43 +122,14 @@ public class Carrera extends Observable{
             throws NewParticipacionException{
         boolean ret = false;
         Caballo c = participacion.getCaballo();
-        try{
-            if(participacion.validar() && !this.siCorreCaballo(c))
-                if(!this.numeroIsRegistrado(participacion.getNumero())){
-                    ret = this.participaciones.add(participacion);
-                }else throw new NewParticipacionException("Numero de caballo inválido");
-                
-        }catch(NewParticipacionException e){
-            throw e;
-        }
-        if(ret) 
-            this.notificar(Events.NUEVA_PARTICIPACION);
-        return ret;        
-    }
-    
-    public float getMontoTotalApostado(){
-        float total = 0;
-        for(Apuesta a : this.apuestas){
-            total += a.getMonto();
-        }
-        return total;
-    }
-        
-    public float getMontoTotalApostado(Caballo caballo){
-        float total = 0;
-        for(Apuesta a : this.getApuestasDeUnCaballo(caballo)){
-            total += a.getMonto();
-        }
-        return total;        
-    }
-    
-    public ArrayList<Apuesta> getApuestasDeUnCaballo(Caballo caballo){
-        ArrayList<Apuesta> apuestas = new ArrayList<Apuesta>();
-        for(Apuesta a : this.apuestas){
-            if(a.getCaballo().equals(caballo))
-                apuestas.add(a);
-        }
-        return apuestas;
+        if(participacion.validar() && !this.siCorreCaballo(c)){            
+            if(!this.numeroIsRegistrado(participacion.getNumero())){
+                ret = this.participaciones.add(participacion);
+                this.notificar(Events.NUEVA_PARTICIPACION);
+                return ret;
+            }else throw new NewParticipacionException("Numero de caballo inválido");
+        }   
+        return ret;   
     }
     
     private boolean validarParticipaciones() 
@@ -174,8 +137,12 @@ public class Carrera extends Observable{
         if(this.participaciones.size() >= 2)
             return true;    
         throw new NewParticipacionException("Debe seleccionar al menos 2 caballos participantes");
-        
     }
+    
+
+    
+    
+    
     
     public ArrayList<Caballo> getCaballos(){
         ArrayList<Caballo> caballos = new ArrayList<Caballo>();
@@ -186,7 +153,7 @@ public class Carrera extends Observable{
     }
     
     public boolean tieneGanador(){
-        return this.ganador == null;
+        return this.ganador != null;
     }
     
     public boolean seCorrio(){
@@ -232,79 +199,18 @@ public class Carrera extends Observable{
                 break;
             }                
         }
-    }
+    } 
     
-    public ArrayList<Participacion> getParticipacionesConApuestas(){
-        ArrayList<Participacion> ret = new ArrayList<Participacion>();
-        for(Apuesta a : this.apuestas){
-            Participacion p = a.getParticipacion();
-            if(!ret.contains(p)){
-                ret.add(p);
-            }
-        }
-        return ret;
-    }
-    
-    public boolean isModificable(Participacion participacion){
-        for(Apuesta p : this.apuestas){
-            if(p.getParticipacion().equals(participacion)) {
-                return false;
-            }  
-        }
-        return true;   
-    }
-    
-    public ArrayList<Participacion> getParticipacionesModificables(){
-        ArrayList<Participacion> ret = new ArrayList<Participacion>();
-        for(Participacion p : this.participaciones){
-            if(isModificable(p))
-                ret.add(p);
-        }
-        return ret;
-    }
+
     
     public boolean isFinalizada(){
         return this.status.equals(Status.FINALIZADA) && this.ganador != null;
     }
     
-    public ArrayList<UsuarioJugador> getGanadores(){
-        ArrayList<UsuarioJugador> ganadores = new ArrayList<UsuarioJugador>();
-        if(this.isFinalizada()){
-            for(Apuesta apuesta : this.apuestas){
-                if(apuesta.apostoACaballo(this.ganador))
-                    ganadores.add(apuesta.getJugador());
-            }
-        }
-        return ganadores;
-    }
-    
-    public boolean isGanador(UsuarioJugador jugador){
-        for(Apuesta apuesta : this.apuestas)
-            if(apuesta.apostoACaballo(this.ganador))
-                return true;
-        return false;
-    }
-    
     public boolean esGanador(Caballo caballo){
         if(this.ganador == null) return false;
         return this.ganador.equals(caballo);
-    }
-    
-    public boolean apuestaPertence(Apuesta apuesta){
-        boolean ret = false;
-        for(Apuesta a : this.apuestas){
-            if(a.equals(apuesta)){
-                return true;
-            }
-        }
-        return ret;
-    }
-    
-    public float getMontoTotalPagado(){
-        float total = 0;
-        
-        return total;
-    }
+    }    
     
     public Participacion buscarParticipacionById(int oid){
         for(Participacion p : this.participaciones){
@@ -320,13 +226,15 @@ public class Carrera extends Observable{
     
     private void setGanador(Caballo caballo){
         this.ganador = caballo;
-        this.notificar(Events.GANADOR_ASIGNADO);
+        
     } 
     
     public void finalizarCarrera(Participacion participacion){
         this.setGanador(participacion.getCaballo());
         this.setStatus(Status.FINALIZADA);
     }
+    
+   
     
     
 

@@ -70,10 +70,14 @@ public class JornadaDataMapper implements DataMapper{
         this.jornada.setCarreraActual(c);
         
         
-        int carrera = rs.getInt("carrera");     
-        Carrera ca = f.buscarCarreraById(carrera);
-        this.jornada.getCarreras().add(ca);
-               
+        int carrera = rs.getInt("carrera"); 
+        if(!rs.wasNull()){
+            Carrera ca = f.buscarCarreraById(carrera);
+            this.jornada.getCarreras().add(ca);
+                
+            
+        }
+        
     }
     
 }

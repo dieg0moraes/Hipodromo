@@ -2,10 +2,12 @@ package gui.controllers;
 
 import gui.controllers.intefaces.IMonitor;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import modelo.Carrera;
+import modelo.Fachada;
 import modelo.Hipodromo;
+import modelo.Jornada;
 import modelo.Participacion;
+import modelo.SistemaApuestas;
 import observer.Observable;
 import observer.Observador;
 
@@ -14,6 +16,7 @@ public class MonitorController implements Observador{
     private Hipodromo hipodromo;
     private IMonitor view;
     private Carrera carrera;
+    private Fachada fachada = Fachada.getInstancia();
     
     public MonitorController(IMonitor view, Hipodromo hipodromo) {
         this.view = view;
@@ -22,11 +25,19 @@ public class MonitorController implements Observador{
     }
     
     public void cargarDatos(){
-        view.cargarCarreras(this.hipodromo.getCarreras());
-
+        ArrayList<Carrera> list = this.hipodromo.getCarreras();
+        for(Carrera c : list){
+            c.agregar(this);
+        }
+        view.cargarCarreras(list);
     }
     
-    public void seleccionarCarrera(Carrera carrera){
+    public void filtrarPorFechas(String fecha){
+        
+        
+    }
+    
+   public void seleccionarCarrera(Carrera carrera){
         this.carrera = carrera;
         ArrayList<String> model = new ArrayList<String>();
         for(Participacion participacion : carrera.getParticipaciones()){
@@ -34,10 +45,12 @@ public class MonitorController implements Observador{
             String string = formatearStringListaCaballos(participacion, esGanador);
             model.add(string);
         }
-        view.cargarCarrera(carrera);
+        float totalApostado = fachada.getMontoTotalApostado(carrera);
+        float totalPagado = fachada.getMontoTotalPagado(carrera);
+        view.cargarCarrera(carrera, totalApostado, totalPagado);
         view.cargarCaballos(model);
         if(carrera.isFinalizada())
-            view.cargarGanadores(carrera.getGanadores());
+            view.cargarGanadores(fachada.getGanadores(carrera));
         
         
     }
@@ -58,7 +71,13 @@ public class MonitorController implements Observador{
     }
     @Override
     public void actualizar(Object event, Observable origen) {
+        if(event.equals(Carrera.Events.GANADOR_ASIGNADO) || event.equals(SistemaApuestas.Events.NUEVA_APUESTA) || event.equals(Carrera.Events.NUEVA_PARTICIPACION) ||
+                event.equals(Carrera.Events.PARTICIPACION_ELIMINADA) || event.equals(Carrera.Events.STATUS_CARRERA)){
+            this.seleccionarCarrera((Carrera)origen);
+        }
+        if(event.equals(Jornada.Eventos.NUEVA_CARRERA_ACTUAL) || event.equals(Jornada.Eventos.NUEVA_CARRERA_AGREGADA)){
+            this.view.cargarCarreras(this.hipodromo.getCarreras());
+        }
         
-    }
-    
+    }    
 }

@@ -1,37 +1,38 @@
 package gui.controllers;
 
 import exceptions.CarreraException;
-import exceptions.ConsultarSaldoException;
 import exceptions.LoginException;
 import gui.controllers.intefaces.IConsultarSaldo;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.Apuesta;
 import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
 import modelo.Participacion;
-import modelo.Usuario;
 import modelo.UsuarioJugador;
+import observer.Observable;
+import observer.Observador;
 
-public class ConsultarSaldoController {
+public class ConsultarSaldoController implements Observador{
     private IConsultarSaldo view;
-    private Carrera carrera = null;
+    private Carrera carrera;
     private Fachada fachada = Fachada.getInstancia();
     
     public ConsultarSaldoController(IConsultarSaldo view, Hipodromo hipodromo){
         this.view = view;
         try {
             this.carrera = hipodromo.getCarreraAbierta();
+            this.carrera.agregar(this);
         } catch (CarreraException ex) {
             this.view.showError(ex.getMessage());
         }
     }
     
     public void cargarDatos(){
-        view.cargarCarrera(this.carrera);
-        this.cargarCaballos();
+        if(this.carrera != null){
+            view.cargarCarrera(this.carrera);
+            this.cargarCaballos();
+        }
     }
     
     public void cargarCaballos(){
@@ -53,17 +54,28 @@ public class ConsultarSaldoController {
      
     public void consultarUltimaApuesta(String username, String password){
         try {
-            UsuarioJugador usuario = fachada.loginJugador((UsuarioJugador) new Usuario(username, password));
-            Apuesta apuesta = fachada.getUltimaApuesta(usuario, this.carrera);
+            Apuesta apuesta = fachada.getUltimaApuesta(username, password);
+            
+            UsuarioJugador  user = fachada.loginJugador(new UsuarioJugador(username, password));
             if(apuesta == null){
                 view.showError("No hay apuestas para mostrar");
             }
-            view.mostrarApuesta(apuesta);
+            else{
+                Hipodromo h = fachada.getHipodromoDeCarrera(apuesta.getCarrera());
+                view.mostrarHipodromo(h);
+                view.mostrarApuesta(apuesta);
+                view.mostrarSaldo(user.getSaldo(), apuesta.getMontoGanado(), apuesta.getMonto());
+            }
         } catch (LoginException ex) {
             this.view.showError(ex.getMessage());
         }
         
        
+        
+    }
+
+    @Override
+    public void actualizar(Object event, Observable origen) {
         
     }
     

@@ -1,6 +1,7 @@
 package modelo;
 
 import exceptions.NewApuestaException;
+import java.util.Date;
 import java.util.Objects;
 
 public class Apuesta {
@@ -8,6 +9,7 @@ public class Apuesta {
     private Participacion participacion;
     private float monto;
     private int oid;
+    private Carrera carrera;
     
     public Apuesta(UsuarioJugador jugador, Participacion participacion, float monto){
         this.jugador = jugador;
@@ -17,8 +19,7 @@ public class Apuesta {
     }
 
     public Apuesta() {
-        this.oid = 0;
-        
+        this.oid = 0; 
     }
     
     public int getOid(){
@@ -29,8 +30,9 @@ public class Apuesta {
         this.oid = oid;
     }
     
-    
-    
+    public boolean esDeJugador(UsuarioJugador user){
+        return this.equals(user);
+    }   
     
     public void setParticipacion(Participacion participacion){
         this.participacion = participacion;
@@ -78,7 +80,27 @@ public class Apuesta {
     public void setMonto(float monto){
         this.monto = monto;
     }
+    
+    public float getDecremento(){
+        return this.participacion.getDecremento(this, this.carrera);
+    }
+    
+    public float getMontoGanado(){
+        return this.participacion.getMontoGanado(this, this.carrera);
+    }
+    
+    public float getDividendo(){
+        return this.participacion.getDividendo();
+    }
 
+    
+    public Carrera getCarrera(){
+        return this.carrera;
+    }
+    
+    public void setCarrera(Carrera carrera){
+        this.carrera = carrera;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -104,10 +126,24 @@ public class Apuesta {
     public void setJugador(UsuarioJugador user) {
         this.jugador = user;
     }
-    
-    
 
-   
-    
-    
+    public String getNombreCaballo() {
+        return this.participacion.getNombreCaballo();
+    }
+
+    public String getNombreCarrera() {
+        return this.carrera.getNombre();
+    }
+
+    public Date getFechaCarrera() {
+        return this.carrera.getDate();
+    }
+
+    public int getNumeroCaballo() {
+        return this.participacion.getNumero();
+    }
+
+    public int getNumeroCarrera() {
+        return this.carrera.getNumero();
+    }
 }

@@ -23,12 +23,17 @@ public class Hipodromo extends Observable{
         this.direccion = direccion;
     }
 
-    public Carrera getCarreraAFinalizar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public Hipodromo(){
         this.jornadas = new ArrayList<Jornada>();   
+    }
+
+    public boolean carreraPertence(Carrera carrera) {
+        for(Jornada j : this.jornadas){
+            if(j.getCarrearById(carrera.getOid()) != null)
+                return true;
+        }
+        return false;
     }
     
     public enum Events{
@@ -98,7 +103,7 @@ public class Hipodromo extends Observable{
         return jornada;
     }
     
-    private Jornada getCurrentJornada(){
+    public Jornada getCurrentJornada(){
         Date today = new Date();
         for(Jornada j : this.jornadas){
             if(sameDay(today, j.getDate())){   

@@ -7,7 +7,7 @@ import modelo.UsuarioAdmin;
 import modelo.UsuarioJugador;
 
 
-public class LoginController extends Controller{
+public class LoginController {
         
     private ILogin view;
     private Fachada fachada;

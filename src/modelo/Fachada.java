@@ -7,8 +7,9 @@ import exceptions.NewCarreraException;
 import exceptions.NewParticipacionException;
 import java.util.ArrayList;
 import java.util.Date;
+import observer.Observable;
 
-public class Fachada {
+public class Fachada extends Observable{
     private static Fachada instancia;
     private SistemaUsuarios sistemaUsuarios;
     private SistemaHipodromos sistemaHipodromos;
@@ -21,20 +22,29 @@ public class Fachada {
         this.sistemaCaballos = new SistemaCaballos();
         this.sistemaApuestas = new SistemaApuestas();
     }
+    
+    public SistemaApuestas getSistemaApuestas(){
+        return this.sistemaApuestas;
+    }
 
     public UsuarioJugador buscarJugadorById(int oid){
         return sistemaUsuarios.buscarJugadorById(oid);
     }    
     
-    public Apuesta getUltimaApuesta(Usuario usuario, Carrera carrera) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Apuesta getUltimaApuesta(String usuario, String password) throws LoginException {
+        return this.sistemaApuestas.getUltimaApuesta(usuario, password);
     }
-
+    
+    public Hipodromo getHipodromoDeCarrera(Carrera carrera){
+        return this.sistemaHipodromos.getHipodromoDeCarrera(carrera);
+    }
+    
     public void cargarApuestas() {
         this.sistemaApuestas.cargarApuestas();
     }
     
     public enum Eventos{
+        NUEVA_APUESTA
         
     }    
     
@@ -162,4 +172,32 @@ public class Fachada {
         this.sistemaApuestas.cargarTipoApuestas();
     }
     
+    public ArrayList<Apuesta> getApuestasDeCarrera(Carrera carrera){
+        return this.sistemaApuestas.getApuestasDeCarrera(carrera);
+    }
+    
+    public void finalizarCarrera(Carrera carrera, Participacion participacion){
+        this.sistemaHipodromos.finalizarCarrera(carrera, participacion);
+    }
+    
+    public float getMontoTotalApostado(Carrera carrera, Caballo caballo){
+        return this.sistemaApuestas.getMontoTotalApostado(carrera, caballo);
+    }
+    
+    public float getMontoTotalApostado(Carrera carrera){
+        return this.sistemaApuestas.getMontoTotalApostado(carrera);
+    }
+    
+    public ArrayList<Participacion> getParticipacionesModificables(Carrera carrera){
+        return this.sistemaApuestas.getParticipacionesModificables(carrera);
+    }
+    
+    public ArrayList<UsuarioJugador> getGanadores(Carrera carrera){
+        return this.sistemaApuestas.getGanadores(carrera);
+    } 
+    
+    public float getMontoTotalPagado(Carrera carrera){
+        return this.sistemaApuestas.getMontoTotalPagado(carrera);
+    }
 }
+

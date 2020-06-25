@@ -11,13 +11,21 @@ import obligatorio2020.Utils;
 
 public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSaldo{
     private ConsultarSaldoController controller;
-    private Carrera modelo;
     
     public UIConsultarSaldo(Hipodromo hipodromo) {
         initComponents();
         this.controller = new ConsultarSaldoController(this, hipodromo);
         this.controller.cargarDatos();
-        this.frameDetalles.setVisible(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -37,23 +45,22 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
         txtPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        frameDetalles = new javax.swing.JInternalFrame();
+        jLabel11 = new javax.swing.JLabel();
+        txtMontoGanado = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtMontoApostado = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtSaldo = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtHipodromo = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtNumeroCarrera = new javax.swing.JLabel();
         txtNombreCarrera = new javax.swing.JLabel();
+        txtNumeroCarrera = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtNombreCaballo = new javax.swing.JLabel();
         txtNumeroCaballo = new javax.swing.JLabel();
         txtDividendoCaballo = new javax.swing.JLabel();
-        txtMontoApostado = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtMontoGanado = new javax.swing.JLabel();
+        txtSaldo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,7 +95,13 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
 
         jLabel5.setText("Password");
 
-        frameDetalles.setVisible(true);
+        jLabel11.setText("Ganado");
+
+        txtMontoGanado.setText("won");
+
+        jLabel10.setText("Apostado");
+
+        txtMontoApostado.setText("monto");
 
         jLabel6.setText("Saldo");
 
@@ -100,104 +113,19 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
 
         jLabel8.setText("Carrera ");
 
-        txtNumeroCarrera.setText("jLabel9");
+        txtNombreCarrera.setText("nombre");
 
-        txtNombreCarrera.setText("jLabel9");
+        txtNumeroCarrera.setText("numero");
 
         jLabel9.setText("Caballo");
 
-        txtNombreCaballo.setText("jLabel10");
+        txtNombreCaballo.setText("name");
 
-        txtNumeroCaballo.setText("jLabel10");
+        txtNumeroCaballo.setText("number");
 
-        txtDividendoCaballo.setText("jLabel10");
+        txtDividendoCaballo.setText("dividendo");
 
-        txtMontoApostado.setText("jLabel10");
-
-        jLabel10.setText("Apostado");
-
-        jLabel11.setText("Ganado");
-
-        txtMontoGanado.setText("jLabel12");
-
-        javax.swing.GroupLayout frameDetallesLayout = new javax.swing.GroupLayout(frameDetalles.getContentPane());
-        frameDetalles.getContentPane().setLayout(frameDetallesLayout);
-        frameDetallesLayout.setHorizontalGroup(
-            frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(frameDetallesLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(frameDetallesLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtHipodromo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFecha))
-                    .addGroup(frameDetallesLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(frameDetallesLayout.createSequentialGroup()
-                        .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(frameDetallesLayout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMontoApostado))
-                            .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(frameDetallesLayout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtNombreCaballo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtNumeroCaballo))
-                                .addGroup(frameDetallesLayout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtNombreCarrera)
-                                    .addGap(41, 41, 41)
-                                    .addComponent(txtNumeroCarrera))))
-                        .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(frameDetallesLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDividendoCaballo))
-                            .addGroup(frameDetallesLayout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMontoGanado)))))
-                .addContainerGap(47, Short.MAX_VALUE))
-        );
-        frameDetallesLayout.setVerticalGroup(
-            frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(frameDetallesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtHipodromo)
-                    .addComponent(txtFecha))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtNumeroCarrera)
-                    .addComponent(txtNombreCarrera))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtNombreCaballo)
-                    .addComponent(txtNumeroCaballo)
-                    .addComponent(txtDividendoCaballo))
-                .addGap(18, 18, 18)
-                .addGroup(frameDetallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMontoApostado)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(txtMontoGanado))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
+        txtSaldo.setText("Saldo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,22 +147,56 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNumero))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtSaldo))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel9)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtNombreCaballo)
+                                            .addGap(29, 29, 29)
+                                            .addComponent(txtNumeroCaballo))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel8)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtNombreCarrera)
+                                            .addGap(41, 41, 41)
+                                            .addComponent(txtNumeroCarrera)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtHipodromo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(27, 27, 27)
+                                .addComponent(txtDividendoCaballo))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtFecha)
+                                        .addComponent(jLabel5)))
+                                .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtPassword)
                             .addComponent(btnConsultar)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49))
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(24, 24, 24)
+                        .addComponent(txtMontoGanado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(frameDetalles)
-                        .addContainerGap())))
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMontoApostado)))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +216,8 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
                             .addComponent(jLabel3)
                             .addComponent(txtEstado))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,10 +227,39 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnConsultar)
-                        .addGap(18, 18, 18)
-                        .addComponent(frameDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnConsultar)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 198, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtSaldo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtHipodromo)
+                                    .addComponent(txtFecha))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txtNumeroCarrera)
+                                    .addComponent(txtNombreCarrera))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtNombreCaballo)
+                                    .addComponent(txtNumeroCaballo)
+                                    .addComponent(txtDividendoCaballo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel10)
+                                        .addComponent(txtMontoApostado)
+                                        .addComponent(txtMontoGanado))
+                                    .addComponent(jLabel11))
+                                .addGap(27, 27, 27))))))
         );
 
         pack();
@@ -285,7 +277,6 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JInternalFrame frameDetalles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -335,6 +326,26 @@ public class UIConsultarSaldo extends javax.swing.JFrame implements IConsultarSa
     
     @Override 
     public void mostrarApuesta(Apuesta apuesta){
-        this.txtNombreCarrera.setText(modelo.getNombre());
+        this.txtDividendoCaballo.setText(apuesta.getDividendo() +"");
+        this.txtNumeroCaballo.setText(apuesta.getNumeroCaballo()+"");
+        this.txtNombreCaballo.setText(apuesta.getNombreCaballo());
+        
+        this.txtNumeroCarrera.setText(apuesta.getNumeroCarrera()+"");
+        this.txtNombreCarrera.setText(apuesta.getNombreCarrera());
+         
+        this.txtFecha.setText(apuesta.getFechaCarrera().toString());
+        
+    }
+    
+    @Override
+    public void mostrarHipodromo(Hipodromo hipodromo){
+        this.txtHipodromo.setText(hipodromo.getNombre());
+    }
+    
+    @Override 
+    public void mostrarSaldo(float saldo, float montoGanado, float montoApostado){
+        this.txtSaldo.setText(saldo +"");
+        this.txtMontoApostado.setText(montoApostado + "");
+        this.txtMontoGanado.setText(montoGanado + "");
     }
 }

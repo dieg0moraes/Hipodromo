@@ -8,7 +8,7 @@ import modelo.Fachada;
 import modelo.Participacion;
 import modelo.TipoApuesta;
 import persistencia.DataMapper;
-import persistencia.Persistencia;
+import persistencia.StringBuilder;
 
 public class ParticipacionDataMapper implements DataMapper{
 
@@ -27,7 +27,7 @@ public class ParticipacionDataMapper implements DataMapper{
     @Override
     public ArrayList<String> getSqlInsertar() {
         ArrayList<String> sqls = new ArrayList<String>();
-        persistencia.StringBuilder builder = new persistencia.StringBuilder();
+        StringBuilder builder = new StringBuilder();
         builder.setTable("Participaciones");
         String string = builder.insert().
                 addValue("object_id", this.getOid()+"").
@@ -35,6 +35,7 @@ public class ParticipacionDataMapper implements DataMapper{
                 addValue("numero_caballo", this.participacion.getNumero()+"").
                 addValue("dividendo", this.participacion.getDividendo()+"").
                 addValue("tipo_apuesta", this.participacion.getTipoApuesta().getTipo()).get();
+        sqls.add(string);
         
         return sqls;
         

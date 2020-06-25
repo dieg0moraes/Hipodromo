@@ -32,6 +32,16 @@ public class UIModificarTipoApuesta extends javax.swing.JFrame implements IModif
                 }
             }
         });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")

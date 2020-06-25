@@ -125,12 +125,16 @@ public class CarreraDataMapper implements DataMapper {
         Fachada f = Fachada.getInstancia();
         
         int participacion = rs.getInt("participacion_id");
-        Participacion p = f.buscarParticipacionById(participacion);
-        this.carrera.getParticipaciones().add(p);
+        if(!rs.wasNull()){  
+            Participacion p = f.buscarParticipacionById(participacion);
+            this.carrera.getParticipaciones().add(p);   
+        }
         
-      
         int apuesta = rs.getInt("apuesta");
-        Apuesta a = f.buscarApuestaById(apuesta);
-        this.carrera.getApuestas().add(a);
+        if(!rs.wasNull()){            
+            Apuesta a = f.buscarApuestaById(apuesta);
+            a.setCarrera(carrera);
+        }
+        
     }    
 }

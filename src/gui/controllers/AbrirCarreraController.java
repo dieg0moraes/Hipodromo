@@ -5,10 +5,8 @@ import gui.controllers.intefaces.IAbrirCarrera;
 import modelo.Carrera;
 import modelo.Fachada;
 import modelo.Hipodromo;
-import observer.Observable;
-import observer.Observador;
 
-public class AbrirCarreraController implements Observador{
+public class AbrirCarreraController {
     private IAbrirCarrera view;
     private Carrera carrera;
     private Hipodromo hipodromo;
@@ -20,7 +18,6 @@ public class AbrirCarreraController implements Observador{
         try {
             carrera = this.fachada.getNextCarrera(hipodromo);
             this.carrera = carrera;   
-            this.carrera.agregar(this);
             this.hipodromo = hipodromo;
             this.cargarDatos();
         } catch (AbrirCarreraException ex) {
@@ -40,11 +37,4 @@ public class AbrirCarreraController implements Observador{
             view.error(ex.getMessage());
         }
     }    
-
-    @Override
-    public void actualizar(Object event, Observable origen) {
-        if(event.equals(Carrera.Events.NUEVA_PARTICIPACION) | event.equals(Carrera.Events.PARTICIPACION_ELIMINADA)
-                | event.equals(Carrera.Events.STATUS_CARRERA))
-            this.view.cargarDatos(carrera);
-    }
 }

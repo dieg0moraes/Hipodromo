@@ -8,17 +8,17 @@ public class TipoApuestaTriple extends TipoApuesta{
     */
 
     @Override
-    public void ganoApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera) {
-        float montoTotalApostado = carrera.getMontoTotalApostado(apuesta.getCaballo());
+    public float ganoApuesta(float dividendo, Apuesta apuesta, Carrera carrera) {
+        float montoTotalApostado = Fachada.getInstancia().getMontoTotalApostado(carrera, apuesta.getCaballo());
         int multiplier = montoTotalApostado >= 100000 ? 3 : 2;      
         float ganancia = apuesta.getMonto() * dividendo * multiplier;
-        usuario.aumentarSaldo(ganancia);        
+        return ganancia;        
     }
 
     @Override
-    public void perdioApuesta(float dividendo, UsuarioJugador usuario, Apuesta apuesta, Carrera carrera) {
+    public float perdioApuesta(float dividendo, Apuesta apuesta, Carrera carrera) {
         float descuento = apuesta.getMonto() * 1.5f;
-        usuario.decrementarSaldo(descuento);
+        return descuento;
     }
     
 }

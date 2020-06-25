@@ -16,6 +16,16 @@ public class UICerrarApuestas extends javax.swing.JFrame implements ICerrarApues
     public UICerrarApuestas(Hipodromo hipodromo) {
         initComponents();
         this.controller = new CerrarApuestasController(this, hipodromo);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -112,10 +122,10 @@ public class UICerrarApuestas extends javax.swing.JFrame implements ICerrarApues
     }//GEN-LAST:event_btnCerrarApuestasActionPerformed
 
     @Override
-    public void cargarDatos(ArrayList<String> detalles, Carrera carrera) {
+    public void cargarDatos(ArrayList<String> detalles, Carrera carrera, float totalApostado) {
         Utils.fillJList(lstCaballos, detalles);
         this.carrera = carrera;
-        this.txtMontoTotal.setText(carrera.getMontoTotalApostado() + "");
+        this.txtMontoTotal.setText(totalApostado+ "");
         this.txtNombre.setText(carrera.getNombre());
         this.txtNumeroCarrera.setText(carrera.getNumero() +"");
         

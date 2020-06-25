@@ -5,10 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Apuesta;
 import modelo.Fachada;
-import modelo.Participacion;
 import modelo.UsuarioJugador;
 import persistencia.DataMapper;
-import persistencia.Persistencia;
 
 public class ApuestaDataMapper implements DataMapper{
     
@@ -70,7 +68,10 @@ public class ApuestaDataMapper implements DataMapper{
         int user = rs.getInt("user_id");
         
         this.apuesta.setParticipacion(Fachada.getInstancia().buscarParticipacionById(participacionId));
-        this.apuesta.setJugador(Fachada.getInstancia().buscarJugadorById(user));
+        UsuarioJugador usuario = Fachada.getInstancia().buscarJugadorById(user);
+        usuario.addApuesta(this.apuesta);
+        usuario.setLastApuesta(apuesta);
+        this.apuesta.setJugador(usuario);
         
     }        
 }    

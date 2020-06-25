@@ -51,9 +51,7 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
                 txtNombre.setText(carrera.getNombre());
                 txtNumero.setText(carrera.getNumero() + "");
                 Utils.fillJList(lstParticipaciones, carrera.getParticipaciones());
-            }else{
-                this.btnApostar.setEnabled(false);
-            }            
+            }           
         }else{
             JOptionPane.showMessageDialog(this, "No hay carreras");
             this.dispose();
@@ -244,8 +242,14 @@ public class UINuevaApuesta extends javax.swing.JFrame implements INuevaApuesta{
         String password = this.txtPassword.getText();
         UsuarioJugador usuario = new UsuarioJugador(username, password);
         Participacion participacion = (Participacion)lstParticipaciones.getSelectedValue();
-        Apuesta apuesta = new Apuesta(usuario, participacion, monto);
-        this.controller.apostar(apuesta);            
+        if(participacion != null){
+            Apuesta apuesta = new Apuesta(usuario, participacion, monto);
+           this.controller.apostar(apuesta);  
+        }
+        else{
+            this.showError("Debes seleccionar una participacion");
+        }
+                   
     }//GEN-LAST:event_btnApostarActionPerformed
 
     private void txtMontoAApostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoAApostarActionPerformed

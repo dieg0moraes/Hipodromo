@@ -15,6 +15,16 @@ public class UIFinalizarCarrera extends javax.swing.JFrame implements IFinalizar
     public UIFinalizarCarrera(Hipodromo hipodromo) {
         initComponents();
         this.controller = new FinalizarCarreraController(this, hipodromo);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+        this.dispose();
     }
     
     
@@ -201,8 +211,8 @@ public class UIFinalizarCarrera extends javax.swing.JFrame implements IFinalizar
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void cargarDatos(Carrera carrera) {
-        this.txtMonto.setText(carrera.getMontoTotalApostado() +"");
+    public void cargarDatos(Carrera carrera, float monto) {
+        this.txtMonto.setText(monto+"");
         this.txtNombre.setText(carrera.getNombre());
         this.txtNumero.setText(carrera.getNumero()+"");
         Utils.fillJList(lstParticipaciones, carrera.getParticipaciones());

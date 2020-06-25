@@ -79,10 +79,6 @@ public class Participacion {
         return this.dividendo;
     }
     
-    public String getNombreCaballo(){
-        return this.caballo.getNombre();
-    }    
-        
     private boolean validarNumero(){
         return this.numero >= 1 && this.numero <= 9999;
     }
@@ -99,6 +95,16 @@ public class Participacion {
     public void setTipoParticipacion(TipoApuesta tipo){
         this.tipoApuesta = tipo;
     }
+    
+    public float getDecremento(Apuesta apuesta, Carrera carrera){
+        return this.tipoApuesta.perdioApuesta(dividendo, apuesta, carrera);
+    }
+    
+    public float getMontoGanado(Apuesta apuesta, Carrera carrera){
+        return this.tipoApuesta.ganoApuesta(dividendo, apuesta, carrera);
+    }
+    
+    
     
 }
 

@@ -15,10 +15,20 @@ public class Jornada extends Observable{
     private int carreraNextId = 0;
     private Carrera carreraActual;  
     private int oid;
+      
+    public Jornada(Date date){
+        this.date = date;
+        this.carreras = new ArrayList<Carrera>();
+    }
 
     public Jornada() {
         this.carreras = new ArrayList<Carrera>();
     }
+    
+     public enum Eventos{
+        NUEVA_CARRERA_ACTUAL, NUEVA_CARRERA_AGREGADA
+    }
+    
     
     public Participacion buscarParticipacionById(int oid){
         for(Carrera c : this.carreras){
@@ -48,16 +58,9 @@ public class Jornada extends Observable{
     
     public void setCarreraActual(Carrera carrera){
         this.carreraActual = carrera;
+        this.notificar(Eventos.NUEVA_CARRERA_ACTUAL);
     }
     
-    public Jornada(Date date){
-        this.date = date;
-        this.carreras = new ArrayList<Carrera>();
-    }
-    
-    public enum Events{
-        CARRERA_ABIERTA
-    }
     
     public Date getDate(){
         return this.date;
@@ -76,10 +79,13 @@ public class Jornada extends Observable{
     }
     
     public Carrera getCarrearById(int id){
-        for(Carrera c : this.carreras){
-            if(id == c.getNumero())
-                return c;
+        if(this.carreras !=null){
+            for(Carrera c : this.carreras){
+                if(id == c.getOid())
+                    return c;
+            }            
         }
+        
         return null;
     }
     
@@ -110,30 +116,17 @@ public class Jornada extends Observable{
             return c;
         }    
         return null; 
-    }
-    
-    private Carrera getPrimeraCarrera(){
-        int min = Integer.MAX_VALUE;
-        Carrera ret = null;
-        for(Carrera c : this.carreras){
-            if(c.getNumero() < min){
-                min = c.getNumero();
-                ret = c;
-            }
-        }
-        return ret;
-    }
-    
+    }    
 
     public Carrera getNextCarrera() throws AbrirCarreraException {
         for(Carrera c : this.carreras){
             if(!c.seCorrio()){
                 if(this.carreraActual == null){
-                    this.carreraActual = c;
+                    this.setCarreraActual(c);
                     return c;
                 }                    
                 else if(this.carreraActual.seCorrio()){
-                    this.carreraActual = c;
+                    this.setCarreraActual(c);
                     return c;
                 }
             } 
@@ -151,15 +144,13 @@ public class Jornada extends Observable{
     public void abrirCarrera(Carrera carrera) throws AbrirCarreraException{
         for(Carrera c : this.carreras){
             if(c.equals(carrera)){
-                c.abrirCarrera();
-                this.notificar(Events.CARRERA_ABIERTA);
-                this.carreraActual = c;
+                c.abrirCarrera();                
+                this.setCarreraActual(c);
                 break;
             }
         }
     }
-    
-    
+        
     public Carrera getLastCarreraCorrida() throws FinalizarCarreraException{
         for(Carrera c : this.carreras){
             if(c.estaCerrada())
@@ -169,6 +160,6 @@ public class Jornada extends Observable{
     }     
     public ArrayList<Carrera> getCarreras(){
         return this.carreras;
-
+            
     }
 }
