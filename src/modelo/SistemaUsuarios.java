@@ -20,6 +20,7 @@ public class SistemaUsuarios {
         Usuario ret = null;     
         for(Usuario user : usuariosList){
             if(user.login(log.getPassword(), log.getUsername())){
+                System.out.println(user.toString());
                 ret = user;
                 break;                
             }

@@ -76,9 +76,8 @@ public class Hipodromo extends Observable{
     public boolean agregarCarrera(Carrera carrera) 
             throws NewCarreraException, NewParticipacionException{
         Jornada jornada = this.getJornada(carrera.getDate());        
-        boolean ret = jornada.agregarCarrera(carrera);
-        this.notificar(Events.CARRERA_AGREGADA);
-        return ret;
+        return jornada.agregarCarrera(carrera);
+        
     }
     
     public Carrera getNextCarrera() throws AbrirCarreraException{
@@ -139,6 +138,7 @@ public class Hipodromo extends Observable{
         Jornada jornada = getCurrentJornada();
         return jornada.getCarreraActual();
     }
+
     
     public void abrirCarrera(Carrera carrera) throws AbrirCarreraException{
         Jornada jornada = this.getCurrentJornada();
@@ -169,6 +169,7 @@ public class Hipodromo extends Observable{
         }
         return carreras;
     }
+
         
     @Override
     public String toString(){
@@ -176,6 +177,12 @@ public class Hipodromo extends Observable{
     }
 
     @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.nombre);
+        hash = 29 * hash + Objects.hashCode(this.direccion);
+        return hash;
+    }
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

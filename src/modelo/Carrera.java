@@ -15,7 +15,8 @@ public class Carrera extends Observable{
     private int oid = 0;
     
     private ArrayList<Participacion> participaciones;    
-    private Caballo ganador = null;
+
+    private Caballo ganador;
     
     public void setOid(int oid){
         this.oid = oid;
@@ -54,11 +55,14 @@ public class Carrera extends Observable{
     public enum Status{
         DEFINIDA, ABIERTA, CERRADA, FINALIZADA
     }
+    
+   
 
     public Carrera(){
         this.participaciones = new ArrayList<Participacion>(); 
         this.setStatus(Status.DEFINIDA);
         this.oid = 0;
+
     }
     
     public Carrera(String nombre, Date date){
@@ -67,6 +71,7 @@ public class Carrera extends Observable{
         this.participaciones = new ArrayList<Participacion>();
         this.setStatus(Status.DEFINIDA);
         this.oid = 0;
+
     }
     
     public ArrayList<Participacion> getParticipaciones(){
@@ -136,15 +141,22 @@ public class Carrera extends Observable{
             throws NewParticipacionException{
         boolean ret = false;
         Caballo c = participacion.getCaballo();
-        if(participacion.validar() && !this.siCorreCaballo(c)){            
-            if(!this.numeroIsRegistrado(participacion.getNumero())){
-                ret = this.participaciones.add(participacion);
-                this.notificar(Events.NUEVA_PARTICIPACION);
-                return ret;
-            }else throw new NewParticipacionException("Numero de caballo inválido");
-        }   
-        return ret;   
+        try{
+            if(participacion.validar() && !this.siCorreCaballo(c))
+                if(!this.numeroIsRegistrado(participacion.getNumero())){
+                    ret = this.participaciones.add(participacion);
+                }else throw new NewParticipacionException("Numero de caballo inválido");
+                
+        }catch(NewParticipacionException e){
+            throw e;
+        }
+        if(ret) 
+            this.notificar(Events.NUEVA_PARTICIPACION);
+        
+        return ret;
+        
     }
+    
     
     private boolean validarParticipaciones() 
             throws NewParticipacionException{
@@ -256,5 +268,8 @@ public class Carrera extends Observable{
     public String toString() {
         return "Carrera{" + "nombre=" + nombre + ", numero=" + numero + ", status=" + status + '}';
     }
+     public void cerrarCarrera(){
+         
+     }
     
 }

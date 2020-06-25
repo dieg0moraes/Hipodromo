@@ -143,6 +143,7 @@ public class Fachada extends Observable{
             throws NewApuestaException, LoginException{
         return this.sistemaApuestas.realizarApuesta(apuesta);
     }
+
     
     public void cargarHipodromos(){
         this.sistemaHipodromos.cargarHipodromos();
@@ -199,7 +200,6 @@ public class Fachada extends Observable{
     public float getMontoTotalPagado(Carrera carrera){
         return this.sistemaApuestas.getMontoTotalPagado(carrera);
     }
-    
     
 }
 

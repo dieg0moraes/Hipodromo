@@ -121,9 +121,9 @@ public class UICarreraMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     private void btnCerrarApuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarApuestasActionPerformed
-        UICerrarApuestas view = new UICerrarApuestas(this.hipodromo);
-        view.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarApuestasActionPerformed
+
 
     private void btnFinalizarApuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarApuestasActionPerformed
         UIFinalizarCarrera view = new UIFinalizarCarrera(hipodromo);
@@ -139,7 +139,6 @@ public class UICarreraMenu extends javax.swing.JFrame {
         UIModificarTipoApuesta view = new UIModificarTipoApuesta(this.hipodromo);
         view.setVisible(true);
     }//GEN-LAST:event_btnModificarTIpoApuestaActionPerformed
-
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {
         this.dispose();
